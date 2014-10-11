@@ -1,5 +1,9 @@
 package se300.destinytactics;
 
+import java.awt.image.BufferedImage;
+
+import com.badlogic.gdx.Graphics;
+
 
 /**
  * @author John
@@ -10,7 +14,7 @@ public class Drawable {
 
 	public Graphics g;
 	public BufferedImage image;
-	public Name namer;
+	public Names namer;
 	public boolean visibleByPlayer;
 	public Names m_Names;
 
