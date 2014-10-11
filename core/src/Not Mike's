@@ -1,7 +1,0 @@
-So... this is a new file... would this be a source code file/class for our project? Or is there a different way to do it?
-
-Absolutely. Whatever folder you created when you cloned the repo should be your Eclipse project file. As we write code files and push changes, the file version history will show in the Sourcetree GUI as week as on Origin (GitHub).
-
-Another addition!
-
-Yet one more!
