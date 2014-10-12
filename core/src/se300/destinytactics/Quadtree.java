@@ -1,5 +1,7 @@
 package se300.destinytactics;
 
+import java.awt.Rectangle;
+
 
 /**
  * @author John
@@ -8,14 +10,18 @@ package se300.destinytactics;
  */
 public class Quadtree {
 
-	public Drawable ArrayList(4);
+	public Drawable ArrayList;
 	public int level;
-	public Quadtree nodes[4];
+	public Quadtree nodes[];
 	public Drawable m_Drawable;
 	public Quadtree m_Quadtree;
 
 	public Quadtree(){
 
+	}
+
+	public Quadtree(Rectangle rectangle) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void finalize() throws Throwable {
@@ -39,5 +45,10 @@ public class Quadtree {
 
 	public void split(){
 
+	}
+
+	public void insert(Sector sector) {
+		// TODO Auto-generated method stub
+		
 	}
 }//end Quadtree

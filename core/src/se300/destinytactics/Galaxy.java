@@ -1,5 +1,6 @@
 package se300.destinytactics;
-
+import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  * @author John
@@ -12,24 +13,42 @@ public class Galaxy {
 	private String name;
 	private Sector sectors[];
 	private int sizeY;
-	private int szeX;
+	private int sizeX;
+	private int numSystems;
 	public Sector m_Sector;
 	public Quadtree m_Quadtree;
 
-	public Galaxy(){
+	public Galaxy(int x, int y, int n){
+		
+		
+		numSystems = n;
+		sizeX = x;
+		sizeY = y;
+		sectors = new Sector[numSystems];
+		map = new Quadtree(new Rectangle(0, 0, sizeX, sizeY));
+		name = Names.newName();
+		Sector.galaxy = this;
+	
+		for (int i = 0; i < numSystems; i++) {
+			sectors[i] = new Sector();
+			map.insert(sectors[i]);
+		}
 
+
+	}
+
+	public int getGalaxyWidth(){
+		
+		return sizeY;
+	
+	}
+	public int getGalaxyHeight(){
+		
+		return sizeX;
+	
 	}
 
 	public void finalize() throws Throwable {
-
-	}
-	/**
-	 * 
-	 * @param x
-	 * @param y
-	 * @param n
-	 */
-	public galaxy(int x, int y, int n){
 
 	}
 
