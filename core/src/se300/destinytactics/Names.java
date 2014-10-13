@@ -38,4 +38,10 @@ public class Names {
 	public void loadFile(File f){
 
 	}
+
+	public static String newName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }//end Names
