@@ -1,6 +1,8 @@
 package se300.destinytactics.planets;
 
 import se300.destinytactics.mapgen.OrbitalBody;
+import se300.destinytactics.planets.interfaces.canBuildDefense;
+import se300.destinytactics.planets.interfaces.canBuildFleets;
 
 
 /**

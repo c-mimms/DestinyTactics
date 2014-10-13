@@ -1,6 +1,7 @@
 package se300.destinytactics.units;
 
-import se300.destinytactics.planets.needsHangar;
+import se300.destinytactics.units.interfaces.needsHangar;
+
 
 
 /**
