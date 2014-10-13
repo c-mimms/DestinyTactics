@@ -1,10 +1,4 @@
-<<<<<<< HEAD:core/src/se300/destinytactics/MinorStar.java
-package se300.destinytactics;
-
-=======
 package se300.destinytactics.planets;
->>>>>>> generationfeaturebranch:core/src/se300/destinytactics/planets/MinorStar.java
-
 
 /**
  * @author John
