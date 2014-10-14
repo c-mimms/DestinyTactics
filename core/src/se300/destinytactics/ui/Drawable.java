@@ -2,6 +2,11 @@ package se300.destinytactics.ui;
 
 import se300.destinytactics.mapgen.Names;
 
+import java.awt.image.BufferedImage;
+
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.graphics.Texture;
+
 
 /**
  * @author John
@@ -12,9 +17,10 @@ public class Drawable {
 
 	public Graphics g;
 	public BufferedImage image;
-	public Name namer;
+	public Names namer;
 	public boolean visibleByPlayer;
 	public Names m_Names;
+	public Texture sprite;
 
 	public Drawable(){
 

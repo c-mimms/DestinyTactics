@@ -1,7 +1,9 @@
-package se300.destinytactics.planets;
+package se300.destinytactics.orbitalbodies;
 
 import se300.destinytactics.mapgen.OrbitalBody;
 import se300.destinytactics.mapgen.Sector;
+import se300.destinytactics.orbitalbodies.interfaces.canBuildDefense;
+import se300.destinytactics.orbitalbodies.interfaces.canBuildFleets;
 
 
 /**
@@ -12,49 +14,39 @@ import se300.destinytactics.mapgen.Sector;
 public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefense {
 
 	private int miningEfficiency2;
-	private int miningEfficieny1;
-	private int recourse;
-	private int recourse2;
+	private int miningEfficiency1;
+	private int resource;
+	private int resource2;
 	private Structure structure[];
 	private String type;
 	public Structure m_Structure;
 
-	public Planet(){
-
+	public Planet(int radius, Sector sector){
+		super(radius,sector);
+		miningEfficiency1 = 0;
+		miningEfficiency2 = 0;
+		resource = (int) Math.random()*1000;
+		resource2 = (int) Math.random()*1000;
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	/**
-	 * 
-	 * @param sector
-	 */
-	public Planet(Sector sector){
-
-	}
-
+	
 	public String getType(){
-		return "";
+		return type;
 	}
 
 	public void incrementMining(){
-
+		miningEfficiency1 ++;
 	}
 
 	public void getLevel(){
-
+		
 	}
 
 	public void incrementLevel(){
-
+		
 	}
 
-	public void getLevel(){
-
-	}
-
-	public void incrementLevel(){
-
-	}
 }//end Planet

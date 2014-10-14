@@ -13,7 +13,7 @@ public class Galaxy {
 
 	private Quadtree map;
 	private String name;
-	private Sector sectors[];
+	public Sector sectors[];
 	private int sizeY;
 	private int sizeX;
 	private int numSystems;
@@ -41,13 +41,17 @@ public class Galaxy {
 
 	public int getGalaxyWidth(){
 		
-		return sizeY;
+		return sizeX;
 	
 	}
 	public int getGalaxyHeight(){
 		
-		return sizeX;
+		return sizeY;
 	
+	}
+	
+	public String getName(){
+		return name;
 	}
 
 	public void finalize() throws Throwable {

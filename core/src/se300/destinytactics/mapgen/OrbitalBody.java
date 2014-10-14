@@ -1,7 +1,10 @@
 package se300.destinytactics.mapgen;
 
-import se300.destinytactics.planets.Fleet;
+import com.badlogic.gdx.graphics.Texture;
+
 import se300.destinytactics.ui.Button;
+import se300.destinytactics.ui.Drawable;
+import se300.destinytactics.units.Fleet;
 
 
 /**
@@ -9,7 +12,7 @@ import se300.destinytactics.ui.Button;
  * @version 1.0
  * @created 10-Oct-2014 5:49:10 PM
  */
-public class OrbitalBody extends Quadtree {
+public class OrbitalBody extends Drawable {
 
 	private int controlState;
 	private Fleet fleet;
@@ -20,8 +23,13 @@ public class OrbitalBody extends Quadtree {
 	public Fleet m_Fleet;
 	public Button m_Button;
 
-	public OrbitalBody(){
+	public OrbitalBody(int radius, Sector sect){
 
+		orbitRadius = radius;
+		name = Names.newName();
+		sector = sect;
+		controlState = 0;
+		
 	}
 
 	public void finalize() throws Throwable {
@@ -35,19 +43,34 @@ public class OrbitalBody extends Quadtree {
 	 * 
 	 * @param body
 	 */
-	public int getDistance(OrbitingBody body){
-		return 0;
+	public int getDistance(OrbitalBody body){
+		int bodyPos = sector.getNumBodies() - orbitRadius;
+		int otherBodyPos = body.getSector().getNumBodies() - body.getPos();
+		int sectorDist = sector.getDistance(body.getSector());
+		return bodyPos + otherBodyPos + sectorDist;
 	}
 
 	public String getName(){
-		return "";
+		return name;
+	}
+	
+	public int getMiningEfficiency(){
+		return miningEfficiency;
+	}
+	
+	public Fleet getFleet(){
+		return fleet;
+	}
+	
+	public Sector getSector(){
+		return sector;
 	}
 
-	public Point getPos(){
-		return null;
+	public int getPos(){
+		return orbitRadius;
 	}
 
 	public int getState(){
-		return 0;
+		return controlState;
 	}
 }//end OrbitalBody

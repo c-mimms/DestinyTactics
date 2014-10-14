@@ -1,5 +1,9 @@
 package se300.destinytactics.ui;
 
+import java.awt.event.ActionListener;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 
 /**
  * @author John
@@ -21,8 +25,9 @@ public class Button {
 	/**
 	 * 
 	 * @param 1
+	 * @return 
 	 */
-	public addActionListener(ActionListener 1){
+	public void addActionListener(ActionListener al){
 
 	}
 
