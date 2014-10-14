@@ -1,6 +1,6 @@
 package se300.destinytactics.mapgen;
 
-import se300.destinytactics.planets.Fleet;
+import se300.destinytactics.orbitalbodies.Fleet;
 import se300.destinytactics.ui.Button;
 
 

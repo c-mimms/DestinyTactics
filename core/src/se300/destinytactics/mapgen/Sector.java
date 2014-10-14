@@ -2,8 +2,8 @@ package se300.destinytactics.mapgen;
 
 import java.awt.Point;
 
-import se300.destinytactics.planets.Planet;
-import se300.destinytactics.planets.Station;
+import se300.destinytactics.orbitalbodies.Planet;
+import se300.destinytactics.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
 
 /**

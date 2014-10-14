@@ -1,6 +1,6 @@
 package se300.destinytactics.units;
 
-import se300.destinytactics.planets.Fleet;
+import se300.destinytactics.orbitalbodies.Fleet;
 
 
 /**
