@@ -1,4 +1,6 @@
 package se300.destinytactics;
+import java.awt.Dimension;
+
 import se300.destinytactics.logic.Game;
 import se300.destinytactics.logic.Setup;
 import se300.destinytactics.ui.Highscores;
@@ -21,6 +23,8 @@ public class DestinyTactics {
 	public Menu m_Menu;
 	public Game m_Game;
 
+	
+	
 	public DestinyTactics(){
 
 	}

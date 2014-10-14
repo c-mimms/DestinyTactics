@@ -2,16 +2,19 @@ package se300.destinytactics.mapgen;
 
 import java.awt.Point;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
+import se300.destinytactics.ui.Drawable;
 
 /**
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:15 PM
  */
-public class Sector extends Quadtree {
+public class Sector extends Drawable {
 
 	public static Galaxy galaxy;
 	private int controlState;
@@ -25,6 +28,8 @@ public class Sector extends Quadtree {
 
 	public Sector() {
 
+		sprite =  new Texture("star.png");
+		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
 		posX = (int) (Math.random() * galaxy.getGalaxyWidth());
@@ -33,10 +38,10 @@ public class Sector extends Quadtree {
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
-				bodyList[i] = new Station();
+				bodyList[i] = new Station(i, this);
 				stationChance /= 10;
 			} else {
-				bodyList[i] = new Planet();
+				bodyList[i] = new Planet(i, this);
 			}
 		}
 		name = Names.newName();
@@ -67,8 +72,15 @@ public class Sector extends Quadtree {
 		return posY;
 	}
 	
+	public int getNumBodies() {
+		return numBodies;
+	}
+	
+	public int getDistance(Sector sector){
+		return (int) sector.getPos().distance(getPos());
+	}
 	
 	public int getState() {
-		return 0;
+		return controlState;
 	}
 }// end Sector

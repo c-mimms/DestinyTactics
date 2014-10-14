@@ -1,6 +1,7 @@
 package se300.destinytactics.orbitalbodies;
 
 import se300.destinytactics.mapgen.OrbitalBody;
+import se300.destinytactics.mapgen.Sector;
 import se300.destinytactics.orbitalbodies.interfaces.canBuildDefense;
 import se300.destinytactics.orbitalbodies.interfaces.canBuildFleets;
 
@@ -15,8 +16,8 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 	private Structure structure[];
 	public Structure m_Structure;
 
-	public Station(){
-
+	public Station(int radius, Sector sector){
+		super(radius,sector);
 	}
 
 	public void finalize() throws Throwable {
@@ -30,11 +31,4 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 
 	}
 
-	public void getLevel(){
-
-	}
-
-	public void incrementLevel(){
-
-	}
 }//end Station

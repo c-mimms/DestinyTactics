@@ -5,6 +5,7 @@ import se300.destinytactics.mapgen.Names;
 import java.awt.image.BufferedImage;
 
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.graphics.Texture;
 
 
 /**
@@ -19,6 +20,7 @@ public class Drawable {
 	public Names namer;
 	public boolean visibleByPlayer;
 	public Names m_Names;
+	public Texture sprite;
 
 	public Drawable(){
 

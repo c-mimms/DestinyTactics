@@ -1,6 +1,7 @@
 package se300.destinytactics.orbitalbodies;
 
 import se300.destinytactics.mapgen.OrbitalBody;
+import se300.destinytactics.mapgen.Sector;
 
 
 /**
@@ -10,8 +11,8 @@ import se300.destinytactics.mapgen.OrbitalBody;
  */
 public class JumpGate extends OrbitalBody {
 
-	public JumpGate(){
-
+	public JumpGate(int radius, Sector sector){
+		super(radius,sector);
 	}
 
 	public void finalize() throws Throwable {
@@ -23,6 +24,6 @@ public class JumpGate extends OrbitalBody {
 	 * @param gate
 	 */
 	public int getDistance(JumpGate gate){
-		return 0;
+		return 1;
 	}
 }//end JumpGate

@@ -1,8 +1,7 @@
-package se300.destinytactics.orbitalbodies;
+package se300.destinytactics.units;
 
 import se300.destinytactics.logic.Player;
 import se300.destinytactics.mapgen.OrbitalBody;
-import se300.destinytactics.units.Ship;
 
 
 /**
