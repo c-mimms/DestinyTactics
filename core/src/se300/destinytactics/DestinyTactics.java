@@ -1,27 +1,70 @@
 package se300.destinytactics;
+import java.awt.Dimension;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import se300.destinytactics.logic.Game;
+import se300.destinytactics.logic.Setup;
+import se300.destinytactics.ui.Highscores;
+import se300.destinytactics.ui.Menu;
 
-public class DestinyTactics extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
 
-	@Override
-	public void create() {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+
+/**
+ * @author John
+ * @version 1.0
+ * @created 10-Oct-2014 5:48:57 PM
+ */
+public class DestinyTactics {
+
+	private int gameBoardSize;
+	private Dimension screen;
+	private enum STATE;
+	public Highscores m_Highscores;
+	public Setup m_Setup;
+	public Menu m_Menu;
+	public Game m_Game;
+
+	
+	
+	public DestinyTactics(){
+
 	}
 
-	@Override
-	public void render() {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void finalize() throws Throwable {
+
 	}
-}
+	public exit(){
+
+	}
+
+	public getGameBoardSize(){
+
+	}
+
+	public getState(){
+
+	}
+
+	private init(){
+
+	}
+
+	public main(){
+
+	}
+
+	private run(){
+
+	}
+
+	public setGameBoardSize(){
+
+	}
+
+	public setState(){
+
+	}
+
+	private tick(){
+
+	}
+}//end DestinyTactics
