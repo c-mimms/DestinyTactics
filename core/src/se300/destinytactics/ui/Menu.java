@@ -1,5 +1,7 @@
 package se300.destinytactics.ui;
 
+import java.awt.event.ActionListener;
+
 
 /**
  * @author John
@@ -7,8 +9,9 @@ package se300.destinytactics.ui;
  * @created 10-Oct-2014 5:49:07 PM
  */
 public class Menu {
-
-	public Button[3] = button["New Game", "Highscores, "Quit"] buttons;
+	
+	//{"New Game", "Highscores", "Quit"}
+	public Button[] buttons = new Button[3];
 
 	public Menu(){
 
@@ -21,15 +24,15 @@ public class Menu {
 	 * 
 	 * @param 1
 	 */
-	public addActionListener(ActionListener 1){
+	public void addActionListener(ActionListener id){
 
 	}
 
-	public startGame(){
+	public void startGame(){
 
 	}
 
-	public viewHighscores(){
+	public void viewHighscores(){
 
 	}
 }//end Menu

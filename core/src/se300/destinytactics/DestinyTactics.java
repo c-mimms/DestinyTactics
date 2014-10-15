@@ -17,7 +17,7 @@ public class DestinyTactics {
 
 	private int gameBoardSize;
 	private Dimension screen;
-	private enum STATE;
+	//private enum STATE;
 	public Highscores m_Highscores;
 	public Setup m_Setup;
 	public Menu m_Menu;
@@ -25,46 +25,46 @@ public class DestinyTactics {
 
 	
 	
-	public DestinyTactics(){
+	public void DestinyTactics(){
 
 	}
 
 	public void finalize() throws Throwable {
 
 	}
-	public exit(){
+	public void exit(){
 
 	}
 
-	public getGameBoardSize(){
+	public void getGameBoardSize(){
 
 	}
 
-	public getState(){
+	public void getState(){
 
 	}
 
-	private init(){
+	private void init(){
 
 	}
 
-	public main(){
+	public void main(){
 
 	}
 
-	private run(){
+	private void run(){
 
 	}
 
-	public setGameBoardSize(){
+	public void setGameBoardSize(){
 
 	}
 
-	public setState(){
+	public void setState(){
 
 	}
 
-	private tick(){
+	private void tick(){
 
 	}
 }//end DestinyTactics
