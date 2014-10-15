@@ -19,8 +19,8 @@ public class OrbitalBody extends Drawable {
 	private Fleet fleet;
 	private int miningEfficiency = 0;
 	private String name;
-	private int orbitRadius;
-	private Sector sector;
+	protected int orbitRadius;
+	protected Sector sector;
 	public Fleet m_Fleet;
 	public Button m_Button;
 
@@ -78,6 +78,6 @@ public class OrbitalBody extends Drawable {
 
 	@Override
 	public void drawImage(SpriteBatch batch, float zoomLevel) {
-		batch.draw(sprite,sector.getXPos()-25*orbitRadius,sector.getYPos()-25*zoomLevel,100*zoomLevel,100*zoomLevel,0,0,200,200,false,false);		
+		batch.draw(sprite,sector.getXPos()-25*orbitRadius,sector.getYPos()-25*zoomLevel,200*zoomLevel,200*zoomLevel,0,0,200,200,false,false);		
 	}
 }//end OrbitalBody

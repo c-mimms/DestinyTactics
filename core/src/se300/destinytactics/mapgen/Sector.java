@@ -90,13 +90,13 @@ public class Sector extends Drawable {
 	@Override
 	public void drawImage(SpriteBatch batch, float zoomLevel) {
 		if(zoomLevel <= 0.201){
-			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,200*zoomLevel,400*zoomLevel,0,0,200,400,false,false);
+			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,400*zoomLevel,800*zoomLevel,0,0,200,400,false,false);
 			for (int i = 0; i < numBodies; i++) {
 				bodyList[i].drawImage(batch, zoomLevel);
 			}
 		}
 		else{
-			batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
+			batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,100*zoomLevel,100*zoomLevel,0,0,50,50,false,false);
 		}
 	}
 }// end Sector
