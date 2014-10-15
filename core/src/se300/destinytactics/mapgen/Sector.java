@@ -3,6 +3,7 @@ package se300.destinytactics.mapgen;
 import java.awt.Point;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
@@ -25,10 +26,12 @@ public class Sector extends Drawable {
 	private int posY;
 	public OrbitalBody m_OrbitalBody;
 	public Button m_Button;
+	private Texture sprite1;
 
 	public Sector() {
 
 		sprite =  new Texture("star.png");
+		sprite1 =  new Texture("realorbitalbody/sun1.png");
 		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
@@ -82,5 +85,18 @@ public class Sector extends Drawable {
 	
 	public int getState() {
 		return controlState;
+	}
+
+	@Override
+	public void drawImage(SpriteBatch batch, float zoomLevel) {
+		if(zoomLevel <= 0.201){
+			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,200*zoomLevel,400*zoomLevel,0,0,200,400,false,false);
+			for (int i = 0; i < numBodies; i++) {
+				bodyList[i].drawImage(batch, zoomLevel);
+			}
+		}
+		else{
+			batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
+		}
 	}
 }// end Sector

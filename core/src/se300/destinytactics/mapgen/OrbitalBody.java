@@ -1,6 +1,7 @@
 package se300.destinytactics.mapgen;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
@@ -29,6 +30,7 @@ public class OrbitalBody extends Drawable {
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
+		sprite =  new Texture("realorbitalbody/lifeplanet2.png");
 		
 	}
 
@@ -72,5 +74,10 @@ public class OrbitalBody extends Drawable {
 
 	public int getState(){
 		return controlState;
+	}
+
+	@Override
+	public void drawImage(SpriteBatch batch, float zoomLevel) {
+		batch.draw(sprite,sector.getXPos()-25*orbitRadius,sector.getYPos()-25*zoomLevel,100*zoomLevel,100*zoomLevel,0,0,200,200,false,false);		
 	}
 }//end OrbitalBody

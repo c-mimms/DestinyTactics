@@ -78,10 +78,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(bgimg, 0, 0, 1200, 800, 0, 0, 2048, 1024, false, false);
-		batch.draw(selImage, sun.x, sun.y, sun.width, sun.height, 0, 0, 200,186, false, false);
+		batch.draw(selImage, mousePos.x, mousePos.y, sun.width*zoomLevel, sun.height*zoomLevel, 0, 0, 200,186, false, false);
+		batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
 		for(int i = 0; i < 100; i++){
 			Sector temp = m_Galaxy.sectors[i];
-			batch.draw(temp.sprite,temp.getXPos()-25*zoomLevel,temp.getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
+			temp.drawImage(batch,zoomLevel);
 		}
 		batch.end();
 	}
@@ -98,10 +99,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if(zoomLevel > 1) zoomLevel = 1;
 		if(zoomLevel <= 0.01) zoomLevel = 0.1f;
 
-		
-		
-		System.out.println("zoomed!" + mousePos);
-
+	
 		camera.zoom = zoomLevel;
 		if (zoomLevel < 1) {
 			camera.position.set(sun.x + 50, sun.y + 50, 0);
