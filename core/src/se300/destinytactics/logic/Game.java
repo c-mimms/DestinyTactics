@@ -78,8 +78,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(bgimg, 0, 0, 1200, 800, 0, 0, 2048, 1024, false, false);
-		batch.draw(selImage, mousePos.x, mousePos.y, sun.width*zoomLevel, sun.height*zoomLevel, 0, 0, 200,186, false, false);
-		batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
+		batch.draw(selImage, mousePos.x-50*zoomLevel, mousePos.y-50*zoomLevel, sun.width*zoomLevel, sun.height*zoomLevel, 0, 0, 200,186, false, false);
 		for(int i = 0; i < 100; i++){
 			Sector temp = m_Galaxy.sectors[i];
 			temp.drawImage(batch,zoomLevel);
