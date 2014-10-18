@@ -18,6 +18,7 @@ public class JumpGate extends OrbitalBody {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
 	/**
 	 * 1
 	 * 

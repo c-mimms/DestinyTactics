@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
-import se300.destinytactics.ui.Drawable;
 
 /**
  * @author John
