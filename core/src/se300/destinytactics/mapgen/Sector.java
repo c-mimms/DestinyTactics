@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
@@ -15,7 +16,6 @@ import se300.destinytactics.ui.Drawable;
  * @version 1.0
  * @created 10-Oct-2014 5:49:15 PM
  */
-public class Sector extends Drawable {
 public class Sector extends Actor {
 
 	public static Galaxy galaxy;
@@ -32,7 +32,7 @@ public class Sector extends Actor {
 	
 	public Sector() {
 
-		sprite =  new Texture("star.png");
+		
 		sprite1 =  new Texture("realorbitalbody/sun1.png");
 		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
@@ -57,13 +57,7 @@ public class Sector extends Actor {
 	}
 
 	public void click() {
-		
-<<<<<<< HEAD
-=======
-		sectorStage
-
->>>>>>> origin/GalaxySystemViewDev
-	}
+	}	
 
 	public String getName() {
 		return name;
@@ -93,23 +87,10 @@ public class Sector extends Actor {
 		return controlState;
 	}
 
-<<<<<<< HEAD
-	@Override
-	public void draw(SpriteBatch batch, float zoomLevel) {
-		if(zoomLevel <= 0.201){
-			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,400*zoomLevel,800*zoomLevel,0,0,200,400,false,false);
-			for (int i = 0; i < numBodies; i++) {
-				bodyList[i].drawImage(batch, zoomLevel);
-			}
-		}
-		else{
-			batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,100*zoomLevel,100*zoomLevel,0,0,50,50,false,false);
-		}
-=======
+
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		
-			batch.draw(sprite,getXPos(),getYPos(),100,100,0,0,50,50,false,false);
-		
->>>>>>> origin/GalaxySystemViewDev
+			batch.draw(sprite1,getXPos(),getYPos(),100,100,0,0,50,50,false,false);
+
 	}
 }// end Sector
