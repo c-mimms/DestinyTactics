@@ -26,4 +26,9 @@ public class JumpGate extends OrbitalBody {
 	public int getDistance(JumpGate gate){
 		return 1;
 	}
+
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
+	}
 }//end JumpGate

@@ -49,4 +49,10 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 	}
 
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }//end Planet

@@ -21,7 +21,6 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 
 	public Station(int radius, Sector sector){
 		super(radius,sector);
-		sprite =  new Texture("realorbitalbody/station1.png");
 	}
 
 	public void finalize() throws Throwable {
@@ -34,8 +33,12 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 	public void incrementLevel(){
 
 	}
-	public void drawImage(SpriteBatch batch, float zoomLevel) {
-		batch.draw(sprite,sector.getXPos()-25*orbitRadius,sector.getYPos()-25*zoomLevel,200*zoomLevel,200*zoomLevel,0,0,200,200,false,false);		
+	
+
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }//end Station

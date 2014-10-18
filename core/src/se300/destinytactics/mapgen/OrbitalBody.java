@@ -2,6 +2,7 @@ package se300.destinytactics.mapgen;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
@@ -13,7 +14,7 @@ import se300.destinytactics.units.Fleet;
  * @version 1.0
  * @created 10-Oct-2014 5:49:10 PM
  */
-public class OrbitalBody extends Drawable {
+public abstract class OrbitalBody extends Actor {
 
 	private int controlState;
 	private Fleet fleet;
@@ -23,6 +24,12 @@ public class OrbitalBody extends Drawable {
 	protected Sector sector;
 	public Fleet m_Fleet;
 	public Button m_Button;
+	
+	//Import all planet textures
+	static Texture[] hotBod = new Texture[12];
+	
+
+	
 
 	public OrbitalBody(int radius, Sector sect){
 
@@ -30,13 +37,26 @@ public class OrbitalBody extends Drawable {
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
-		sprite =  new Texture("realorbitalbody/lifeplanet2.png");
+
+		hotBod[0] = new Texture("realorbitalbody/activatedgate.png");
+		hotBod[1] = new Texture("realorbitalbody/deactivatedgate.png");
+		hotBod[2] = new Texture("realorbitalbody/gasplanet1.png");
+		hotBod[3] = new Texture("realorbitalbody/gasplanet2.png");
+		hotBod[4] = new Texture("realorbitalbody/lifeplanet1.png");
+		hotBod[5] = new Texture("realorbitalbody/lifeplanet2.png");
+		hotBod[6] = new Texture("realorbitalbody/moon1.png");
+		hotBod[7] = new Texture("realorbitalbody/moon2.png");
+		hotBod[8] = new Texture("realorbitalbody/rockplanet1.png");
+		hotBod[9] = new Texture("realorbitalbody/rockplanet2.png");
+		hotBod[10] = new Texture("realorbitalbody/station1.png");
+		hotBod[11] = new Texture("realorbitalbody/station2.png");
 		
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
 	public void click(){
 
 	}
@@ -56,9 +76,7 @@ public class OrbitalBody extends Drawable {
 		return name;
 	}
 	
-	public int getMiningEfficiency(){
-		return miningEfficiency;
-	}
+	public abstract void getMiningEfficiency();
 	
 	public Fleet getFleet(){
 		return fleet;
@@ -76,8 +94,5 @@ public class OrbitalBody extends Drawable {
 		return controlState;
 	}
 
-	@Override
-	public void drawImage(SpriteBatch batch, float zoomLevel) {
-		batch.draw(sprite,sector.getXPos()-25*orbitRadius,sector.getYPos()-25*zoomLevel,200*zoomLevel,200*zoomLevel,0,0,200,200,false,false);		
-	}
+
 }//end OrbitalBody

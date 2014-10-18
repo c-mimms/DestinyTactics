@@ -56,7 +56,7 @@ public class Sector extends Drawable {
 	}
 
 	public void click() {
-
+		
 	}
 
 	public String getName() {
@@ -88,7 +88,7 @@ public class Sector extends Drawable {
 	}
 
 	@Override
-	public void drawImage(SpriteBatch batch, float zoomLevel) {
+	public void draw(SpriteBatch batch, float zoomLevel) {
 		if(zoomLevel <= 0.201){
 			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,400*zoomLevel,800*zoomLevel,0,0,200,400,false,false);
 			for (int i = 0; i < numBodies; i++) {
