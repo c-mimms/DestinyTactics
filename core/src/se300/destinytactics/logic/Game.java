@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * @author John
@@ -26,6 +27,8 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Game extends ApplicationAdapter implements InputProcessor {
 
+	
+	//OLD Variables, Decide which need to be kept
 	private SpriteBatch batch;
 	private Texture bgimg;
 	private Rectangle sun;
@@ -41,8 +44,14 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	float ww;
 	float hh;
 	ShapeRenderer renderer;
-
 	Vector3 mousePos = new Vector3();
+	
+	//NEW variables, put necessary ones here.
+	
+	
+	
+	Stage galaxyStage, sectorStage;
+	
 	
 	
 
@@ -131,7 +140,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 	}
 
 	public void endTurn() {
-
+sectorStage = new Stage();
+sectorStage.
 	}
 
 	public int getGameState() {
