@@ -125,7 +125,7 @@ public class MyGame extends Game {
 
 		// Add image background and stretch to fit
 		Image background = new Image(bgimg);
-		galaxyStage.addActor(background);
+		sectorStage.addActor(background);
 		background.setFillParent(true);
 
 		// Add all planet objects

@@ -83,8 +83,9 @@ public class Sector extends Actor {
 	}
 
 	public void switchView(){
-		System.out.println("Switching view" + galaxy + " This game?" + galaxy.thisgame );
+		
 		galaxy.thisgame.switchView(this);
+		
 	}
 	public void finalize() throws Throwable {
 		super.finalize();
