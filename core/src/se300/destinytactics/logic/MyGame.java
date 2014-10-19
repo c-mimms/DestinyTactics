@@ -63,12 +63,10 @@ public class MyGame extends Game {
 	public Texture sectorSun;
 
 	public void create() {
-		bgimg = new Texture("background.png");
-<<<<<<< HEAD
 		
-=======
+		bgimg = new Texture("background.png");
 		sectorSun = new Texture("realorbitalbody/sun1.png");
->>>>>>> origin/GalaxySystemViewDev
+		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));

@@ -72,17 +72,11 @@ public class Sector extends Actor {
 		}
 		name = Names.newName();
 		this.addListener(new ClickListener() {
-
-<<<<<<< HEAD
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-=======
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
 
 				System.out.println("Hello from " + this);
 				// Game, etc.
 
->>>>>>> origin/GalaxySystemViewDev
 				switchView();
 				return true;
 			}
