@@ -2,8 +2,12 @@ package se300.destinytactics.mapgen;
 
 import java.awt.Point;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import se300.destinytactics.orbitalbodies.Planet;
@@ -31,14 +35,20 @@ public class Sector extends Actor {
 	
 	public Sector() {
 
-		
-		sprite1 =  new Texture("realorbitalbody/sun1.png");
+		super.setVisible(true);
+		sprite1 =  new Texture(Gdx.files.internal("sun.png"));
 		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
 		posX = (int) (Math.random() * galaxy.getGalaxyWidth());
 		posY = (int) (Math.random() * galaxy.getGalaxyHeight());
+		setX(10);
+		setY(10);
 
+        setWidth(sprite1.getWidth());
+        setHeight(sprite1.getHeight());
+        setBounds(0, 0, getWidth(), getHeight());
+        
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
@@ -54,12 +64,13 @@ public class Sector extends Actor {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-
-	public void click() {
-	}	
-
+	
 	public String getName() {
 		return name;
+	}
+	
+	public void act(){
+		System.out.println("ACtin!");
 	}
 
 	public Point getPos() {
@@ -86,10 +97,10 @@ public class Sector extends Actor {
 		return controlState;
 	}
 
+	public void draw(Batch batch, float parentAlpha) {
 
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		
-			batch.draw(sprite1,getXPos(),getYPos(),100,100,0,0,50,50,false,false);
+		System.out.println("Drawing thing");
+		batch.draw(sprite1, getXPos(), getYPos());
 
 	}
 }// end Sector

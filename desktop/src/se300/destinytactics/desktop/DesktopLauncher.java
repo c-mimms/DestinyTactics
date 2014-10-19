@@ -1,8 +1,9 @@
 package se300.destinytactics.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import se300.destinytactics.logic.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
+import se300.destinytactics.logic.MyGame;
 
 import se300.destinytactics.logic.DestinyTactics;
 
@@ -12,6 +13,6 @@ public class DesktopLauncher {
 		config.title = "Destiny Tactics";
 	      config.width = 1200;
 	      config.height = 800;
-		new LwjglApplication(new Game(), config);
+		new LwjglApplication(new MyGame(), config);
 	}
 }
