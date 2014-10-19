@@ -37,8 +37,8 @@ public class Sector extends Actor {
 	private Texture sprite1;
 	
 	//New variables
-	private final double EDGE_EXCLUSION = 60;
-	private final int SPRITE_SIZE = 50;
+	private static final double EDGE_EXCLUSION = 60;
+	private static final int SPRITE_SIZE = 50;
 	public MyGame thisgame;
 
 	public Sector() {
@@ -73,8 +73,7 @@ public class Sector extends Actor {
 		name = Names.newName();
 		this.addListener(new ClickListener() {
 
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				switchView();
 				return true;
 			}

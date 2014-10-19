@@ -56,16 +56,20 @@ public class MyGame extends Game {
 	public static final int GALAXY_HEIGHT = 800;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage galaxyStage, sectorStage;
+	public Stage galaxyStage, sectorStage, sectorUI;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public Texture bgimg;
 
 	public void create() {
 		bgimg = new Texture("background.png");
+		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+		
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyStage.setDebugAll(true);
@@ -134,8 +138,16 @@ public class MyGame extends Game {
 		}
 		
 		galaxyView = false;
+		Gdx.input.setInputProcessor(sectorStage);
 		sectorView = true;
 
+	}
+	
+	public void goGalaxy(){
+
+		sectorView = false;
+		Gdx.input.setInputProcessor(galaxyStage);
+		galaxyView = true;
 	}
 
 	public int getGameState() {
