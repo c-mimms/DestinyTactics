@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
@@ -32,21 +35,27 @@ public class Sector extends Actor {
 	private Texture sprite1;
 	private final double EDGE_EXCLUSION = 60;
 	private final int SPRITE_SIZE = 50;
-	
+
 	public Sector() {
 
 		super.setVisible(true);
-		sprite1 =  new Texture(Gdx.files.internal("realorbitalbody/galaxySun.png"));
+		sprite1 = new Texture(
+				Gdx.files.internal("realorbitalbody/galaxySun.png"));
 		controlState = 0;
-		numBodies = (int)  (Math.random()* 15) + 1;
+		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyWidth()- 2*EDGE_EXCLUSION)));
-		posY = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyHeight()-2*EDGE_EXCLUSION)));
+		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
+		posY = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+				.getGalaxyHeight() - 2 * EDGE_EXCLUSION)));
 
-        setWidth(sprite1.getWidth());
-        setHeight(sprite1.getHeight());
-        setBounds(0, 0, getWidth(), getHeight());
-        
+		this.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
+		setWidth(SPRITE_SIZE);
+		setHeight(SPRITE_SIZE);
+		setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
+		setX(posX);
+		setY(posY);
+
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
@@ -57,24 +66,36 @@ public class Sector extends Actor {
 			}
 		}
 		name = Names.newName();
+		this.addListener(new ClickListener() {
+
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				System.out.println("Hello from " + this);
+				this.
+				// Game, etc.
+													// **//
+				return true;
+			}
+
+		});
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
-	public void act(){
+
+	public void act() {
 		System.out.println("ACtin!");
 	}
 
 	public Point getPos() {
 		return new Point(posX, posY);
 	}
-	
+
 	public int getXPos() {
 		return posX;
 	}
@@ -82,22 +103,22 @@ public class Sector extends Actor {
 	public int getYPos() {
 		return posY;
 	}
-	
+
 	public int getNumBodies() {
 		return numBodies;
 	}
-	
-	public int getDistance(Sector sector){
+
+	public int getDistance(Sector sector) {
 		return (int) sector.getPos().distance(getPos());
 	}
-	
+
 	public int getState() {
 		return controlState;
 	}
 
 	public void draw(Batch batch, float parentAlpha) {
 
-		batch.draw(sprite1, getXPos()-SPRITE_SIZE/2, getYPos()-SPRITE_SIZE/2,SPRITE_SIZE,SPRITE_SIZE);
+		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
 
 	}
 }// end Sector

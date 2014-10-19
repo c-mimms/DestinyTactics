@@ -68,7 +68,7 @@ public class MyGame extends Game {
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT));
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
-		
+		galaxyStage.setDebugAll(true);
 		galaxyStage.addActor(background);
 		background.setFillParent(true);
 
