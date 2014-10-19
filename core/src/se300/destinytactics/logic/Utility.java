@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Utility {
 	
-	public static Random random = new Random(100);
+	public static Random random = new Random();
 	
 
 }

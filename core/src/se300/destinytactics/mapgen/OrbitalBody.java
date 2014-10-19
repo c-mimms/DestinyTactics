@@ -1,10 +1,17 @@
 package se300.destinytactics.mapgen;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import se300.destinytactics.logic.MyGame;
+import se300.destinytactics.logic.Utility;
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
 import se300.destinytactics.units.Fleet;
@@ -24,6 +31,15 @@ public abstract class OrbitalBody extends Actor {
 	protected Sector sector;
 	public Fleet m_Fleet;
 	public Button m_Button;
+	public Random rand;
+	public int type;
+	
+	
+	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-20;
+	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-230;
+	public static final int SPRITE_SIZE = 50;
+	public Texture texture;
+	
 
 	// Import all planet textures
 	public static Texture[] hotBod = {
@@ -41,11 +57,21 @@ public abstract class OrbitalBody extends Actor {
 			new Texture("realorbitalbody/station2.png") };
 
 	public OrbitalBody(int radius, Sector sect){
-
+		
+		
 		orbitRadius = radius;
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
+		
+		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
+		
+		addListener(new ClickListener(){
+		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		        System.out.println(name);
+		        return true;
+		    }
+		});
 		
 		
 	}
@@ -86,9 +112,15 @@ public abstract class OrbitalBody extends Actor {
 	public int getPos() {
 		return orbitRadius;
 	}
+	
+
 
 	public int getState() {
 		return controlState;
 	}
 
+	@Override
+	public void draw(Batch batch, float parentAlpha){
+		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+	}
 }// end OrbitalBody

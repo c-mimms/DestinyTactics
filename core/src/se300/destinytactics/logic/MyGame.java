@@ -60,10 +60,15 @@ public class MyGame extends Game {
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public Texture bgimg;
+	public Texture sectorSun;
 
 	public void create() {
 		bgimg = new Texture("background.png");
+<<<<<<< HEAD
 		
+=======
+		sectorSun = new Texture("realorbitalbody/sun1.png");
+>>>>>>> origin/GalaxySystemViewDev
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -129,7 +134,13 @@ public class MyGame extends Game {
 
 		// Add image background and stretch to fit
 		Image background = new Image(bgimg);
+		Image sun = new Image(sectorSun);
 		sectorStage.addActor(background);
+		sectorStage.addActor(sun);
+		sun.setX(SCREEN_WIDTH-sectorSun.getWidth());
+		sun.setY(SCREEN_HEIGHT/2 - sectorSun.getHeight()/2);
+		
+		
 		background.setFillParent(true);
 
 		// Add all planet objects
