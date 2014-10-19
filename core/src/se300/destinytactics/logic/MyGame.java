@@ -55,16 +55,22 @@ public class MyGame extends Game {
 	public static final int SCREEN_HEIGHT = 800;
 	public static final int GALAXY_WIDTH = 1200;
 	public static final int GALAXY_HEIGHT = 800;
-	public static final int NUMBER_SECTORS = 40;
+	public static final int NUMBER_SECTORS = 20;
 
 	public Stage galaxyStage, sectorStage;
 
 	public void create() {
 
+		bgimg = new Texture("galaxyBG.jpg");
+		Image background = new Image(bgimg);
+		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new StretchViewport(SCREEN_WIDTH,SCREEN_HEIGHT));
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
+		
+		galaxyStage.addActor(background);
+		background.setFillParent(true);
 
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
 
