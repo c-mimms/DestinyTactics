@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import se300.destinytactics.logic.MyGame;
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
@@ -23,18 +24,22 @@ import se300.destinytactics.ui.Button;
  */
 public class Sector extends Actor {
 
+	
+	//Old variables, clean these
 	public static Galaxy galaxy;
 	private int controlState;
 	private int numBodies;
 	private String name;
-	private OrbitalBody bodyList[];
+	public OrbitalBody bodyList[];
 	private int posX;
 	private int posY;
-	public OrbitalBody m_OrbitalBody;
 	public Button m_Button;
 	private Texture sprite1;
+	
+	//New variables
 	private final double EDGE_EXCLUSION = 60;
 	private final int SPRITE_SIZE = 50;
+	public MyGame thisgame;
 
 	public Sector() {
 
@@ -70,16 +75,17 @@ public class Sector extends Actor {
 
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				System.out.println("Hello from " + this);
-				this.
-				// Game, etc.
-													// **//
+				switchView();
 				return true;
 			}
 
 		});
 	}
 
+	public void switchView(){
+		System.out.println("Switching view" + galaxy + " This game?" + galaxy.thisgame );
+		galaxy.thisgame.switchView(this);
+	}
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
