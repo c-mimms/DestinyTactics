@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -31,7 +30,8 @@ public class Sector extends Actor {
 	public OrbitalBody m_OrbitalBody;
 	public Button m_Button;
 	private Texture sprite1;
-
+	private final double EDGE_EXCLUSION = 60;
+	private final int SPRITE_SIZE = 50;
 	
 	public Sector() {
 
@@ -40,10 +40,8 @@ public class Sector extends Actor {
 		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (Math.random() * galaxy.getGalaxyWidth());
-		posY = (int) (Math.random() * galaxy.getGalaxyHeight());
-		setX(10);
-		setY(10);
+		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyWidth()- 2*EDGE_EXCLUSION)));
+		posY = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyHeight()-2*EDGE_EXCLUSION)));
 
         setWidth(sprite1.getWidth());
         setHeight(sprite1.getHeight());
@@ -99,8 +97,7 @@ public class Sector extends Actor {
 
 	public void draw(Batch batch, float parentAlpha) {
 
-		System.out.println("Drawing thing");
-		batch.draw(sprite1, getXPos(), getYPos());
+		batch.draw(sprite1, getXPos()-SPRITE_SIZE/2, getYPos()-SPRITE_SIZE/2,SPRITE_SIZE,SPRITE_SIZE);
 
 	}
 }// end Sector
