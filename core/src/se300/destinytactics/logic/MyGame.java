@@ -61,6 +61,7 @@ public class MyGame extends Game {
 	public boolean galaxyView = true;
 	public Texture bgimg;
 	public Texture sectorSun;
+	public static Texture backButton = new Texture("/backbutton.png");
 
 	public void create() {
 		
