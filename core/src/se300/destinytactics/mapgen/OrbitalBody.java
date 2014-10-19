@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.logic.MyGame;
+import se300.destinytactics.logic.Utility;
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
 import se300.destinytactics.units.Fleet;
@@ -31,12 +32,13 @@ public abstract class OrbitalBody extends Actor {
 	public Fleet m_Fleet;
 	public Button m_Button;
 	public Random rand;
+	public int type;
 	
 	
-	public int spriteIndex;
 	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-20;
 	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-230;
 	public static final int SPRITE_SIZE = 50;
+	public Texture texture;
 	
 
 	// Import all planet textures
@@ -58,8 +60,6 @@ public abstract class OrbitalBody extends Actor {
 		
 		
 		orbitRadius = radius;
-		setY(rand.nextInt(YEDGEEXCLUSION));
-		setX(rand.nextInt(XEDGEEXCLUSION));
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
@@ -121,6 +121,6 @@ public abstract class OrbitalBody extends Actor {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha){
-		batch.draw(hotBod[spriteIndex], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 	}
 }// end OrbitalBody
