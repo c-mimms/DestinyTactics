@@ -71,7 +71,6 @@ public class Sector extends Actor {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				System.out.println("Hello from " + this);
-				this.
 				// Game, etc.
 													// **//
 				return true;
