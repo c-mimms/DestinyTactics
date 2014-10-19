@@ -19,8 +19,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -61,22 +63,40 @@ public class MyGame extends Game {
 	public boolean galaxyView = true;
 	public Texture bgimg;
 	public Texture sectorSun;
-	public static Texture backButton = new Texture("/backbutton.png");
+	public Texture backButton; 
 
 	public void create() {
 		
 		bgimg = new Texture("background.png");
 		sectorSun = new Texture("realorbitalbody/sun1.png");
+		backButton = new Texture("backbutton.png");
 		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		
+		//Add buttons to sector UI
+		Image backbut = new Image(backButton);
+		sectorUI.addActor(backbut);
+		backbut.setX(0);
+		backbut.setY(SCREEN_HEIGHT - backbut.getHeight());
+		backbut.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+
+				goGalaxy();
+				return true;
+			}
+
+		});
+		
 		
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyStage.setDebugAll(true);
+		sectorStage.setDebugAll(true);
+		sectorUI.setDebugAll(true);
 
 		Image background = new Image(bgimg);
 		galaxyStage.addActor(background);
@@ -103,6 +123,7 @@ public class MyGame extends Game {
 		else if (sectorView) {
 			sectorStage.act();
 			sectorStage.draw();
+			sectorUI.draw();
 		}
 
 	}
@@ -148,7 +169,7 @@ public class MyGame extends Game {
 		}
 		
 		galaxyView = false;
-		Gdx.input.setInputProcessor(sectorStage);
+		Gdx.input.setInputProcessor(sectorUI);
 		sectorView = true;
 
 	}
