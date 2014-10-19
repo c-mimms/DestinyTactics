@@ -36,7 +36,7 @@ public class Sector extends Actor {
 	public Sector() {
 
 		super.setVisible(true);
-		sprite1 =  new Texture(Gdx.files.internal("sun.png"));
+		sprite1 =  new Texture(Gdx.files.internal("realorbitalbody/galaxySun.png"));
 		controlState = 0;
 		numBodies = (int)  (Math.random()* 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
