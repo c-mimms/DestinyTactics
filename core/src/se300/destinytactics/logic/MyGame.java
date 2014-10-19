@@ -61,11 +61,11 @@ public class MyGame extends Game {
 
 	public void create() {
 
-		bgimg = new Texture("galaxyBG.jpg");
+		bgimg = new Texture("background.png");
 		Image background = new Image(bgimg);
 		
 		// Create galaxy stage on game initialization.
-		galaxyStage = new Stage(new StretchViewport(SCREEN_WIDTH,SCREEN_HEIGHT));
+		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT));
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
 		
@@ -79,9 +79,6 @@ public class MyGame extends Game {
 			
 		}
 		
-		bgimg = new Texture("galaxyBG.jpg");
-		selImage = new Texture("circle.png");
-		zoomLevel = 1;
 
 	}
 
