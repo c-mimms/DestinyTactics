@@ -8,7 +8,6 @@ import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
 import se300.destinytactics.units.Fleet;
 
-
 /**
  * @author John
  * @version 1.0
@@ -24,12 +23,21 @@ public abstract class OrbitalBody extends Actor {
 	protected Sector sector;
 	public Fleet m_Fleet;
 	public Button m_Button;
-	
-	//Import all planet textures
-	static Texture[] hotBod = new Texture[12];
-	
 
-	
+	// Import all planet textures
+	static Texture[] hotBod = {
+			new Texture("realorbitalbody/activatedgate.png"),
+			new Texture("realorbitalbody/deactivatedgate.png"),
+			new Texture("realorbitalbody/gasplanet1.png"),
+			new Texture("realorbitalbody/gasplanet2.png"),
+			new Texture("realorbitalbody/lifeplanet1.png"),
+			new Texture("realorbitalbody/lifeplanet2.png"),
+			new Texture("realorbitalbody/moon1.png"),
+			new Texture("realorbitalbody/moon2.png"),
+			new Texture("realorbitalbody/rockplanet1.png"),
+			new Texture("realorbitalbody/rockplanet2.png"),
+			new Texture("realorbitalbody/station1.png"),
+			new Texture("realorbitalbody/station2.png") };
 
 	public OrbitalBody(int radius, Sector sect){
 
@@ -37,27 +45,15 @@ public abstract class OrbitalBody extends Actor {
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
-
-		hotBod[0] = new Texture("realorbitalbody/activatedgate.png");
-		hotBod[1] = new Texture("realorbitalbody/deactivatedgate.png");
-		hotBod[2] = new Texture("realorbitalbody/gasplanet1.png");
-		hotBod[3] = new Texture("realorbitalbody/gasplanet2.png");
-		hotBod[4] = new Texture("realorbitalbody/lifeplanet1.png");
-		hotBod[5] = new Texture("realorbitalbody/lifeplanet2.png");
-		hotBod[6] = new Texture("realorbitalbody/moon1.png");
-		hotBod[7] = new Texture("realorbitalbody/moon2.png");
-		hotBod[8] = new Texture("realorbitalbody/rockplanet1.png");
-		hotBod[9] = new Texture("realorbitalbody/rockplanet2.png");
-		hotBod[10] = new Texture("realorbitalbody/station1.png");
-		hotBod[11] = new Texture("realorbitalbody/station2.png");
+		
 		
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	
-	public void click(){
+
+	public void click() {
 
 	}
 
@@ -65,34 +61,33 @@ public abstract class OrbitalBody extends Actor {
 	 * 
 	 * @param body
 	 */
-	public int getDistance(OrbitalBody body){
+	public int getDistance(OrbitalBody body) {
 		int bodyPos = sector.getNumBodies() - orbitRadius;
 		int otherBodyPos = body.getSector().getNumBodies() - body.getPos();
 		int sectorDist = sector.getDistance(body.getSector());
 		return bodyPos + otherBodyPos + sectorDist;
 	}
 
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	
+
 	public abstract void getMiningEfficiency();
-	
-	public Fleet getFleet(){
+
+	public Fleet getFleet() {
 		return fleet;
 	}
-	
-	public Sector getSector(){
+
+	public Sector getSector() {
 		return sector;
 	}
 
-	public int getPos(){
+	public int getPos() {
 		return orbitRadius;
 	}
 
-	public int getState(){
+	public int getState() {
 		return controlState;
 	}
 
-
-}//end OrbitalBody
+}// end OrbitalBody
