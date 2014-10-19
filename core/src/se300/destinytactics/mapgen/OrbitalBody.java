@@ -3,6 +3,7 @@ package se300.destinytactics.mapgen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
@@ -25,7 +26,7 @@ public abstract class OrbitalBody extends Actor {
 	public Button m_Button;
 
 	// Import all planet textures
-	static Texture[] hotBod = {
+	public static Texture[] hotBod = {
 			new Texture("realorbitalbody/activatedgate.png"),
 			new Texture("realorbitalbody/deactivatedgate.png"),
 			new Texture("realorbitalbody/gasplanet1.png"),
