@@ -1,7 +1,8 @@
 package se300.destinytactics;
 import java.awt.Dimension;
 
-import se300.destinytactics.logic.Game;
+//import se300.destinytactics.logic.Game;
+import se300.destinytactics.logic.MyGame;
 import se300.destinytactics.logic.Setup;
 import se300.destinytactics.ui.Highscores;
 import se300.destinytactics.ui.Menu;
@@ -21,7 +22,7 @@ public class DestinyTactics {
 	public Highscores m_Highscores;
 	public Setup m_Setup;
 	public Menu m_Menu;
-	public Game m_Game;
+	public MyGame m_Game;
 
 	
 	
