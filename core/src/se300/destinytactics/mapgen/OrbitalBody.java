@@ -34,10 +34,10 @@ public abstract class OrbitalBody extends Actor {
 	public Random rand;
 	public int type;
 	
-	
-	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-20;
-	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-230;
-	public static final int SPRITE_SIZE = 50;
+
+	public static final int SPRITE_SIZE = 75;
+	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
+	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH- 240;
 	public Texture texture;
 	
 
