@@ -36,10 +36,10 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		resource = (int) Math.random()*1000;
 		resource2 = (int) Math.random()*1000;
 		
-		type = Utility.random.nextInt(12);
+		type = Utility.random.nextInt(8)+2; //Use only planet images
 		System.out.println(type);
 		this.setY(Utility.random.nextInt(YEDGEEXCLUSION));
-		this.setX(XEDGEEXCLUSION-100*orbitRadius);
+		this.setX(XEDGEEXCLUSION-150*orbitRadius);
 		
 		
 	}

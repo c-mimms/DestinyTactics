@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.logic.MyGame;
@@ -23,6 +24,7 @@ import se300.destinytactics.units.Fleet;
  */
 public abstract class OrbitalBody extends Actor {
 
+	public static Galaxy galaxy;
 	private int controlState;
 	private Fleet fleet;
 	private int miningEfficiency = 0;
@@ -33,12 +35,6 @@ public abstract class OrbitalBody extends Actor {
 	public Button m_Button;
 	public Random rand;
 	public int type;
-	
-
-	public static final int SPRITE_SIZE = 75;
-	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
-	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH- 240;
-	public Texture texture;
 	
 
 	// Import all planet textures
@@ -55,6 +51,11 @@ public abstract class OrbitalBody extends Actor {
 			new Texture("realorbitalbody/rockplanet2.png"),
 			new Texture("realorbitalbody/station1.png"),
 			new Texture("realorbitalbody/station2.png") };
+	
+	public static final int SPRITE_SIZE = 65;
+	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
+	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-275;
+	public Texture texture;
 
 	public OrbitalBody(int radius, Sector sect){
 		
@@ -68,11 +69,18 @@ public abstract class OrbitalBody extends Actor {
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		        System.out.println(name);
+		        System.out.println("SUP GUYS");
+		        switchView();
 		        return true;
 		    }
 		});
 		
+		
+	}
+	
+public void switchView(){
+		
+		galaxy.thisgame.switchView(this);
 		
 	}
 

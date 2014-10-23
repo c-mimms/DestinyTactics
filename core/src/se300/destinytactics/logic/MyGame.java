@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import se300.destinytactics.mapgen.Galaxy;
+import se300.destinytactics.mapgen.OrbitalBody;
 import se300.destinytactics.mapgen.Sector;
 import se300.destinytactics.ui.Drawable;
 
@@ -58,9 +59,10 @@ public class MyGame extends Game {
 	public static final int GALAXY_HEIGHT = 800;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage galaxyStage, sectorStage, sectorUI;
+	public Stage galaxyStage, sectorStage, planetStage, sectorUI;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
+	public boolean planetView = false;
 	public Texture bgimg;
 	public Texture sectorSun;
 	public Texture backButton; 
@@ -74,6 +76,7 @@ public class MyGame extends Game {
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		
 		//Add buttons to sector UI
@@ -96,6 +99,7 @@ public class MyGame extends Game {
 		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyStage.setDebugAll(true);
 		sectorStage.setDebugAll(true);
+		planetStage.setDebugAll(true);
 		sectorUI.setDebugAll(true);
 
 		Image background = new Image(bgimg);
@@ -124,6 +128,9 @@ public class MyGame extends Game {
 			sectorStage.act();
 			sectorStage.draw();
 			sectorUI.draw();
+		}
+		else if (planetView) {
+			
 		}
 
 	}
@@ -169,8 +176,33 @@ public class MyGame extends Game {
 		}
 		
 		galaxyView = false;
+		planetView = false;
 		Gdx.input.setInputProcessor(sectorUI);
 		sectorView = true;
+
+	}
+	
+public void switchView(OrbitalBody nextOrbitalBody) {
+		
+		// Clear stage to reuse it
+		planetStage.clear();
+
+		// Add image background and stretch to fit
+		Image background = new Image(bgimg);
+		Image orbitalBody = new Image(nextOrbitalBody.hotBod[2]);
+		planetStage.addActor(background);
+		planetStage.addActor(orbitalBody);
+		orbitalBody.setX(0);
+		orbitalBody.setY(0);
+		
+		
+		background.setFillParent(true);
+
+		
+		galaxyView = false;
+		Gdx.input.setInputProcessor(sectorUI);
+		sectorView = false;
+		planetView = true;
 
 	}
 	

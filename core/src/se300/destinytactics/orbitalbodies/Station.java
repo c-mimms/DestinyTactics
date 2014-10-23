@@ -26,7 +26,7 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 		type = Utility.random.nextInt(2)+10;
 		System.out.println(type);
 		this.setY(Utility.random.nextInt(YEDGEEXCLUSION));
-		this.setX(XEDGEEXCLUSION-100*orbitRadius);
+		this.setX(XEDGEEXCLUSION-150*orbitRadius);
 	}
 
 	public void finalize() throws Throwable {
