@@ -52,9 +52,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	public void create() {
 
-		m_Galaxy = new Galaxy(1200, 800, 100);
+		m_Galaxy = new Galaxy(12000, 8000, 100);
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 800);
+		camera.setToOrtho(false, 12000, 8000);
 		batch = new SpriteBatch();
 		bgimg = new Texture("galaxyBG.jpg");
 		selImage = new Texture("circle.png");
@@ -77,11 +77,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(bgimg, 0, 0, 1200, 800, 0, 0, 2048, 1024, false, false);
-		batch.draw(selImage, sun.x, sun.y, sun.width, sun.height, 0, 0, 200,186, false, false);
+		batch.draw(bgimg, 0, 0, 12000, 8000, 0, 0, 2048, 1024, false, false);
+		batch.draw(selImage, mousePos.x-100*zoomLevel, mousePos.y-100*zoomLevel, sun.width*zoomLevel, sun.height*zoomLevel, 0, 0, 200,186, false, false);
 		for(int i = 0; i < 100; i++){
 			Sector temp = m_Galaxy.sectors[i];
-			batch.draw(temp.sprite,temp.getXPos()-25*zoomLevel,temp.getYPos()-25*zoomLevel,50*zoomLevel,50*zoomLevel,0,0,50,50,false,false);
+			temp.drawImage(batch,zoomLevel);
 		}
 		batch.end();
 	}
@@ -96,12 +96,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 			}
 		}
 		if(zoomLevel > 1) zoomLevel = 1;
-		if(zoomLevel <= 0.01) zoomLevel = 0.1f;
+		if(zoomLevel <= 0.001) zoomLevel = 0.01f;
 
-		
-		
-		System.out.println("zoomed!" + mousePos);
-
+	
 		camera.zoom = zoomLevel;
 		if (zoomLevel < 1) {
 			camera.position.set(sun.x + 50, sun.y + 50, 0);
@@ -110,8 +107,8 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		}
 		float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
         float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
-		camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 1200 - effectiveViewportWidth / 2f);
-        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 800 - effectiveViewportHeight / 2f);
+		camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 12000 - effectiveViewportWidth / 2f);
+        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 8000 - effectiveViewportHeight / 2f);
         
 		camera.update();
 	}

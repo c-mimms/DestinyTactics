@@ -73,7 +73,7 @@ public class Fleet {
 	 * 
 	 * @param location
 	 */
-	public fleet moveFleet(OrbitalBody location){
+	public Fleet moveFleet(OrbitalBody location){
 		return null;
 	}
 

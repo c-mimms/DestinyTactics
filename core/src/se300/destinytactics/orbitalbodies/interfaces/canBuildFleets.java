@@ -8,7 +8,7 @@ package se300.destinytactics.orbitalbodies.interfaces;
  */
 public interface canBuildFleets {
 
-	public static int shipyardLevel;
+	public static int shipyardLevel = 0;
 
 	public void getLevel();
 

@@ -8,8 +8,8 @@ package se300.destinytactics.units.interfaces;
  */
 public interface needsHangar {
 
-	public static int hangarCost;
-	public static boolean isHangared;
+	public static int hangarCost = 0;
+	public static boolean isHangared = false;
 
 	public int getHangarCost();
 

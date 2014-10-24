@@ -8,7 +8,7 @@ package se300.destinytactics.orbitalbodies.interfaces;
  */
 public interface canBuildDefense {
 
-	public static int defenseLevel;
+	public static int defenseLevel = 0;
 
 	public void getLevel();
 

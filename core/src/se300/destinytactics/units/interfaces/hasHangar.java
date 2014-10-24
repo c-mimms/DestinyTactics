@@ -8,8 +8,8 @@ package se300.destinytactics.units.interfaces;
  */
 public interface hasHangar {
 
-	public static int baysEmpty;
-	public static int hangarSize;
+	public static int baysEmpty = 0;
+	public static int hangarSize = 0;
 
 	public int getEmptyBayCount();
 
