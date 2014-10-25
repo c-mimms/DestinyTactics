@@ -13,6 +13,7 @@ import se300.destinytactics.ui.Drawable;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -63,6 +64,7 @@ public class MyGame extends Game {
 	public Texture bgimg;
 	public Texture sectorSun;
 	public Texture backButton; 
+	InputMultiplexer multiplexer;
 
 	public void create() {
 		
@@ -76,6 +78,10 @@ public class MyGame extends Game {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+		multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(galaxyStage);
+		Gdx.input.setInputProcessor(multiplexer);
 		
 		//Add buttons to sector UI
 		Image backbut = new Image(backButton);
@@ -116,7 +122,6 @@ public class MyGame extends Game {
 		});
 		
 		// Set galaxy stage to get inputs.
-		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyStage.setDebugAll(true);
 		sectorStage.setDebugAll(true);
 		planetStage.setDebugAll(true);
@@ -202,8 +207,10 @@ public class MyGame extends Game {
 		
 		galaxyView = false;
 		planetView = false;
-		Gdx.input.setInputProcessor(sectorStage);
 		sectorView = true;
+		multiplexer.addProcessor(sectorStage);
+		multiplexer.addProcessor(sectorUI);
+		multiplexer.removeProcessor(galaxyStage);
 
 
 	}
@@ -227,24 +234,32 @@ public class MyGame extends Game {
 		
 		planetView = true;
 		galaxyView = false;
-		Gdx.input.setInputProcessor(planetUI);
 		sectorView = false;
+		multiplexer.addProcessor(planetStage);
+		multiplexer.addProcessor(planetUI);
+		multiplexer.removeProcessor(sectorStage);
+		multiplexer.removeProcessor(sectorUI);
 
 	}
 	
 	public void goGalaxy(){
 		planetView = false;
 		sectorView = false;
-		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyView = true;
+		multiplexer.addProcessor(galaxyStage);
+		multiplexer.removeProcessor(sectorStage);
+		multiplexer.removeProcessor(sectorUI);
 	}
 	
 	public void goSystem(){
 		System.out.println("goSystem method()");
 		planetView = false;
-		Gdx.input.setInputProcessor(sectorStage);
 		sectorView = true;
 		galaxyView = false;
+		multiplexer.addProcessor(sectorStage);
+		multiplexer.addProcessor(sectorUI);
+		multiplexer.removeProcessor(planetStage);
+		multiplexer.removeProcessor(planetUI);
 	}
 
 	public int getGameState() {
