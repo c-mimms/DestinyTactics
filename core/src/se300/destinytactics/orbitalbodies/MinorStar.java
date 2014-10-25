@@ -17,4 +17,11 @@ public class MinorStar extends OrbitalBody {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }//end Minor Star

@@ -2,41 +2,64 @@ package se300.destinytactics.mapgen;
 
 import java.awt.Point;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import se300.destinytactics.logic.MyGame;
 import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
-import se300.destinytactics.ui.Drawable;
 
 /**
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:15 PM
  */
-public class Sector extends Drawable {
+public class Sector extends Actor {
 
+	
+	//Old variables, clean these
 	public static Galaxy galaxy;
 	private int controlState;
 	private int numBodies;
 	private String name;
-	private OrbitalBody bodyList[];
+	public OrbitalBody bodyList[];
 	private int posX;
 	private int posY;
-	public OrbitalBody m_OrbitalBody;
 	public Button m_Button;
 	private Texture sprite1;
+	
+	//New variables
+	private static final double EDGE_EXCLUSION = 60;
+	private static final int SPRITE_SIZE = 50;
+	public MyGame thisgame;
 
 	public Sector() {
 
-		sprite =  new Texture("star.png");
-		sprite1 =  new Texture("realorbitalbody/sun1.png");
+		super.setVisible(true);
+		sprite1 = new Texture(
+				Gdx.files.internal("realorbitalbody/galaxySun.png"));
 		controlState = 0;
-		numBodies = (int)  (Math.random()* 15) + 1;
+		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (Math.random() * galaxy.getGalaxyWidth());
-		posY = (int) (Math.random() * galaxy.getGalaxyHeight());
+		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
+		posY = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+				.getGalaxyHeight() - 2 * EDGE_EXCLUSION)));
+
+		this.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
+		setWidth(SPRITE_SIZE);
+		setHeight(SPRITE_SIZE);
+		setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
+		setX(posX);
+		setY(posY);
 
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
@@ -48,25 +71,40 @@ public class Sector extends Drawable {
 			}
 		}
 		name = Names.newName();
+		this.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
+				System.out.println("Hello from " + this);
+				// Game, etc.
+
+				switchView();
+				return true;
+			}
+
+		});
 	}
 
+	public void switchView(){
+		
+		galaxy.thisgame.switchView(this);
+		
+	}
 	public void finalize() throws Throwable {
 		super.finalize();
-	}
-
-	public void click() {
-
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void act() {
+		System.out.println("ACtin!");
+	}
+
 	public Point getPos() {
 		return new Point(posX, posY);
 	}
-	
+
 	public int getXPos() {
 		return posX;
 	}
@@ -74,29 +112,22 @@ public class Sector extends Drawable {
 	public int getYPos() {
 		return posY;
 	}
-	
+
 	public int getNumBodies() {
 		return numBodies;
 	}
-	
-	public int getDistance(Sector sector){
+
+	public int getDistance(Sector sector) {
 		return (int) sector.getPos().distance(getPos());
 	}
-	
+
 	public int getState() {
 		return controlState;
 	}
 
-	@Override
-	public void drawImage(SpriteBatch batch, float zoomLevel) {
-		if(zoomLevel <= 0.201){
-			batch.draw(sprite1,getXPos()+100*zoomLevel,getYPos()-100*zoomLevel,400*zoomLevel,800*zoomLevel,0,0,200,400,false,false);
-			for (int i = 0; i < numBodies; i++) {
-				bodyList[i].drawImage(batch, zoomLevel);
-			}
-		}
-		else{
-			batch.draw(sprite,getXPos()-25*zoomLevel,getYPos()-25*zoomLevel,100*zoomLevel,100*zoomLevel,0,0,50,50,false,false);
-		}
+	public void draw(Batch batch, float parentAlpha) {
+
+		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
+
 	}
 }// end Sector

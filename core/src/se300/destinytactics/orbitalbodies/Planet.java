@@ -1,5 +1,14 @@
 package se300.destinytactics.orbitalbodies;
 
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
+
+import se300.destinytactics.logic.MyGame;
+import se300.destinytactics.logic.Utility;
 import se300.destinytactics.mapgen.OrbitalBody;
 import se300.destinytactics.mapgen.Sector;
 import se300.destinytactics.orbitalbodies.interfaces.canBuildDefense;
@@ -18,7 +27,6 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	private int resource;
 	private int resource2;
 	private Structure structure[];
-	private String type;
 	public Structure m_Structure;
 
 	public Planet(int radius, Sector sector){
@@ -27,13 +35,20 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		miningEfficiency2 = 0;
 		resource = (int) Math.random()*1000;
 		resource2 = (int) Math.random()*1000;
+		
+		type = Utility.random.nextInt(8)+2; //Use only planet images
+		System.out.println(type);
+		this.setY(Utility.random.nextInt(YEDGEEXCLUSION));
+		this.setX(XEDGEEXCLUSION-150*orbitRadius);
+		
+		
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 	
-	public String getType(){
+	public int getType(){
 		return type;
 	}
 
@@ -46,6 +61,12 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	}
 
 	public void incrementLevel(){
+		
+	}
+
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
 		
 	}
 
