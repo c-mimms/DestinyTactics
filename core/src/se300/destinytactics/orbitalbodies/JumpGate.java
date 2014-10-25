@@ -38,4 +38,6 @@ public class JumpGate extends OrbitalBody {
 	public void getMiningEfficiency() {
 		// TODO Auto-generated method stub
 	}
+
+
 }//end JumpGate

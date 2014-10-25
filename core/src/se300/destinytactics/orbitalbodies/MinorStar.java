@@ -23,4 +23,5 @@ public class MinorStar extends OrbitalBody {
 		// TODO Auto-generated method stub
 		
 	}
+
 }//end Minor Star

@@ -30,7 +30,7 @@ public abstract class OrbitalBody extends Actor {
 	private int miningEfficiency = 0;
 	private String name;
 	protected int orbitRadius;
-	protected Sector sector;
+	public Sector sector;
 	public Fleet m_Fleet;
 	public Button m_Button;
 	public Random rand;
@@ -56,6 +56,7 @@ public abstract class OrbitalBody extends Actor {
 	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
 	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-275;
 	public Texture texture;
+	public MyGame thisgame;
 
 	public OrbitalBody(int radius, Sector sect){
 		
@@ -64,13 +65,15 @@ public abstract class OrbitalBody extends Actor {
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
+		galaxy = sect.galaxy;
+		thisgame = sect.thisgame;
 		
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		        System.out.println("SUP GUYS");
-		        switchView();
+		        System.out.println("Listen Clicker added... calling switchToPlanetView()");
+		        switchToPlanetView();
 		        return true;
 		    }
 		});
@@ -78,10 +81,9 @@ public abstract class OrbitalBody extends Actor {
 		
 	}
 	
-public void switchView(){
-		
-		galaxy.thisgame.switchView(this);
-		
+	public void switchToPlanetView(){
+		System.out.println("In switchToPlanetView()...");
+		galaxy.thisgame.switchToPlanetView(this);
 	}
 
 	public void finalize() throws Throwable {
@@ -121,12 +123,14 @@ public void switchView(){
 		return orbitRadius;
 	}
 	
-
-
 	public int getState() {
 		return controlState;
 	}
 
+	public int getType() {
+		return type;
+	}
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha){
 		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);

@@ -11,8 +11,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Destiny Tactics";
-	      config.width = 1000;
-	      config.height = 500;
+	      config.width = 1024;
+	      config.height = 640;
 		new LwjglApplication(new MyGame(), config);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import se300.destinytactics.mapgen.Galaxy;
 import se300.destinytactics.mapgen.OrbitalBody;
 import se300.destinytactics.mapgen.Sector;
+import se300.destinytactics.orbitalbodies.Planet;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -45,10 +46,6 @@ public class MyGame extends Game {
 	public AI m_AI;
 	public User m_User;
 	public Galaxy m_Galaxy;
-	private float zoomLevel;
-	OrthographicCamera camera;
-	float ww;
-	float hh;
 	ShapeRenderer renderer;
 	Vector3 mousePos = new Vector3();
 
@@ -59,7 +56,7 @@ public class MyGame extends Game {
 	public static final int GALAXY_HEIGHT = 800;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage galaxyStage, sectorStage, planetStage, sectorUI;
+	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public boolean planetView = false;
@@ -78,6 +75,7 @@ public class MyGame extends Game {
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		
 		//Add buttons to sector UI
 		Image backbut = new Image(backButton);
@@ -86,14 +84,36 @@ public class MyGame extends Game {
 		backbut.setY(SCREEN_HEIGHT - backbut.getHeight());
 		backbut.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-
 				goGalaxy();
 				return true;
 			}
 
 		});
 		
+		//Addbuttons to planet UI
+		Image backbutt = new Image(backButton);
+		Image managefleet = new Image(new Texture("managefleet.png"));
+		Image manageInfrastructure = new Image(new Texture("manageinfrastructure.png"));
+		Image manageDefense = new Image(new Texture("managedefense.png"));
+		planetUI.addActor(backbutt);
+		planetUI.addActor(managefleet);
+		planetUI.addActor(manageInfrastructure);
+		planetUI.addActor(manageDefense);
+		backbutt.setX(0);
+		backbutt.setY(SCREEN_HEIGHT - backbutt.getHeight());
+		managefleet.setX(0);
+		managefleet.setY(2*managefleet.getHeight());
+		manageInfrastructure.setX(0);
+		manageInfrastructure.setY(managefleet.getHeight());
+		manageDefense.setX(0);
+		manageDefense.setY(0);
+		backbutt.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				goSystem();
+				return true;
+			}
+
+		});
 		
 		// Set galaxy stage to get inputs.
 		Gdx.input.setInputProcessor(galaxyStage);
@@ -101,6 +121,7 @@ public class MyGame extends Game {
 		sectorStage.setDebugAll(true);
 		planetStage.setDebugAll(true);
 		sectorUI.setDebugAll(true);
+		planetUI.setDebugAll(true);
 
 		Image background = new Image(bgimg);
 		galaxyStage.addActor(background);
@@ -130,7 +151,9 @@ public class MyGame extends Game {
 			sectorUI.draw();
 		}
 		else if (planetView) {
-			
+			planetStage.act();
+			planetStage.draw();
+			planetUI.draw();
 		}
 
 	}
@@ -148,6 +171,8 @@ public class MyGame extends Game {
 
 	public void dispose() {
 		galaxyStage.dispose();
+		sectorStage.dispose();
+		planetStage.dispose();
 	}
 
 	public void endTurn() {
@@ -177,40 +202,49 @@ public class MyGame extends Game {
 		
 		galaxyView = false;
 		planetView = false;
-		Gdx.input.setInputProcessor(sectorUI);
+		Gdx.input.setInputProcessor(sectorStage);
 		sectorView = true;
+
 
 	}
 	
-public void switchView(OrbitalBody nextOrbitalBody) {
-		
+	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
+		System.out.println("Go to MyGame Method");
 		// Clear stage to reuse it
 		planetStage.clear();
 
 		// Add image background and stretch to fit
 		Image background = new Image(bgimg);
-		Image orbitalBody = new Image(nextOrbitalBody.hotBod[2]);
+		Image orbitalBody = new Image(nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
-		orbitalBody.setX(0);
-		orbitalBody.setY(0);
+		orbitalBody.setX(SCREEN_WIDTH/4-orbitalBody.getWidth()/2);
+		orbitalBody.setY(SCREEN_HEIGHT/2-orbitalBody.getHeight()/2);
 		
 		
 		background.setFillParent(true);
 
 		
-		galaxyView = false;
-		Gdx.input.setInputProcessor(sectorUI);
-		sectorView = false;
 		planetView = true;
+		galaxyView = false;
+		Gdx.input.setInputProcessor(planetUI);
+		sectorView = false;
 
 	}
 	
 	public void goGalaxy(){
-
+		planetView = false;
 		sectorView = false;
 		Gdx.input.setInputProcessor(galaxyStage);
 		galaxyView = true;
+	}
+	
+	public void goSystem(){
+		System.out.println("goSystem method()");
+		planetView = false;
+		Gdx.input.setInputProcessor(sectorStage);
+		sectorView = true;
+		galaxyView = false;
 	}
 
 	public int getGameState() {
