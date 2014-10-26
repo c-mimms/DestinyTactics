@@ -25,11 +25,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -56,10 +61,10 @@ public class GameScene extends Game {
 	Vector3 mousePos = new Vector3();
 
 	// NEW variables, put necessary ones here.
-	public static final int SCREEN_WIDTH = 1200;
-	public static final int SCREEN_HEIGHT = 800;
-	public static final int GALAXY_WIDTH = 1200;
-	public static final int GALAXY_HEIGHT = 800;
+	public static final int SCREEN_WIDTH = 1024;
+	public static final int SCREEN_HEIGHT = 640;
+	public static final int GALAXY_WIDTH = 1024;
+	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
 
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
@@ -70,6 +75,7 @@ public class GameScene extends Game {
 	public Texture sectorSun;
 	public Texture backButton; 
 	InputMultiplexer multiplexer;
+	public Table container, overview, manager, dataGrid, form;
 	public Skin skin;
 
 	public void create() {
@@ -78,12 +84,22 @@ public class GameScene extends Game {
 		sectorSun = new Texture("realorbitalbody/sun1.png");
 		backButton = new Texture("backbutton.png");
 		
+		// Specify the UI Skin
+		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		
+		// Debugger toggles. Make borders around actors and regions. Turn OFF for demo
+//		galaxyStage.setDebugAll(true);
+//		sectorStage.setDebugAll(true);
+//		planetStage.setDebugAll(true);
+//		sectorUI.setDebugAll(true);
+//		planetUI.setDebugAll(true);
 		
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
@@ -112,23 +128,153 @@ public class GameScene extends Game {
 
 		});
 		
+		container = new Table(skin);
+		overview = new Table(skin);
+		dataGrid = new Table(skin);
+		manager = new Table(skin);
+		form = new Table(skin);
+
+		final ScrollPane overviewScroll = new ScrollPane(dataGrid, skin);
+		InputListener stopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+		
+		dataGrid.defaults().expandX();
+		
+		dataGrid.row();
+		dataGrid.add(new Label("Fighters", skin)).width(SCREEN_WIDTH/8);
+		dataGrid.add("1000").width(SCREEN_WIDTH/8);
+		
+		dataGrid.add(new Label("Corvettes", skin)).width(SCREEN_WIDTH/8);
+		dataGrid.add("40").width(SCREEN_WIDTH/8);
+		
+		dataGrid.row();
+		dataGrid.add(new Label("Bombers", skin)).expandX().fillX();
+		dataGrid.add("300").expandX().fillX();
+		
+		dataGrid.add(new Label("Carriers", skin)).expandX().fillX();
+		dataGrid.add("12").expandX().fillX();
+		
+		dataGrid.row();
+		dataGrid.add(new Label("Scoutships", skin)).expandX().fillX();
+		dataGrid.add("3").expandX().fillX();
+		
+		dataGrid.add(new Label("Battleships", skin)).expandX().fillX();
+		dataGrid.add("7").expandX().fillX();
+		
+		dataGrid.row();
+		dataGrid.add().expandX().fillX();
+		dataGrid.add().expandX().fillX();
+		dataGrid.add(new Label("Dreadnaughts", skin)).expandX().fillX();
+		dataGrid.add("1").expandX().fillX();
+		
+		final TextButton buildButton = new TextButton("Build Units", skin.get("default", TextButtonStyle.class));
+		final TextButton moveButton = new TextButton("Move Fleet", skin.get("default", TextButtonStyle.class));
+		final TextButton attackButton = new TextButton("Attack", skin.get("default", TextButtonStyle.class));
+		
+		overview.add("Fleet Overview").colspan(3).left().expandX();
+		overview.row().top();                 
+		overview.add(overviewScroll).expand().colspan(3).fill().top();
+		overview.row().top().expandX();
+		overview.add(buildButton).right().top();
+		overview.add(moveButton).top();
+		overview.add(attackButton).left().top();
+		
+		overview.setWidth(SCREEN_WIDTH/2);
+		overview.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
+		
+		final ScrollPane formScroll = new ScrollPane(form, skin);
+		InputListener formStopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+		
+		form.defaults().expandX();
+		
+		form.row();
+		form.add(new Label("Fighters", skin)).width(SCREEN_WIDTH/8).expandX().fillX();
+		TextField unitCountTextBox = new TextField("", skin);
+		//unitCountTextBox.DigitsOnlyFilter();
+		form.add(unitCountTextBox).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.add(new Label("Corvettes", skin)).width(SCREEN_WIDTH/8).expandX().fillX();
+		TextField unitCountTextBox5 = new TextField("", skin);
+		form.add(unitCountTextBox5).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.row();
+		form.add(new Label("Bombers", skin)).expandX().fillX();
+		TextField unitCountTextBox2 = new TextField("", skin);
+		form.add(unitCountTextBox2).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.add(new Label("Carriers", skin)).expandX().fillX();
+		TextField unitCountTextBox4 = new TextField("", skin);
+		form.add(unitCountTextBox4).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.row();
+		form.add(new Label("Scoutships", skin)).expandX().fillX();
+		TextField unitCountTextBox3 = new TextField("", skin);
+		form.add(unitCountTextBox3).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.add(new Label("Battleships", skin)).expandX().fillX();
+		TextField unitCountTextBox6 = new TextField("", skin);
+		form.add(unitCountTextBox6).width(SCREEN_WIDTH/8).expandX().fillX();
+		
+		form.row();
+		form.add().expandX().fillX();
+		form.add().expandX().fillX();
+		
+		form.add(new Label("Dreadnaughts", skin)).expandX().fillX();
+		TextField unitCountTextBox7 = new TextField("", skin);
+		form.add(unitCountTextBox7).width(SCREEN_WIDTH/8).expandX().fillX();
+
+		final TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
+		final TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
+		final TextButton submitButton = new TextButton("Send Fleet", skin.get("default", TextButtonStyle.class));
+		
+		manager.add("Move Fleet").colspan(3).left().expandX();
+		manager.row().top();                 
+		manager.add(formScroll).expand().colspan(3).fill().top();
+		manager.row().top().expandX();
+		manager.add(cancelButton).right().top();
+		manager.add(clearButton).top();
+		manager.add(submitButton).left().top();
+		
+		manager.setWidth(SCREEN_WIDTH/2);
+		manager.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
+		
+		container.add("FLEET COMMAND").expandX().top().height(GameScene.SCREEN_HEIGHT * 1/10);
+		container.row();
+		container.add(overview).expandX().top().height(GameScene.SCREEN_HEIGHT * 3/10);
+		container.row();
+		container.add(manager).expandX().top().height(GameScene.SCREEN_HEIGHT * 3/10);
+		
+		container.setHeight(SCREEN_HEIGHT * 7/10);
+		container.setWidth(SCREEN_WIDTH/2);
+		container.setY(SCREEN_HEIGHT * 2/10);
+		container.setX(SCREEN_WIDTH/2);
+		
+		
 		//Addbuttons to planet UI
 		Image backbutt = new Image(backButton);
-		//Image managefleet = new Image(new Texture("managefleet.png"));
-		//Image manageInfrastructure = new Image(new Texture("manageinfrastructure.png"));
-		//Image manageDefense = new Image(new Texture("managedefense.png"));
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		final TextButton managefleet = new TextButton("Fleet Command", skin.get("toggle", TextButtonStyle.class));
-		final TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("toggle", TextButtonStyle.class));
-		final TextButton manageDefense = new TextButton("Defense", skin.get("toggle", TextButtonStyle.class));
+		final TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
+		final TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
+		final TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
 		Image bar3 = new Image(new Texture("sun.png"));
-		Image bar4 = new Image(new Texture("sun.png"));
-		planetUI.addActor(bar3);
-		planetUI.addActor(bar4);
-		planetUI.addActor(backbutt);
+		Image bar4 = new Image(new Texture("sun.png"));	
+		
 		planetUI.addActor(managefleet);
 		planetUI.addActor(manageInfrastructure);
 		planetUI.addActor(manageDefense);
+		planetUI.addActor(container);
+		planetUI.addActor(backbutt);
+		planetUI.addActor(bar3);
+		planetUI.addActor(bar4);
+		
 		bar3.setScaleX(SCREEN_WIDTH);
 		bar3.setHeight(SCREEN_HEIGHT/10);
 		bar3.setY(SCREEN_HEIGHT - bar.getHeight());
@@ -152,12 +298,6 @@ public class GameScene extends Game {
 		});
 		
 		// Set galaxy stage to get inputs.
-		galaxyStage.setDebugAll(true);
-		sectorStage.setDebugAll(true);
-		planetStage.setDebugAll(true);
-		sectorUI.setDebugAll(true);
-		planetUI.setDebugAll(true);
-
 		Image background = new Image(bgimg);
 		Image bar5 = new Image(new Texture("sun.png"));
 		Image bar6 = new Image(new Texture("sun.png"));
@@ -270,6 +410,7 @@ public class GameScene extends Game {
 		orbitalBody.setSize(nextOrbitalBody.getSpriteSize()*10, nextOrbitalBody.getSpriteSize()*10);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
+		//planetStage.addActor(container);
 		orbitalBody.setX(SCREEN_WIDTH/4-orbitalBody.getWidth()/2);
 		orbitalBody.setY(SCREEN_HEIGHT/2-orbitalBody.getHeight()/2);
 		
