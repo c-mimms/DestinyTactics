@@ -1,71 +1,29 @@
-package se300.destinytactics;
-import java.awt.Dimension;
+package se300.destinytactics.logic;
 
-//import se300.destinytactics.logic.Game;
-import se300.destinytactics.logic.MyGame;
-import se300.destinytactics.logic.Setup;
-import se300.destinytactics.ui.Highscores;
-import se300.destinytactics.ui.Menu;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+public class DestinyTactics extends ApplicationAdapter {
+	SpriteBatch batch;
+	Texture img;
 
-
-/**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:48:57 PM
- */
-public class DestinyTactics {
-
-	private int gameBoardSize;
-	private Dimension screen;
-	//private enum STATE;
-	public Highscores m_Highscores;
-	public Setup m_Setup;
-	public Menu m_Menu;
-	public MyGame m_Game;
-
-	
-	
-	public void DestinyTactics(){
-
+	@Override
+	public void create() {
+		batch = new SpriteBatch();
+		img = new Texture("galaxyBG.jpg");
 	}
 
-	public void finalize() throws Throwable {
-
+	@Override
+	public void render() {
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		int ww = Gdx.graphics.getWidth();
+		int hh = Gdx.graphics.getHeight();
+		batch.begin();
+		batch.draw(img, 0, 0, ww, hh, 0f, 0f, 1f, 1f);
+		batch.end();
 	}
-	public void exit(){
-
-	}
-
-	public void getGameBoardSize(){
-
-	}
-
-	public void getState(){
-
-	}
-
-	private void init(){
-
-	}
-
-	public void main(){
-
-	}
-
-	private void run(){
-
-	}
-
-	public void setGameBoardSize(){
-
-	}
-
-	public void setState(){
-
-	}
-
-	private void tick(){
-
-	}
-}//end DestinyTactics
+}
