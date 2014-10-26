@@ -10,6 +10,8 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
+import se300.destinytactics.game.scenes.GalaxyScene;
+import se300.destinytactics.game.scenes.SectorScene;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -59,7 +61,8 @@ public class GameScene extends Game {
 	public static final int GALAXY_HEIGHT = 800;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
+	public Stage galaxyStage, planetStage, sectorUI, planetUI;
+	public SectorScene sectorStage;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public boolean planetView = false;
@@ -68,7 +71,7 @@ public class GameScene extends Game {
 	public Texture backButton; 
 	InputMultiplexer multiplexer;
 
-	public void create() {
+	public void create() { 
 		
 		bgimg = new Texture("background.png");
 		sectorSun = new Texture("realorbitalbody/sun1.png");
@@ -76,7 +79,7 @@ public class GameScene extends Game {
 		
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		sectorStage = new SectorScene(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
