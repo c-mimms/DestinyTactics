@@ -50,10 +50,8 @@ public class Sector extends Actor {
 		controlState = 0;
 		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
-				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
-		posY = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
-				.getGalaxyHeight() - 2 * EDGE_EXCLUSION)));
+		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
+		posY = (int) (GameScene.SCREEN_HEIGHT/5 + (Utility.random.nextInt((GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE)-GameScene.SCREEN_HEIGHT/5)));
 
 		this.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
 		setWidth(SPRITE_SIZE);

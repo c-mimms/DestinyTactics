@@ -10,7 +10,6 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
-import se300.destinytactics.game.scenes.*;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -28,6 +27,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -35,7 +37,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /**
  * @author John
- * @version 1.0
+ * @version 1.0 
  * @created 10-Oct-2014 5:49:03 PM
  */
 public class GameScene extends Game {
@@ -60,9 +62,7 @@ public class GameScene extends Game {
 	public static final int GALAXY_HEIGHT = 800;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage planetStage, sectorUI, planetUI;
-	public GalaxyScene galaxyStage;
-	public SectorScene sectorStage;
+	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public boolean planetView = false;
@@ -70,16 +70,17 @@ public class GameScene extends Game {
 	public Texture sectorSun;
 	public Texture backButton; 
 	InputMultiplexer multiplexer;
+	public Skin skin;
 
-	public void create() { 
+	public void create() {
 		
 		bgimg = new Texture("background.png");
 		sectorSun = new Texture("realorbitalbody/sun1.png");
 		backButton = new Texture("backbutton.png");
 		
 		// Create galaxy stage on game initialization.
-		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		sectorStage = new SectorScene(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -90,7 +91,17 @@ public class GameScene extends Game {
 		
 		//Add buttons to sector UI
 		Image backbut = new Image(backButton);
+		Image bar = new Image(new Texture("sun.png"));
+		Image bar2 = new Image(new Texture("sun.png"));
+		sectorUI.addActor(bar);
+		sectorUI.addActor(bar2);
 		sectorUI.addActor(backbut);
+		bar.setScaleX(SCREEN_WIDTH);
+		bar.setHeight(SCREEN_HEIGHT/10);
+		bar.setY(SCREEN_HEIGHT - bar.getHeight());
+		bar2.setScaleX(GALAXY_WIDTH);
+		bar2.setHeight(SCREEN_HEIGHT/5);
+		bar2.setY(0);
 		backbut.setX(0);
 		backbut.setY(SCREEN_HEIGHT - backbut.getHeight());
 		backbut.addListener(new ClickListener() {
@@ -103,21 +114,35 @@ public class GameScene extends Game {
 		
 		//Addbuttons to planet UI
 		Image backbutt = new Image(backButton);
-		Image managefleet = new Image(new Texture("managefleet.png"));
-		Image manageInfrastructure = new Image(new Texture("manageinfrastructure.png"));
-		Image manageDefense = new Image(new Texture("managedefense.png"));
+		//Image managefleet = new Image(new Texture("managefleet.png"));
+		//Image manageInfrastructure = new Image(new Texture("manageinfrastructure.png"));
+		//Image manageDefense = new Image(new Texture("managedefense.png"));
+		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		final TextButton managefleet = new TextButton("Fleet Command", skin.get("toggle", TextButtonStyle.class));
+		final TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("toggle", TextButtonStyle.class));
+		final TextButton manageDefense = new TextButton("Defense", skin.get("toggle", TextButtonStyle.class));
+		Image bar3 = new Image(new Texture("sun.png"));
+		Image bar4 = new Image(new Texture("sun.png"));
+		planetUI.addActor(bar3);
+		planetUI.addActor(bar4);
 		planetUI.addActor(backbutt);
 		planetUI.addActor(managefleet);
 		planetUI.addActor(manageInfrastructure);
 		planetUI.addActor(manageDefense);
+		bar3.setScaleX(SCREEN_WIDTH);
+		bar3.setHeight(SCREEN_HEIGHT/10);
+		bar3.setY(SCREEN_HEIGHT - bar.getHeight());
+		bar4.setScaleX(GALAXY_WIDTH);
+		bar4.setHeight(SCREEN_HEIGHT/5);
+		bar4.setY(0);
 		backbutt.setX(0);
 		backbutt.setY(SCREEN_HEIGHT - backbutt.getHeight());
 		managefleet.setX(0);
-		managefleet.setY(2*managefleet.getHeight());
+		managefleet.setY(managefleet.getHeight()*9);
 		manageInfrastructure.setX(0);
-		manageInfrastructure.setY(managefleet.getHeight());
+		manageInfrastructure.setY(managefleet.getHeight()*8);
 		manageDefense.setX(0);
-		manageDefense.setY(0);
+		manageDefense.setY(managefleet.getHeight()*7);
 		backbutt.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				goSystem();
@@ -134,7 +159,17 @@ public class GameScene extends Game {
 		planetUI.setDebugAll(true);
 
 		Image background = new Image(bgimg);
+		Image bar5 = new Image(new Texture("sun.png"));
+		Image bar6 = new Image(new Texture("sun.png"));
+		bar5.setScaleX(SCREEN_WIDTH);
+		bar5.setHeight(SCREEN_HEIGHT/10);
+		bar5.setY(SCREEN_HEIGHT - bar.getHeight());
+		bar6.setScaleX(GALAXY_WIDTH);
+		bar6.setHeight(SCREEN_HEIGHT/5);
+		bar6.setY(0);
 		galaxyStage.addActor(background);
+		galaxyStage.addActor(bar5);
+		galaxyStage.addActor(bar6);
 		background.setFillParent(true);
 
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS,this);
@@ -172,6 +207,10 @@ public class GameScene extends Game {
 
 		// Resize stage to fill window.
 		galaxyStage.getViewport().update(width, height, false);
+		sectorStage.getViewport().update(width, height, false);
+		planetStage.getViewport().update(width, height, false);
+		sectorUI.getViewport().update(width, height, false);
+		planetUI.getViewport().update(width, height, false);
 
 	}
 
@@ -200,7 +239,7 @@ public class GameScene extends Game {
 		sectorStage.addActor(background);
 		sectorStage.addActor(sun);
 		sun.setX(SCREEN_WIDTH-sectorSun.getWidth());
-		sun.setY(SCREEN_HEIGHT/2 - sectorSun.getHeight()/2);
+		sun.setY(SCREEN_HEIGHT/2+SCREEN_HEIGHT/20 - sectorSun.getHeight()/2);
 		
 		
 		background.setFillParent(true);
@@ -228,6 +267,7 @@ public class GameScene extends Game {
 		// Add image background and stretch to fit
 		Image background = new Image(bgimg);
 		Image orbitalBody = new Image(nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
+		orbitalBody.setSize(nextOrbitalBody.getSpriteSize()*10, nextOrbitalBody.getSpriteSize()*10);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
 		orbitalBody.setX(SCREEN_WIDTH/4-orbitalBody.getWidth()/2);

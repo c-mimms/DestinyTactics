@@ -56,7 +56,7 @@ public abstract class OrbitalBody extends Actor {
 			new Texture("realorbitalbody/station2.png") };
 	
 	public static final int SPRITE_SIZE = 65;
-	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
+	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
 	public static final int XEDGEEXCLUSION = GameScene.SCREEN_WIDTH-275;
 	public Texture texture;
 	public GameScene thisgame;
@@ -134,6 +134,9 @@ public abstract class OrbitalBody extends Actor {
 		return type;
 	}
 	
+	public int getSpriteSize() {
+		return SPRITE_SIZE;
+	}
 	@Override
 	public void draw(Batch batch, float parentAlpha){
 		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);

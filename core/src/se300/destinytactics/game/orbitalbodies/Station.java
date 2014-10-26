@@ -3,6 +3,7 @@ package se300.destinytactics.game.orbitalbodies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import se300.destinytactics.GameScene;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 
@@ -22,7 +23,7 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 		
 		type = Utility.random.nextInt(2)+10;
 		System.out.println(type);
-		this.setY(Utility.random.nextInt(YEDGEEXCLUSION));
+		this.setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
 		this.setX(XEDGEEXCLUSION-150*orbitRadius);
 	}
 
