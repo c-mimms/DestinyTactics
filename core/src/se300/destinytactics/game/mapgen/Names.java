@@ -1,4 +1,4 @@
-package se300.destinytactics.mapgen;
+package se300.destinytactics.game.mapgen;
 
 import java.io.File;
 

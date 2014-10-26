@@ -1,6 +1,5 @@
-package se300.destinytactics.orbitalbodies;
+package se300.destinytactics.game.orbitalbodies;
 
-import se300.destinytactics.mapgen.OrbitalBody;
 
 
 /**

@@ -1,4 +1,4 @@
-package se300.destinytactics.orbitalbodies.interfaces;
+package se300.destinytactics.game.orbitalbodies;
 
 
 /**

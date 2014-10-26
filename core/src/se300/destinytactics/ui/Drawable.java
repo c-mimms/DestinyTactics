@@ -1,6 +1,6 @@
 package se300.destinytactics.ui;
 
-import se300.destinytactics.mapgen.Names;
+import se300.destinytactics.game.mapgen.Names;
 
 import java.awt.image.BufferedImage;
 

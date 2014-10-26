@@ -1,13 +1,10 @@
-package se300.destinytactics.orbitalbodies;
+package se300.destinytactics.game.orbitalbodies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import se300.destinytactics.logic.Utility;
-import se300.destinytactics.mapgen.OrbitalBody;
-import se300.destinytactics.mapgen.Sector;
-import se300.destinytactics.orbitalbodies.interfaces.canBuildDefense;
-import se300.destinytactics.orbitalbodies.interfaces.canBuildFleets;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 
 
 /**

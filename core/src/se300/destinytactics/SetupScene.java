@@ -1,4 +1,4 @@
-package se300.destinytactics.logic;
+package se300.destinytactics;
 
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Pulldown;
@@ -8,14 +8,14 @@ import se300.destinytactics.ui.Pulldown;
  * @version 1.0
  * @created 10-Oct-2014 5:49:16 PM
  */
-public class Setup {
+public class SetupScene {
 
 	public Button[] buttons;
 	public int mapSize;
 	public int numPlayer;
 	public Pulldown puldownthing = new Pulldown();
 
-	public Setup(){
+	public SetupScene(){
 
 	}
 

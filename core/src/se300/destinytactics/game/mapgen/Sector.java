@@ -1,4 +1,4 @@
-package se300.destinytactics.mapgen;
+package se300.destinytactics.game.mapgen;
 
 import java.awt.Point;
 
@@ -12,9 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import se300.destinytactics.logic.MyGame;
-import se300.destinytactics.orbitalbodies.Planet;
-import se300.destinytactics.orbitalbodies.Station;
+import se300.destinytactics.GameScene;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+import se300.destinytactics.game.orbitalbodies.Planet;
+import se300.destinytactics.game.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
 
 /**
@@ -39,7 +40,7 @@ public class Sector extends Actor {
 	//New variables
 	private static final double EDGE_EXCLUSION = 60;
 	private static final int SPRITE_SIZE = 50;
-	public MyGame thisgame;
+	public GameScene thisgame;
 
 	public Sector() {
 

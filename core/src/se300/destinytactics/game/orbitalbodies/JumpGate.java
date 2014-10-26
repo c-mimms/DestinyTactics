@@ -1,8 +1,7 @@
-package se300.destinytactics.orbitalbodies;
+package se300.destinytactics.game.orbitalbodies;
 
-import se300.destinytactics.logic.Utility;
-import se300.destinytactics.mapgen.OrbitalBody;
-import se300.destinytactics.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 
 
 /**

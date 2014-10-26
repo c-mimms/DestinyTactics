@@ -1,8 +1,8 @@
-package se300.destinytactics.mapgen;
+package se300.destinytactics.game.mapgen;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import se300.destinytactics.logic.MyGame;
+import se300.destinytactics.GameScene;
 import se300.destinytactics.ui.Drawable;
 
 /**
@@ -20,9 +20,9 @@ public class Galaxy {
 	private int numSystems;
 	public Sector m_Sector;
 	public Quadtree m_Quadtree;
-	public MyGame thisgame;
+	public GameScene thisgame;
 
-	public Galaxy(int x, int y, int n, MyGame thisgame){
+	public Galaxy(int x, int y, int n, GameScene thisgame){
 		
 		this.thisgame = thisgame;
 		numSystems = n;

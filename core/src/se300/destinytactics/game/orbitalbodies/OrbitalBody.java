@@ -1,4 +1,4 @@
-package se300.destinytactics.mapgen;
+package se300.destinytactics.game.orbitalbodies;
 
 import java.util.Random;
 
@@ -11,11 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import se300.destinytactics.logic.MyGame;
-import se300.destinytactics.logic.Utility;
+import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.mapgen.Galaxy;
+import se300.destinytactics.game.mapgen.Names;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.Drawable;
-import se300.destinytactics.units.Fleet;
 
 /**
  * @author John
@@ -53,10 +56,10 @@ public abstract class OrbitalBody extends Actor {
 			new Texture("realorbitalbody/station2.png") };
 	
 	public static final int SPRITE_SIZE = 65;
-	public static final int YEDGEEXCLUSION = MyGame.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
-	public static final int XEDGEEXCLUSION = MyGame.SCREEN_WIDTH-275;
+	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-SPRITE_SIZE-25; //-25 for tool bar
+	public static final int XEDGEEXCLUSION = GameScene.SCREEN_WIDTH-275;
 	public Texture texture;
-	public MyGame thisgame;
+	public GameScene thisgame;
 
 	public OrbitalBody(int radius, Sector sect){
 		

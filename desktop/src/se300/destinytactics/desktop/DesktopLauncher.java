@@ -3,9 +3,8 @@ package se300.destinytactics.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import se300.destinytactics.logic.MyGame;
-
-import se300.destinytactics.logic.DestinyTactics;
+import se300.destinytactics.DestinyTactics;
+import se300.destinytactics.GameScene;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -13,6 +12,6 @@ public class DesktopLauncher {
 		config.title = "Destiny Tactics";
 	      config.width = 1024;
 	      config.height = 640;
-		new LwjglApplication(new MyGame(), config);
+		new LwjglApplication(new GameScene(), config);
 	}
 }

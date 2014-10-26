@@ -1,4 +1,4 @@
-package se300.destinytactics.units;
+package se300.destinytactics.game.fleet;
 
 
 /**

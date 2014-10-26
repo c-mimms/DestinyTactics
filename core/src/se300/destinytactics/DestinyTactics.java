@@ -1,4 +1,4 @@
-package se300.destinytactics.logic;
+package se300.destinytactics;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

@@ -1,13 +1,15 @@
-package se300.destinytactics.logic;
+package se300.destinytactics;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import se300.destinytactics.mapgen.Galaxy;
-import se300.destinytactics.mapgen.OrbitalBody;
-import se300.destinytactics.mapgen.Sector;
-import se300.destinytactics.orbitalbodies.Planet;
+import se300.destinytactics.game.AI;
+import se300.destinytactics.game.User;
+import se300.destinytactics.game.mapgen.Galaxy;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -35,7 +37,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
  * @version 1.0
  * @created 10-Oct-2014 5:49:03 PM
  */
-public class MyGame extends Game {
+public class GameScene extends Game {
 
 	// OLD Variables, Decide which need to be kept
 	private SpriteBatch batch;

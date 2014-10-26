@@ -1,4 +1,4 @@
-package se300.destinytactics.logic;
+package se300.destinytactics.game;
 
 
 

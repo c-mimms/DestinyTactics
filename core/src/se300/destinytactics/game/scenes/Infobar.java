@@ -1,4 +1,4 @@
-package se300.destinytactics.ui;
+package se300.destinytactics.game.scenes;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

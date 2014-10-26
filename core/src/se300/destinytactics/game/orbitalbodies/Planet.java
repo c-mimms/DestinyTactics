@@ -1,4 +1,4 @@
-package se300.destinytactics.orbitalbodies;
+package se300.destinytactics.game.orbitalbodies;
 
 import java.util.Random;
 
@@ -7,12 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
-import se300.destinytactics.logic.MyGame;
-import se300.destinytactics.logic.Utility;
-import se300.destinytactics.mapgen.OrbitalBody;
-import se300.destinytactics.mapgen.Sector;
-import se300.destinytactics.orbitalbodies.interfaces.canBuildDefense;
-import se300.destinytactics.orbitalbodies.interfaces.canBuildFleets;
+import se300.destinytactics.GameScene;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 
 
 /**
