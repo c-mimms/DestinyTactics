@@ -10,6 +10,7 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
+import se300.destinytactics.game.scenes.*;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
