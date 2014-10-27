@@ -38,22 +38,22 @@ public abstract class OrbitalBody extends Actor {
 	public Button m_Button;
 	public Random rand;
 	public int type;
+	private static String spriteLib = "realorbitalbody";
 	
-
 	// Import all planet textures
 	public static Texture[] hotBod = {
-			new Texture("realorbitalbody/activatedgate.png"),
-			new Texture("realorbitalbody/deactivatedgate.png"),
-			new Texture("realorbitalbody/gasplanet1.png"),
-			new Texture("realorbitalbody/gasplanet2.png"),
-			new Texture("realorbitalbody/lifeplanet1.png"),
-			new Texture("realorbitalbody/lifeplanet2.png"),
-			new Texture("realorbitalbody/moon1.png"),
-			new Texture("realorbitalbody/moon2.png"),
-			new Texture("realorbitalbody/rockplanet1.png"),
-			new Texture("realorbitalbody/rockplanet2.png"),
-			new Texture("realorbitalbody/station1.png"),
-			new Texture("realorbitalbody/station2.png") };
+			new Texture(spriteLib + "/activatedgate.png"),
+			new Texture(spriteLib + "/deactivatedgate.png"),
+			new Texture(spriteLib + "/gasplanet1.png"),
+			new Texture(spriteLib + "/gasplanet2.png"),
+			new Texture(spriteLib + "/lifeplanet1.png"),
+			new Texture(spriteLib + "/lifeplanet2.png"),
+			new Texture(spriteLib + "/moon1.png"),
+			new Texture(spriteLib + "/moon2.png"),
+			new Texture(spriteLib + "/rockplanet1.png"),
+			new Texture(spriteLib + "/rockplanet2.png"),
+			new Texture(spriteLib + "/station1.png"),
+			new Texture(spriteLib + "/station2.png") };
 	
 	public static final int SPRITE_SIZE = 65;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
@@ -75,7 +75,7 @@ public abstract class OrbitalBody extends Actor {
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		        System.out.println("Listen Clicker added... calling switchToPlanetView()");
+		        //System.out.println("Listen Clicker added... calling switchToPlanetView()");
 		        switchToPlanetView();
 		        return true;
 		    }
@@ -85,7 +85,7 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	public void switchToPlanetView(){
-		System.out.println("In switchToPlanetView()...");
+		//System.out.println("In switchToPlanetView()...");
 		galaxy.thisgame.switchToPlanetView(this);
 	}
 

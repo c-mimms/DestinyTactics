@@ -73,7 +73,7 @@ public class Sector extends Actor {
 		this.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-				System.out.println("Hello from " + this);
+				//System.out.println("Hello from " + this);
 				// Game, etc.
 
 				switchView();
@@ -97,7 +97,6 @@ public class Sector extends Actor {
 	}
 
 	public void act() {
-		System.out.println("ACtin!");
 	}
 
 	public Point getPos() {
