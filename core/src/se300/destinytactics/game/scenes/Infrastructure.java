@@ -34,10 +34,7 @@ public class Infrastructure {
 		container.row();
 		container.add(getBuildForm()).expandX().top().height(GameScene.SCREEN_HEIGHT * 3/10);
 		
-		container.setHeight(GameScene.SCREEN_HEIGHT * 7/10);
-		container.setWidth(GameScene.SCREEN_WIDTH/2);
-		container.setY(GameScene.SCREEN_HEIGHT * 2/10);
-		container.setX(GameScene.SCREEN_WIDTH/2);
+		container.setFillParent(true);
 
 	}
 	

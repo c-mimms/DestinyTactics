@@ -10,6 +10,7 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
+import se300.destinytactics.game.scenes.Defense;
 import se300.destinytactics.game.scenes.FleetCommand;
 import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.ui.Drawable;
@@ -29,6 +30,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -65,6 +67,10 @@ public class GameScene extends Game {
 	public static final int NUMBER_SECTORS = 20;
 
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
+	public Table managementInterface;
+	public FleetCommand fc;
+	public Infrastructure inf;
+	public Defense def;
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public boolean planetView = false;
@@ -125,20 +131,53 @@ public class GameScene extends Game {
 		});
 		
 		//Add Actors to planet UI
-		FleetCommand fc = new FleetCommand(skin);
-		Infrastructure ins = new Infrastructure(skin);
+		fc = new FleetCommand(skin);
+		inf = new Infrastructure(skin);
+		def = new Defense(skin);
 		
-		final TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
-		final TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
-		final TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
-		final TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
+		managementInterface = new Table();
+		managementInterface.add(fc.getFleetCommand()).expand().top();
+		managementInterface.setHeight(GameScene.SCREEN_HEIGHT * 7/10);
+		managementInterface.setWidth(GameScene.SCREEN_WIDTH/2);
+		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2/10);
+		managementInterface.setX(GameScene.SCREEN_WIDTH/2);
+		
+		TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
+		TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
+		TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
+		TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
+		
+		// Add Click listeners. Changes the loaded form and the toggled button.
+		managefleet.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				setManagementInterface("Fleet");
+				return true;
+			}
+		});
+		
+		manageInfrastructure.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				setManagementInterface("Infrastructure");
+				return true;
+			}
+		});
+		
+		manageDefense.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				setManagementInterface("Defense");
+				return true;
+			}
+		});
+				
 		Image bar3 = new Image(new Texture("sun.png"));
 		Image bar4 = new Image(new Texture("sun.png"));	
 		
 		planetUI.addActor(managefleet);
 		planetUI.addActor(manageInfrastructure);
 		planetUI.addActor(manageDefense);
-		planetUI.addActor(ins.getInfrastructure());
+		planetUI.addActor(managementInterface);
+		//planetUI.addActor(def.getDefense());
+		//planetUI.addActor(inf.getInfrastructure());
 		//planetUI.addActor(fc.getFleetCommand());
 		planetUI.addActor(bar3);
 		planetUI.addActor(bar4);
@@ -310,5 +349,37 @@ public class GameScene extends Game {
 
 	public void setGameState() {
 	}
-
+	
+	public void setManagementInterface(String formType) {
+		Cell cell = getFormCell();
+		
+		if (cell.hasActor()) {
+			cell.clearActor();
+			
+			if (formType == "Fleet") {
+				cell.setActor(fc.getFleetCommand());
+			}
+			else if (formType == "Infrastructure") {
+				cell.setActor(inf.getInfrastructure());
+			}
+			else if (formType == "Defense") {
+				cell.setActor(def.getDefense());
+			}
+		}
+	}
+	
+	// Private Methods
+	private Cell getFormCell() {
+		Cell cell;
+		
+		cell = managementInterface.getCell(fc.getFleetCommand());
+		if (cell == null) {
+			cell = managementInterface.getCell(inf.getInfrastructure());
+		} 
+		if (cell == null) {
+			cell = managementInterface.getCell(def.getDefense());
+		} 
+		
+		return cell;
+	}
 }// end Game
