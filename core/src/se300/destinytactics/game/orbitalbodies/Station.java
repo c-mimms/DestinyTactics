@@ -22,7 +22,6 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 		super(radius,sector);
 		
 		type = Utility.random.nextInt(2)+10;
-		System.out.println(type);
 		this.setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
 		this.setX(XEDGEEXCLUSION-150*orbitRadius);
 	}
