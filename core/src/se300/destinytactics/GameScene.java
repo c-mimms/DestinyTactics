@@ -11,6 +11,7 @@ import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.FleetCommand;
+import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -125,6 +126,8 @@ public class GameScene extends Game {
 		
 		//Add Actors to planet UI
 		FleetCommand fc = new FleetCommand(skin);
+		Infrastructure ins = new Infrastructure(skin);
+		
 		final TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
 		final TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
 		final TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
@@ -135,7 +138,8 @@ public class GameScene extends Game {
 		planetUI.addActor(managefleet);
 		planetUI.addActor(manageInfrastructure);
 		planetUI.addActor(manageDefense);
-		planetUI.addActor(fc.getFleetCommand());
+		planetUI.addActor(ins.getInfrastructure());
+		//planetUI.addActor(fc.getFleetCommand());
 		planetUI.addActor(bar3);
 		planetUI.addActor(bar4);
 		planetUI.addActor(backButton_Sector);

@@ -298,9 +298,9 @@ public class FleetCommand {
 		
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
-		TextButton submitButton = new TextButton("Build Fleet", skin.get("default", TextButtonStyle.class));
+		TextButton submitButton = new TextButton("Build Units", skin.get("default", TextButtonStyle.class));
 		
-		buildFormWrapper.add("Build Fleet").colspan(3).left().expandX();
+		buildFormWrapper.add("Build Units").colspan(3).left().expandX();
 		buildFormWrapper.row().top();                 
 		buildFormWrapper.add(formScroll).expand().colspan(3).fill().top();
 		buildFormWrapper.row().top().expandX();
@@ -366,7 +366,7 @@ public class FleetCommand {
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
 		TextButton submitButton = new TextButton("Attack", skin.get("default", TextButtonStyle.class));
 		
-		attackFormWrapper.add("Move Fleet").colspan(3).left().expandX();
+		attackFormWrapper.add("Attack").colspan(3).left().expandX();
 		attackFormWrapper.row().top();                 
 		attackFormWrapper.add(formScroll).expand().colspan(3).fill().top();
 		attackFormWrapper.row().top().expandX();
