@@ -21,6 +21,7 @@ public class Galaxy {
 	public Sector m_Sector;
 	public Quadtree m_Quadtree;
 	public GameScene thisgame;
+	public int minSpacing = 75;
 
 	public Galaxy(int x, int y, int n, GameScene thisgame){
 		
@@ -34,7 +35,21 @@ public class Galaxy {
 		Sector.galaxy = this;
 	
 		for (int i = 0; i < numSystems; i++) {
-			sectors[i] = new Sector();
+			boolean placeFree = false;
+			Sector temp = null;
+			while(!placeFree){
+				temp  = new Sector();
+				placeFree = true;
+				for(int j = 0; j < sectors.length; j ++){
+					if(sectors[j] == null) break;
+					if(temp.getDistance(sectors[j]) < minSpacing){
+						placeFree = false;
+						break;
+					}
+				}
+				
+			}
+			sectors[i] = temp;
 			map.insert(sectors[i]);
 		}
 

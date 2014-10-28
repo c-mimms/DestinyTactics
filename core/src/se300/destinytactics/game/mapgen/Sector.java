@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -35,18 +36,30 @@ public class Sector extends Actor {
 	private int posX;
 	private int posY;
 	public Button m_Button;
-	private Texture sprite1;
+	public static String imagePath = "images/orbitalbodies/suns";
+	private static Texture sprite1= new Texture(
+			Gdx.files.internal("realorbitalbody/galaxySun.png"));
+			
+	public static Texture sunTypes[] = {
+		new Texture(imagePath + "/blueSun.png"),
+		new Texture(imagePath + "/neonSun.png"),
+		new Texture(imagePath + "/orangeSun.png"),
+		new Texture(imagePath + "/redSun.png"),
+		new Texture(imagePath + "/tealSun.png"),
+		new Texture(imagePath + "/yellowSun.png")};
 	
 	//New variables
 	private static final double EDGE_EXCLUSION = 60;
 	private static final int SPRITE_SIZE = 50;
 	public GameScene thisgame;
+	public int sunType;
+	public float sunRotation;
 
 	public Sector() {
 
 		super.setVisible(true);
-		sprite1 = new Texture(
-				Gdx.files.internal("realorbitalbody/galaxySun.png"));
+		this.sunType = Utility.random.nextInt(6);
+		this.sunRotation = Utility.random.nextFloat()*360;
 		controlState = 0;
 		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];

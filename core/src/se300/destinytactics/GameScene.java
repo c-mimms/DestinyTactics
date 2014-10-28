@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -30,6 +31,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -76,13 +78,16 @@ public class GameScene implements Screen {
 
 	public GameScene(DestinyTactics game) {
 		this.game = game;
-		
-		musicLoop = Gdx.audio.newMusic(Gdx.files.internal("music/galaxyLoop.mp3"));
-		selectSound = Gdx.audio.newSound(Gdx.files.internal("sounds/select2.wav"));
-		
+
+		musicLoop = Gdx.audio.newMusic(Gdx.files
+				.internal("music/galaxyLoop.mp3"));
+		selectSound = Gdx.audio.newSound(Gdx.files
+				.internal("sounds/select2.wav"));
+
 		bgimg = new Texture("background.png");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
+		Image gridOverlay = new Image(new Texture("images/gridOverlay.png"));
 
 		// Specify the UI Skin
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -235,9 +240,12 @@ public class GameScene implements Screen {
 
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
+		gridOverlay.setFillParent(true);
+		gridOverlay.setTouchable(Touchable.disabled);
 		for (int i = 0; i < m_Galaxy.sectors.length; i++) {
 			galaxyStage.addActor(m_Galaxy.sectors[i]);
 		}
+		galaxyStage.addActor(gridOverlay);
 	}
 
 	public void render() {
@@ -281,7 +289,7 @@ public class GameScene implements Screen {
 	}
 
 	public void switchView(Sector nextSector) {
-		
+
 		selectSound.play();
 
 		// Clear stage to reuse it
@@ -289,12 +297,14 @@ public class GameScene implements Screen {
 
 		// Add image background and stretch to fit
 		Image background = new Image(bgimg);
-		Image sun = new Image(sectorSun);
+		Image sun = new Image(Sector.sunTypes[nextSector.sunType]);
 		sectorStage.addActor(background);
 		sectorStage.addActor(sun);
-		sun.setX(SCREEN_WIDTH - sectorSun.getWidth());
-		sun.setY(SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 20 - sectorSun.getHeight()
-				/ 2);
+		sun.setSize(SCREEN_HEIGHT, SCREEN_HEIGHT);
+		sun.setOrigin(SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
+		sun.setRotation(nextSector.sunRotation);
+		sun.setX(SCREEN_WIDTH - sun.getWidth() * (3.0f/8.0f));
+		sun.setY(SCREEN_HEIGHT / 2 - sun.getHeight() / 2);
 
 		background.setFillParent(true);
 

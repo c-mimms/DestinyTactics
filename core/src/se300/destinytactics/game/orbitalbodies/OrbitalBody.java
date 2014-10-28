@@ -39,23 +39,24 @@ public abstract class OrbitalBody extends Actor {
 	public Random rand;
 	public int type;
 	private static String spriteLib = "realorbitalbody";
+	private static String imagelib = "images/orbitalbodies/planets";
 	
 	// Import all planet textures
 	public static Texture[] hotBod = {
 			new Texture(spriteLib + "/activatedgate.png"),
 			new Texture(spriteLib + "/deactivatedgate.png"),
-			new Texture(spriteLib + "/gasplanet1.png"),
-			new Texture(spriteLib + "/gasplanet2.png"),
-			new Texture(spriteLib + "/lifeplanet1.png"),
-			new Texture(spriteLib + "/lifeplanet2.png"),
-			new Texture(spriteLib + "/moon1.png"),
-			new Texture(spriteLib + "/moon2.png"),
-			new Texture(spriteLib + "/rockplanet1.png"),
-			new Texture(spriteLib + "/rockplanet2.png"),
+			new Texture(imagelib + "/life1.png"),
+			new Texture(imagelib + "/life2.png"),
+			new Texture(imagelib + "/red1.png"),
+			new Texture(imagelib + "/red2.png"),
+			new Texture(imagelib + "/redWater1.png"),
+			new Texture(imagelib + "/redWater2.png"),
+			new Texture(imagelib + "/water1.png"),
+			new Texture(imagelib + "/water2.png"),
 			new Texture(spriteLib + "/station1.png"),
 			new Texture(spriteLib + "/station2.png") };
 	
-	public static final int SPRITE_SIZE = 65;
+	public static final int SPRITE_SIZE = 100;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
 	public static final int XEDGEEXCLUSION = GameScene.SCREEN_WIDTH-275;
 	public Texture texture;
