@@ -9,7 +9,7 @@ public class HighScoresScene implements Screen{
 	public Stage highscoreStage;
 
 	public HighScoresScene(DestinyTactics game){
-
+		
 		highscoreStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 	}
 

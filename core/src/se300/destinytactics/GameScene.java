@@ -15,6 +15,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -68,9 +70,16 @@ public class GameScene implements Screen {
 	public Skin skin;
 	private String spriteLib = "realorbitalbody";
 	public DestinyTactics game;
+	public Music musicLoop;
+	public Sound selectSound;
+	public float masterVolume = 0.5f;
 
 	public GameScene(DestinyTactics game) {
 		this.game = game;
+		
+		musicLoop = Gdx.audio.newMusic(Gdx.files.internal("music/galaxyLoop.mp3"));
+		selectSound = Gdx.audio.newSound(Gdx.files.internal("sounds/select2.wav"));
+		
 		bgimg = new Texture("background.png");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
@@ -116,6 +125,7 @@ public class GameScene implements Screen {
 		backButton_Galaxy.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				selectSound.play(masterVolume);
 				goGalaxy();
 				return true;
 			}
@@ -146,6 +156,7 @@ public class GameScene implements Screen {
 		managefleet.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				selectSound.play(masterVolume);
 				setManagementInterface("Fleet");
 				return true;
 			}
@@ -154,6 +165,7 @@ public class GameScene implements Screen {
 		manageInfrastructure.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				selectSound.play(masterVolume);
 				setManagementInterface("Infrastructure");
 				return true;
 			}
@@ -162,6 +174,7 @@ public class GameScene implements Screen {
 		manageDefense.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				selectSound.play(masterVolume);
 				setManagementInterface("Defense");
 				return true;
 			}
@@ -198,6 +211,7 @@ public class GameScene implements Screen {
 		backButton_Sector.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				selectSound.play(masterVolume);
 				goSystem();
 				return true;
 			}
@@ -245,7 +259,6 @@ public class GameScene implements Screen {
 
 	public void resize(int width, int height) {
 		// Resize stage to fill window.
-		System.out.println(width + " " + height);
 		galaxyStage.getViewport().update(width, height, false);
 		sectorStage.getViewport().update(width, height, false);
 		planetStage.getViewport().update(width, height, false);
@@ -268,6 +281,8 @@ public class GameScene implements Screen {
 	}
 
 	public void switchView(Sector nextSector) {
+		
+		selectSound.play();
 
 		// Clear stage to reuse it
 		sectorStage.clear();
@@ -297,6 +312,8 @@ public class GameScene implements Screen {
 	}
 
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
+
+		selectSound.play();
 		// System.out.println("Go to MyGame Method");
 		// Clear stage to reuse it
 		planetStage.clear();
@@ -383,12 +400,15 @@ public class GameScene implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		musicLoop.play();
+		musicLoop.setLooping(true);
 
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
+		musicLoop.stop();
 
 	}
 
