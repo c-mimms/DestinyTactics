@@ -28,7 +28,8 @@ public class MenuScene implements Screen{
 	public InputMultiplexer multiplexer;
 	public Stage menuStage;
 	public Table menu;
-	public Image logo;
+	public Texture bgimg;
+	public Image logo, background;
 	public TextButton newGameButton, highscoreButton, quitButton;
 	
 	public MenuScene(DestinyTactics game, Skin skin){
@@ -39,6 +40,8 @@ public class MenuScene implements Screen{
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		
+		bgimg = new Texture("MenuBackground.jpg");
+		background = new Image(bgimg);
 		menuStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 		
 		multiplexer = new InputMultiplexer();
@@ -84,6 +87,8 @@ public class MenuScene implements Screen{
 		menu.add(highscoreButton);
 		menu.row().space(50);
 		menu.add(quitButton);
+		
+		menuStage.addActor(background);
 		menuStage.addActor(menu);
 	}
 
@@ -104,6 +109,8 @@ public class MenuScene implements Screen{
 	public void show() {
 		musicLoop.play();
 		musicLoop.setLooping(true);
+		Gdx.input.setInputProcessor(multiplexer);
+		
 	}
 
 	@Override
@@ -125,7 +132,6 @@ public class MenuScene implements Screen{
 	}
 
 	public void startGame() {
-		System.out.println("startGame pressed");
 		game.startGame();
 	}
 	

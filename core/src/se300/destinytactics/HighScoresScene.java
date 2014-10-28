@@ -27,7 +27,9 @@ public class HighScoresScene implements Screen{
 	public float masterVolume = 0.5f;
 	public InputMultiplexer multiplexer;
 	public Stage scoreStage;
-	public Table menu, highscores;
+	public Table menu, headers;
+	public Texture bgimg;
+	public Image logo, background;
 	public TextButton menuButton;
 	
 	public HighScoresScene(DestinyTactics game, Skin skin){
@@ -38,6 +40,8 @@ public class HighScoresScene implements Screen{
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		
+		bgimg = new Texture("MenuBackground.jpg");
+		background = new Image(bgimg);
 		scoreStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 		
 		multiplexer = new InputMultiplexer();
@@ -56,21 +60,24 @@ public class HighScoresScene implements Screen{
 			}
 		});
 		
-		highscores = new Table(skin);
-		highscores.row().space(50);
-		highscores.add("Player");
-		highscores.add("Galaxy");
-		highscores.add("Sectors Controlled");
-		highscores.add("Resources");
-		highscores.add("Total Fleet Strength");
-		highscores.add("Star Date");
+		headers = new Table(skin);
+		headers.setFillParent(true);
+		headers.add("Player").top().expand().fill();
+		headers.add("Galaxy").top().expand().fill();
+		headers.add("Sectors Controlled").top().expand().fill();
+		headers.add("Resources").top().expand().fill();
+		headers.add("Total Fleet Strength").top().expand().fill();
+		headers.add("Star Date").top().expand().fill();
 		
 		menu.setFillParent(true);
-		menu.add("High Scores");
-		menu.row().space(50);
-		menu.add(highscores);
-		menu.row().space(50);
-		menu.add(menuButton);
+		menu.row().height(150);
+		menu.add("High Scores").top();
+		menu.row().height(300);
+		menu.add(headers).top().expand().fill();
+		menu.row();
+		menu.add(menuButton).height(30);
+		
+		scoreStage.addActor(background);
 		scoreStage.addActor(menu);
 	}
 
@@ -91,6 +98,7 @@ public class HighScoresScene implements Screen{
 	public void show() {
 		musicLoop.play();
 		musicLoop.setLooping(true);
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
