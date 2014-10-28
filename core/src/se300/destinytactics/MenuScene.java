@@ -104,6 +104,8 @@ public class MenuScene implements Screen{
 	public void show() {
 		musicLoop.play();
 		musicLoop.setLooping(true);
+		Gdx.input.setInputProcessor(multiplexer);
+		
 	}
 
 	@Override

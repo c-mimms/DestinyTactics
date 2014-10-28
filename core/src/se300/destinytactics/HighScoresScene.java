@@ -91,6 +91,7 @@ public class HighScoresScene implements Screen{
 	public void show() {
 		musicLoop.play();
 		musicLoop.setLooping(true);
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override

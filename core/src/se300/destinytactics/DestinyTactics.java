@@ -39,7 +39,7 @@ public class DestinyTactics extends Game {
 		if (menuScreen == null) {
 			menuScreen = new MenuScene(this, skin);
 		}
-		destroyCurrentScreen();
+		//destroyCurrentScreen();
 		setScreen(menuScreen);
 	}
 	
@@ -47,7 +47,7 @@ public class DestinyTactics extends Game {
 		if (gameScreen == null) {
 			gameScreen = new GameScene(this, skin);
 		}
-		destroyCurrentScreen();
+		//destroyCurrentScreen();
 		setScreen(gameScreen);
 	}
 	
@@ -55,7 +55,7 @@ public class DestinyTactics extends Game {
 		if (scoreScreen == null) {
 			scoreScreen = new HighScoresScene(this, skin);
 		}
-		destroyCurrentScreen();
+		//destroyCurrentScreen();
 		setScreen(scoreScreen);
 	}
 	
