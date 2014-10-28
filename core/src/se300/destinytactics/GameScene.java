@@ -76,7 +76,7 @@ public class GameScene implements Screen {
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
 
-	public GameScene(DestinyTactics game) {
+	public GameScene(DestinyTactics game, Skin skin){
 		this.game = game;
 
 		musicLoop = Gdx.audio.newMusic(Gdx.files
@@ -88,9 +88,6 @@ public class GameScene implements Screen {
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
 		Image gridOverlay = new Image(new Texture("images/gridOverlay.png"));
-
-		// Specify the UI Skin
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));

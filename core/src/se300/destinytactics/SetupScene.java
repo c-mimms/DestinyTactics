@@ -2,13 +2,14 @@ package se300.destinytactics;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class SetupScene implements Screen{
 	
 	public Stage setupStage;
 
-	public SetupScene(DestinyTactics game){
+	public SetupScene(DestinyTactics game, Skin skin){
 
 		setupStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 	}
