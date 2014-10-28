@@ -2,7 +2,9 @@ package se300.destinytactics.game.orbitalbodies;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -43,18 +45,18 @@ public abstract class OrbitalBody extends Actor {
 	
 	// Import all planet textures
 	public static Texture[] hotBod = {
-			new Texture(spriteLib + "/activatedgate.png"),
-			new Texture(spriteLib + "/deactivatedgate.png"),
-			new Texture(imagelib + "/life1.png"),
-			new Texture(imagelib + "/life2.png"),
-			new Texture(imagelib + "/red1.png"),
-			new Texture(imagelib + "/red2.png"),
-			new Texture(imagelib + "/redWater1.png"),
-			new Texture(imagelib + "/redWater2.png"),
-			new Texture(imagelib + "/water1.png"),
-			new Texture(imagelib + "/water2.png"),
-			new Texture(spriteLib + "/station1.png"),
-			new Texture(spriteLib + "/station2.png") };
+			new Texture(Gdx.files.internal(spriteLib + "/activatedgate.png"),true),
+			new Texture(Gdx.files.internal(spriteLib + "/deactivatedgate.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/red1.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/red2.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/redWater1.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/redWater2.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/water1.png"),true),
+			new Texture(Gdx.files.internal(imagelib + "/water2.png"),true),
+			new Texture(Gdx.files.internal(spriteLib + "/station1.png"),true),
+			new Texture(Gdx.files.internal(spriteLib + "/station2.png"),true) };
 	
 	public static final int SPRITE_SIZE = 100;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
@@ -63,13 +65,15 @@ public abstract class OrbitalBody extends Actor {
 	public GameScene thisgame;
 
 	public OrbitalBody(int radius, Sector sect){
-		
-		
+
+		for(int i = 0; i < hotBod.length; i++){
+			hotBod[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
+		}
 		orbitRadius = radius;
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
-		galaxy = sect.galaxy;
+		galaxy = Sector.galaxy;
 		thisgame = sect.thisgame;
 		
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
