@@ -65,7 +65,7 @@ public class GameScene implements Screen {
 	public boolean sectorView = false;
 	public boolean galaxyView = true;
 	public boolean planetView = false;
-	public Texture bgimg;
+	public Texture bgimg, bgimg_galaxy;
 	public Texture sectorSun;
 	public Texture backButton;
 	InputMultiplexer multiplexer;
@@ -75,7 +75,8 @@ public class GameScene implements Screen {
 	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
-
+	public Image background;
+	
 	public GameScene(DestinyTactics game, Skin skin){
 		this.game = game;
 
@@ -85,6 +86,7 @@ public class GameScene implements Screen {
 				.internal("sounds/select2.wav"));
 
 		bgimg = new Texture("background.png");
+		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
 		Image gridOverlay = new Image(new Texture("images/gridOverlay.png"));
@@ -221,7 +223,7 @@ public class GameScene implements Screen {
 		});
 
 		// Set galaxy stage to get inputs.
-		Image background = new Image(bgimg);
+		background = new Image(bgimg_galaxy);
 		Image bar5 = new Image(new Texture("sun.png"));
 		Image bar6 = new Image(new Texture("sun.png"));
 		bar5.setScaleX(SCREEN_WIDTH);
@@ -293,7 +295,7 @@ public class GameScene implements Screen {
 		sectorStage.clear();
 
 		// Add image background and stretch to fit
-		Image background = new Image(bgimg);
+		background = new Image(bgimg);
 		Image sun = new Image(Sector.sunTypes[nextSector.sunType]);
 		sectorStage.addActor(background);
 		sectorStage.addActor(sun);
@@ -326,7 +328,7 @@ public class GameScene implements Screen {
 		planetStage.clear();
 
 		// Add image background and stretch to fit
-		Image background = new Image(bgimg);
+		background = new Image(bgimg);
 		Image orbitalBody = new Image(
 				nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
 		orbitalBody.setSize(nextOrbitalBody.getSpriteSize() * 10,
