@@ -1,29 +1,44 @@
 package se300.destinytactics;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class DestinyTactics extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+public class DestinyTactics extends Game {
+
+	public static final int SCREEN_WIDTH = 1024;
+	public static final int SCREEN_HEIGHT = 640;
+
+	GameScene gameScreen;
+	MenuScene menuScreen;
+	HighScoresScene scoreScreen;
+	SetupScene setupScreen;
+	
 
 	@Override
 	public void create() {
-		batch = new SpriteBatch();
-		img = new Texture("galaxyBG.jpg");
+		gameScreen =  new GameScene(this);
+		menuScreen = new MenuScene(this);
+		scoreScreen = new HighScoresScene(this);
+		setupScreen = new SetupScene(this);
+		setScreen(gameScreen);
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		int ww = Gdx.graphics.getWidth();
-		int hh = Gdx.graphics.getHeight();
-		batch.begin();
-		batch.draw(img, 0, 0, ww, hh, 0f, 0f, 1f, 1f);
-		batch.end();
+		getScreen().render(0);
+	}
+	
+	public void goMenu(){
+		setScreen(menuScreen);
+	}
+	
+	public void startGame(){
+		setScreen(gameScreen);
+	}
+	
+	public void showScores(){
+		setScreen(scoreScreen);
 	}
 }

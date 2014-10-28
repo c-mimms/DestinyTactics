@@ -12,6 +12,6 @@ public class DesktopLauncher {
 		config.title = "Destiny Tactics";
 	      config.width = 1024;
 	      config.height = 640;
-		new LwjglApplication(new GameScene(), config);
+		new LwjglApplication(new DestinyTactics(), config);
 	}
 }
