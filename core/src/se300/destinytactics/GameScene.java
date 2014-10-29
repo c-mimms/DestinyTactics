@@ -57,8 +57,11 @@ public class GameScene implements Screen {
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
 
+
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
 			navBar, infoBarStage;
+	public static final int PADDING = 20;
+
 	public Table managementInterface;
 	public FleetCommand fc;
 	public Infrastructure inf;
@@ -87,16 +90,16 @@ public class GameScene implements Screen {
 	public GameScene(DestinyTactics game, Skin skin) {
 		this.game = game;
 
-		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/Butterfly.mp3"));
+		musicLoop = Gdx.audio.newMusic(Gdx.files.internal("music/Butterfly.mp3"));
+
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		bgimg = new Texture("background.png");
+		bgimg = new Texture("StarfieldBackground.jpg");
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
-		Image gridOverlay = new Image(new Texture("images/gridOverlay.png"));
+		Image gridOverlay = new Image(new Texture("images/gridOverlay-ps.png"));
 
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -104,8 +107,8 @@ public class GameScene implements Screen {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		navBar = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		infoBarStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING, SCREEN_HEIGHT + PADDING));
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -193,8 +196,8 @@ public class GameScene implements Screen {
 
 		sectorUI.addActor(backButton_Galaxy);
 
-		backButton_Galaxy.setX(0);
-		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight());
+		backButton_Galaxy.setX(PADDING);
+		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight() - PADDING);
 		backButton_Galaxy.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -214,16 +217,12 @@ public class GameScene implements Screen {
 		managementInterface.setHeight(GameScene.SCREEN_HEIGHT * 7 / 10);
 		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2);
 		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
-		managementInterface.setX(GameScene.SCREEN_WIDTH / 2);
+		managementInterface.setX(GameScene.SCREEN_WIDTH / 2 - PADDING);
 
-		TextButton backButton_Sector = new TextButton("Back to Sector",
-				skin.get("default", TextButtonStyle.class));
-		TextButton managefleet = new TextButton("Fleet Command", skin.get(
-				"default", TextButtonStyle.class));
-		TextButton manageInfrastructure = new TextButton("Infrastructure",
-				skin.get("default", TextButtonStyle.class));
-		TextButton manageDefense = new TextButton("Defense", skin.get(
-				"default", TextButtonStyle.class));
+		TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
+		TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
+		TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
+		TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
 
 		// Add Click listeners. Changes the loaded form and the toggled button.
 		managefleet.addListener(new ClickListener() {
@@ -260,13 +259,13 @@ public class GameScene implements Screen {
 
 		planetUI.addActor(backButton_Sector);
 
-		backButton_Sector.setX(0);
-		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight());
-		managefleet.setX(0);
+		backButton_Sector.setX(PADDING);
+		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight() - PADDING);
+		managefleet.setX(PADDING);
 		managefleet.setY(managefleet.getHeight() * 9);
-		manageInfrastructure.setX(0);
+		manageInfrastructure.setX(PADDING);
 		manageInfrastructure.setY(managefleet.getHeight() * 8);
-		manageDefense.setX(0);
+		manageDefense.setX(PADDING);
 		manageDefense.setY(managefleet.getHeight() * 7);
 		backButton_Sector.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -291,10 +290,11 @@ public class GameScene implements Screen {
 
 		gridOverlay.setFillParent(true);
 		gridOverlay.setTouchable(Touchable.disabled);
+		galaxyStage.addActor(gridOverlay);
 		for (int i = 0; i < m_Galaxy.sectors.length; i++) {
 			galaxyStage.addActor(m_Galaxy.sectors[i]);
 		}
-		galaxyStage.addActor(gridOverlay);
+		
 	}
 
 	public void resize(int width, int height) {
