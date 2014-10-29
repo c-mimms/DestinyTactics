@@ -89,7 +89,7 @@ public class GameScene implements Screen {
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		bgimg = new Texture("background.png");
+		bgimg = new Texture("StarfieldBackground.jpg");
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
