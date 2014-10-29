@@ -56,7 +56,8 @@ public class GameScene implements Screen {
 	public static final int GALAXY_WIDTH = 1024;
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
-
+	public static final int PADDING = 20;
+	
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI, navBar;
 	public Table managementInterface;
 	public FleetCommand fc;
@@ -93,7 +94,7 @@ public class GameScene implements Screen {
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
-		Image gridOverlay = new Image(new Texture("images/gridOverlay.png"));
+		Image gridOverlay = new Image(new Texture("images/gridOverlay-ps.png"));
 
 		// Create galaxy stage on game initialization.
 		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -101,7 +102,7 @@ public class GameScene implements Screen {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		navBar = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING, SCREEN_HEIGHT + PADDING));
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -177,7 +178,7 @@ public class GameScene implements Screen {
 		managementInterface = new Table();
 		managementInterface.add(fc.getFleetCommand()).expand().top();
 		managementInterface.setHeight(GameScene.SCREEN_HEIGHT * 7 / 10);
-		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2);
+		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2 - PADDING);
 		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
 		managementInterface.setX(GameScene.SCREEN_WIDTH / 2);
 
@@ -257,10 +258,11 @@ public class GameScene implements Screen {
 
 		gridOverlay.setFillParent(true);
 		gridOverlay.setTouchable(Touchable.disabled);
+		galaxyStage.addActor(gridOverlay);
 		for (int i = 0; i < m_Galaxy.sectors.length; i++) {
 			galaxyStage.addActor(m_Galaxy.sectors[i]);
 		}
-		galaxyStage.addActor(gridOverlay);
+		
 	}
 
 	public void resize(int width, int height) {

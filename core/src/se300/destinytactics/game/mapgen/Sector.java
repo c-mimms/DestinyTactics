@@ -54,7 +54,7 @@ public class Sector extends Actor {
 	public GameScene thisgame;
 	public int sunType;
 	public float sunRotation;
-
+	public int padding = 50;
 	public Sector() {
 
 		super.setVisible(true);
@@ -64,7 +64,7 @@ public class Sector extends Actor {
 		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
 		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
-		posY = (int) (GameScene.SCREEN_HEIGHT/5 + (Utility.random.nextInt((GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE)-GameScene.SCREEN_HEIGHT/5)));
+		posY = (int) (GameScene.SCREEN_HEIGHT/5 + padding + (Utility.random.nextInt((GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE)-GameScene.SCREEN_HEIGHT/5 - (padding * 2))));
 
 		this.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
 		setWidth(SPRITE_SIZE);
