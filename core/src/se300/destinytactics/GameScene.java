@@ -85,7 +85,7 @@ public class GameScene implements Screen {
 		this.game = game;
 
 		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/galaxyLoop.mp3"));
+				.internal("music/Liquid_Solidus.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 

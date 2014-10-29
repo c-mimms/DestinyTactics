@@ -38,7 +38,7 @@ public class Sector extends Actor {
 	public Button m_Button;
 	public static String imagePath = "images/orbitalbodies/suns";
 	private static Texture sprite1= new Texture(
-			Gdx.files.internal("realorbitalbody/galaxySun.png"));
+			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
 			
 	public static Texture sunTypes[] = {
 		new Texture(imagePath + "/blueSun.png"),
@@ -50,7 +50,7 @@ public class Sector extends Actor {
 	
 	//New variables
 	private static final double EDGE_EXCLUSION = 60;
-	private static final int SPRITE_SIZE = 50;
+	private static final int SPRITE_SIZE = 15;
 	public GameScene thisgame;
 	public int sunType;
 	public float sunRotation;
