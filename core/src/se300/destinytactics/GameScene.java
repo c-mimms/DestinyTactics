@@ -56,9 +56,12 @@ public class GameScene implements Screen {
 	public static final int GALAXY_WIDTH = 1024;
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
+
+
+	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
+			navBar, infoBarStage;
 	public static final int PADDING = 20;
-	
-	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI, navBar;
+
 	public Table managementInterface;
 	public FleetCommand fc;
 	public Infrastructure inf;
@@ -79,14 +82,16 @@ public class GameScene implements Screen {
 	public Image background;
 	public Sector curSector;
 	TextButton quitButton;
-	TextButton endTurnButton; 
-	Label nameLabel;
+	TextButton endTurnButton;
+	Label nameLabel, infoBar;
+	TextButton PlayerButton, PlayerButton2, PlayerButton3;
+	TextField txt1, txt2;
 
 	public GameScene(DestinyTactics game, Skin skin) {
 		this.game = game;
 
-		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/Liquid_Solidus.mp3"));
+		musicLoop = Gdx.audio.newMusic(Gdx.files.internal("music/Butterfly.mp3"));
+
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
@@ -102,6 +107,7 @@ public class GameScene implements Screen {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		infoBarStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING, SCREEN_HEIGHT + PADDING));
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
@@ -112,19 +118,50 @@ public class GameScene implements Screen {
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
 
-		
-		//name Label buttons
+		// name Label buttons
 		nameLabel = new Label("Aurora", skin);
 		navBar.addActor(nameLabel);
-		nameLabel.setX(SCREEN_WIDTH/2 - nameLabel.getWidth()/2);
+		nameLabel.setX(SCREEN_WIDTH / 2 - nameLabel.getWidth() / 2);
 		nameLabel.setY(SCREEN_HEIGHT - nameLabel.getHeight());
 
+		// Infobar Label
+		infoBar = new Label("infoBar", skin);
+		infoBar.setX(SCREEN_WIDTH / 2 - infoBar.getWidth() / 2);
+		infoBar.setY(0);
+
+        
+
+		// Player and infoBar shell
+		PlayerButton = new TextButton("Player Info", skin.get("default",
+				TextButtonStyle.class));
+		PlayerButton2 = new TextButton("Current game status", skin.get(
+				"default", TextButtonStyle.class));
+		PlayerButton3 = new TextButton("Current Fleet Status", skin.get(
+				"default", TextButtonStyle.class));
+		txt1 = new TextField("txt1", skin);
 		
+	
+		
+		PlayerButton.setX(20);
+        PlayerButton.setY(3*PlayerButton.getHeight());
+        PlayerButton2.setX(0);
+        PlayerButton2.setY(2*PlayerButton.getHeight());
+        PlayerButton3.setX(0);
+        PlayerButton3.setY(PlayerButton.getHeight());
+        txt1.setX(SCREEN_WIDTH - txt1.getWidth());
+        txt1.setY(0);
+        
+        infoBarStage.addActor(infoBar);
+        infoBarStage.addActor(PlayerButton);
+        infoBarStage.addActor(PlayerButton2);
+        infoBarStage.addActor(PlayerButton3);
+        infoBarStage.addActor(txt1);
+
 		// quit and end turn buttons
-		quitButton = new TextButton("Quit", skin.get(
-				"default", TextButtonStyle.class));
-		endTurnButton = new TextButton("End Turn", skin.get(
-				"default", TextButtonStyle.class));
+		quitButton = new TextButton("Quit", skin.get("default",
+				TextButtonStyle.class));
+		endTurnButton = new TextButton("End Turn", skin.get("default",
+				TextButtonStyle.class));
 		quitButton.setX(SCREEN_WIDTH - quitButton.getWidth());
 		quitButton.setY(SCREEN_HEIGHT - quitButton.getHeight());
 		endTurnButton.setX(SCREEN_WIDTH - endTurnButton.getWidth()
@@ -147,10 +184,10 @@ public class GameScene implements Screen {
 			}
 		});
 
-
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBarStage);
 		Gdx.input.setInputProcessor(multiplexer);
 
 		// Add Actors to sector UI
@@ -304,9 +341,7 @@ public class GameScene implements Screen {
 		sun.setX(SCREEN_WIDTH - sun.getWidth() * (3.0f / 8.0f));
 		sun.setY(SCREEN_HEIGHT / 2 - sun.getHeight() / 2);
 
-		
 		background.setFillParent(true);
-		
 
 		// Add all planet objects
 		for (int i = 0; i < nextSector.getNumBodies(); i++) {
@@ -458,8 +493,9 @@ public class GameScene implements Screen {
 		}
 
 		navBar.draw();
+		infoBarStage.draw();
 	}
-	
+
 	public void goMenu() {
 		game.goMenu();
 	}
