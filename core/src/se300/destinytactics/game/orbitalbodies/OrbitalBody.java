@@ -58,7 +58,7 @@ public abstract class OrbitalBody extends Actor {
 			new Texture(Gdx.files.internal(spriteLib + "/station1.png"),true),
 			new Texture(Gdx.files.internal(spriteLib + "/station2.png"),true) };
 	
-	public static final int SPRITE_SIZE = 100;
+	public static final int SPRITE_SIZE = 40;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
 	public static final int XEDGEEXCLUSION = GameScene.SCREEN_WIDTH-275;
 	public Texture texture;

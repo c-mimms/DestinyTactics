@@ -368,8 +368,7 @@ public class GameScene implements Screen {
 		background = new Image(bgimg);
 		Image orbitalBody = new Image(
 				nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
-		orbitalBody.setSize(nextOrbitalBody.getSpriteSize() * 10,
-				nextOrbitalBody.getSpriteSize() * 10);
+		orbitalBody.setSize(1000,1000);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
 		orbitalBody.setX(SCREEN_WIDTH / 4 - orbitalBody.getWidth() / 2);
@@ -392,6 +391,8 @@ public class GameScene implements Screen {
 		galaxyView = true;
 		nameLabel.setText("Aurora");
 		multiplexer.addProcessor(galaxyStage);
+		multiplexer.removeProcessor(planetStage);
+		multiplexer.removeProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
 		multiplexer.removeProcessor(sectorUI);
 	}
