@@ -22,7 +22,6 @@ public class HighScoresScene implements Screen{
 	public Stage highscoreStage;
 
 	public DestinyTactics game;
-	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
 	public InputMultiplexer multiplexer;
@@ -35,8 +34,6 @@ public class HighScoresScene implements Screen{
 	public HighScoresScene(DestinyTactics game, Skin skin){
 		this.game = game;
 		
-		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/SimplicityIsBliss.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		
@@ -73,9 +70,11 @@ public class HighScoresScene implements Screen{
 		menu.row().height(150);
 		menu.add("High Scores").top();
 		menu.row().height(300);
-		menu.add(headers).top().expand().fill();
+		menu.add(headers).top().expand().fill().width(game.SCREEN_WIDTH - game.PADDING);
 		menu.row();
-		menu.add(menuButton).height(30);
+		menu.add(menuButton);
+		menu.row().space(50);
+		menu.add().expand().fill();
 		
 		scoreStage.addActor(background);
 		scoreStage.addActor(menu);
@@ -96,14 +95,11 @@ public class HighScoresScene implements Screen{
 
 	@Override
 	public void show() {
-		musicLoop.play();
-		musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void hide() {
-		musicLoop.stop();
 	}
 
 	@Override

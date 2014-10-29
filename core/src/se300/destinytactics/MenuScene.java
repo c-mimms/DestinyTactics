@@ -22,7 +22,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class MenuScene implements Screen{
 	
 	public DestinyTactics game;
-	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
 	public InputMultiplexer multiplexer;
@@ -35,8 +34,6 @@ public class MenuScene implements Screen{
 	public MenuScene(DestinyTactics game, Skin skin){
 		this.game = game;
 		
-		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/SimplicityIsBliss.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		
@@ -88,6 +85,8 @@ public class MenuScene implements Screen{
 		menu.row().space(50);
 		menu.add(quitButton);
 		
+		menu.setX(game.PADDING);
+		menu.setY(game.PADDING);
 		menuStage.addActor(background);
 		menuStage.addActor(menu);
 	}
@@ -107,15 +106,12 @@ public class MenuScene implements Screen{
 
 	@Override
 	public void show() {
-		musicLoop.play();
-		musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
 		
 	}
 
 	@Override
 	public void hide() {
-		musicLoop.stop();
 	}
 
 	@Override
@@ -138,4 +134,5 @@ public class MenuScene implements Screen{
 	public void showScores() {
 		game.showScores();
 	}
+	
 }

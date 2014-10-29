@@ -10,7 +10,10 @@ import java.io.File;
  */
 public class Names {
 
-	public String names[];
+	public static String[] names = {"Randomeous Nameous", "Steveous Jobeous", "Totz Notz Randomz", "Cornify", "Lil' Spoon", "Sauce Boas",
+			"Planet 1", "Breaking Bad", "Not A Name", "Name", "Epicus Maximus", "Blue Planet", "Greystrom Meyers", 
+			"The Pwnzershriek", "East Germany", "The Snack that Smiles Back", "Strong Steps", "Rolling Stoned"
+	};
 
 	public Names(){
 
@@ -40,8 +43,8 @@ public class Names {
 	}
 
 	public static String newName() {
-		// TODO Auto-generated method stub
-		return null;
+		String pick = names[Utility.random.nextInt(names.length)];
+		return pick;
 	}
 
 }//end Names
