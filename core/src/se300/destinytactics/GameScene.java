@@ -159,8 +159,8 @@ public class GameScene implements Screen {
 
 		sectorUI.addActor(backButton_Galaxy);
 
-		backButton_Galaxy.setX(0);
-		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight());
+		backButton_Galaxy.setX(PADDING);
+		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight() - PADDING);
 		backButton_Galaxy.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -178,18 +178,14 @@ public class GameScene implements Screen {
 		managementInterface = new Table();
 		managementInterface.add(fc.getFleetCommand()).expand().top();
 		managementInterface.setHeight(GameScene.SCREEN_HEIGHT * 7 / 10);
-		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2 - PADDING);
+		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2);
 		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
-		managementInterface.setX(GameScene.SCREEN_WIDTH / 2);
+		managementInterface.setX(GameScene.SCREEN_WIDTH / 2 - PADDING);
 
-		TextButton backButton_Sector = new TextButton("Back to Sector",
-				skin.get("default", TextButtonStyle.class));
-		TextButton managefleet = new TextButton("Fleet Command", skin.get(
-				"default", TextButtonStyle.class));
-		TextButton manageInfrastructure = new TextButton("Infrastructure",
-				skin.get("default", TextButtonStyle.class));
-		TextButton manageDefense = new TextButton("Defense", skin.get(
-				"default", TextButtonStyle.class));
+		TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
+		TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
+		TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
+		TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
 
 		// Add Click listeners. Changes the loaded form and the toggled button.
 		managefleet.addListener(new ClickListener() {
@@ -226,13 +222,13 @@ public class GameScene implements Screen {
 
 		planetUI.addActor(backButton_Sector);
 
-		backButton_Sector.setX(0);
-		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight());
-		managefleet.setX(0);
+		backButton_Sector.setX(PADDING);
+		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight() - PADDING);
+		managefleet.setX(PADDING);
 		managefleet.setY(managefleet.getHeight() * 9);
-		manageInfrastructure.setX(0);
+		manageInfrastructure.setX(PADDING);
 		manageInfrastructure.setY(managefleet.getHeight() * 8);
-		manageDefense.setX(0);
+		manageDefense.setX(PADDING);
 		manageDefense.setY(managefleet.getHeight() * 7);
 		backButton_Sector.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -252,7 +248,6 @@ public class GameScene implements Screen {
 		background.setFillParent(true);
 		navBar.addActor(quitButton);
 		navBar.addActor(endTurnButton);
-		
 
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
