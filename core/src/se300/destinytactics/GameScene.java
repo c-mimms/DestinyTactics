@@ -4,6 +4,7 @@ import se300.destinytactics.game.AI;
 import se300.destinytactics.game.User;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.Defense;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -34,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sun.javafx.scene.control.skin.LabelSkin;
 
 public class GameScene implements Screen {
 
@@ -56,7 +59,6 @@ public class GameScene implements Screen {
 	public static final int GALAXY_WIDTH = 1024;
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
-
 
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
 			navBar, infoBarStage;
@@ -90,7 +92,8 @@ public class GameScene implements Screen {
 	public GameScene(DestinyTactics game, Skin skin) {
 		this.game = game;
 
-		musicLoop = Gdx.audio.newMusic(Gdx.files.internal("music/Butterfly.mp3"));
+		musicLoop = Gdx.audio.newMusic(Gdx.files
+				.internal("music/Butterfly.mp3"));
 
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
@@ -108,7 +111,8 @@ public class GameScene implements Screen {
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		infoBarStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING, SCREEN_HEIGHT + PADDING));
+		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING,
+				SCREEN_HEIGHT + PADDING));
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -117,19 +121,20 @@ public class GameScene implements Screen {
 		// planetStage.setDebugAll(true);
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
+		// navBar.setDebugAll(true);
 
 		// name Label buttons
 		nameLabel = new Label("Aurora", skin);
 		navBar.addActor(nameLabel);
-		nameLabel.setX(SCREEN_WIDTH / 2 - nameLabel.getWidth() / 2);
+		nameLabel.setFontScale(2);
+		nameLabel.setAlignment(Align.center);
+		nameLabel.setX(SCREEN_WIDTH / 2);
 		nameLabel.setY(SCREEN_HEIGHT - nameLabel.getHeight());
 
 		// Infobar Label
 		infoBar = new Label("infoBar", skin);
 		infoBar.setX(SCREEN_WIDTH / 2 - infoBar.getWidth() / 2);
 		infoBar.setY(0);
-
-        
 
 		// Player and infoBar shell
 		PlayerButton = new TextButton("Player Info", skin.get("default",
@@ -139,23 +144,21 @@ public class GameScene implements Screen {
 		PlayerButton3 = new TextButton("Current Fleet Status", skin.get(
 				"default", TextButtonStyle.class));
 		txt1 = new TextField("txt1", skin);
-		
-	
-		
+
 		PlayerButton.setX(20);
-        PlayerButton.setY(3*PlayerButton.getHeight());
-        PlayerButton2.setX(0);
-        PlayerButton2.setY(2*PlayerButton.getHeight());
-        PlayerButton3.setX(0);
-        PlayerButton3.setY(PlayerButton.getHeight());
-        txt1.setX(SCREEN_WIDTH - txt1.getWidth());
-        txt1.setY(0);
-        
-        infoBarStage.addActor(infoBar);
-        infoBarStage.addActor(PlayerButton);
-        infoBarStage.addActor(PlayerButton2);
-        infoBarStage.addActor(PlayerButton3);
-        infoBarStage.addActor(txt1);
+		PlayerButton.setY(3 * PlayerButton.getHeight());
+		PlayerButton2.setX(0);
+		PlayerButton2.setY(2 * PlayerButton.getHeight());
+		PlayerButton3.setX(0);
+		PlayerButton3.setY(PlayerButton.getHeight());
+		txt1.setX(SCREEN_WIDTH - txt1.getWidth());
+		txt1.setY(0);
+
+		infoBarStage.addActor(infoBar);
+		infoBarStage.addActor(PlayerButton);
+		infoBarStage.addActor(PlayerButton2);
+		infoBarStage.addActor(PlayerButton3);
+		infoBarStage.addActor(txt1);
 
 		// quit and end turn buttons
 		quitButton = new TextButton("Quit", skin.get("default",
@@ -197,7 +200,8 @@ public class GameScene implements Screen {
 		sectorUI.addActor(backButton_Galaxy);
 
 		backButton_Galaxy.setX(PADDING);
-		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight() - PADDING);
+		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight()
+				- PADDING);
 		backButton_Galaxy.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -219,10 +223,14 @@ public class GameScene implements Screen {
 		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
 		managementInterface.setX(GameScene.SCREEN_WIDTH / 2 - PADDING);
 
-		TextButton backButton_Sector = new TextButton("Back to Sector", skin.get("default", TextButtonStyle.class));
-		TextButton managefleet = new TextButton("Fleet Command", skin.get("default", TextButtonStyle.class));
-		TextButton manageInfrastructure = new TextButton("Infrastructure", skin.get("default", TextButtonStyle.class));
-		TextButton manageDefense = new TextButton("Defense", skin.get("default", TextButtonStyle.class));
+		TextButton backButton_Sector = new TextButton("Back to Sector",
+				skin.get("default", TextButtonStyle.class));
+		TextButton managefleet = new TextButton("Fleet Command", skin.get(
+				"default", TextButtonStyle.class));
+		TextButton manageInfrastructure = new TextButton("Infrastructure",
+				skin.get("default", TextButtonStyle.class));
+		TextButton manageDefense = new TextButton("Defense", skin.get(
+				"default", TextButtonStyle.class));
 
 		// Add Click listeners. Changes the loaded form and the toggled button.
 		managefleet.addListener(new ClickListener() {
@@ -260,7 +268,8 @@ public class GameScene implements Screen {
 		planetUI.addActor(backButton_Sector);
 
 		backButton_Sector.setX(PADDING);
-		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight() - PADDING);
+		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight()
+				- PADDING);
 		managefleet.setX(PADDING);
 		managefleet.setY(managefleet.getHeight() * 9);
 		manageInfrastructure.setX(PADDING);
@@ -293,8 +302,17 @@ public class GameScene implements Screen {
 		galaxyStage.addActor(gridOverlay);
 		for (int i = 0; i < m_Galaxy.sectors.length; i++) {
 			galaxyStage.addActor(m_Galaxy.sectors[i]);
+			String secName = m_Galaxy.sectors[i].getName();
+			Label tmpLabel = new Label(secName, skin);
+			galaxyStage.addActor(tmpLabel);
+			tmpLabel.setX(m_Galaxy.sectors[i].getX() - tmpLabel.getWidth() / 2);
+			if (Utility.random.nextBoolean()) {
+				tmpLabel.setY(m_Galaxy.sectors[i].getY() + tmpLabel.getHeight()/2);
+			} else {
+				tmpLabel.setY(m_Galaxy.sectors[i].getY() - tmpLabel.getHeight());
+			}
 		}
-		
+
 	}
 
 	public void resize(int width, int height) {
@@ -330,6 +348,7 @@ public class GameScene implements Screen {
 		sectorStage.clear();
 
 		nameLabel.setText(nextSector.getName());
+
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
 		Image sun = new Image(Sector.sunTypes[nextSector.sunType]);
@@ -363,12 +382,12 @@ public class GameScene implements Screen {
 		// Clear stage to reuse it
 		planetStage.clear();
 		nameLabel.setText(nextOrbitalBody.getName());
-
+		
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
 		Image orbitalBody = new Image(
 				nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
-		orbitalBody.setSize(1000,1000);
+		orbitalBody.setSize(1000, 1000);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
 		orbitalBody.setX(SCREEN_WIDTH / 4 - orbitalBody.getWidth() / 2);
