@@ -29,7 +29,7 @@ public class DestinyTactics extends Game {
 		// Specify the UI Skin
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/SimplicityIsBliss.mp3"));
+				.internal("music/Butterfly.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		musicLoop.play();
