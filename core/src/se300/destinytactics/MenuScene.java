@@ -138,4 +138,5 @@ public class MenuScene implements Screen{
 	public void showScores() {
 		game.showScores();
 	}
+	
 }

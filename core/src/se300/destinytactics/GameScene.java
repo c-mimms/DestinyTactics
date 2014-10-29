@@ -57,7 +57,7 @@ public class GameScene implements Screen {
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
 
-	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI;
+	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI, navBar;
 	public Table managementInterface;
 	public FleetCommand fc;
 	public Infrastructure inf;
@@ -76,8 +76,12 @@ public class GameScene implements Screen {
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
 	public Image background;
-	
-	public GameScene(DestinyTactics game, Skin skin){
+	public Sector curSector;
+	TextButton quitButton;
+	TextButton endTurnButton; 
+	Label nameLabel;
+
+	public GameScene(DestinyTactics game, Skin skin) {
 		this.game = game;
 
 		musicLoop = Gdx.audio.newMusic(Gdx.files
@@ -97,6 +101,7 @@ public class GameScene implements Screen {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		navBar = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -106,24 +111,53 @@ public class GameScene implements Screen {
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
 
+		
+		//name Label buttons
+		nameLabel = new Label("Aurora", skin);
+		navBar.addActor(nameLabel);
+		nameLabel.setX(SCREEN_WIDTH/2 - nameLabel.getWidth()/2);
+		nameLabel.setY(SCREEN_HEIGHT - nameLabel.getHeight());
+
+		
+		// quit and end turn buttons
+		quitButton = new TextButton("Quit", skin.get(
+				"default", TextButtonStyle.class));
+		endTurnButton = new TextButton("End Turn", skin.get(
+				"default", TextButtonStyle.class));
+		quitButton.setX(SCREEN_WIDTH - quitButton.getWidth());
+		quitButton.setY(SCREEN_HEIGHT - quitButton.getHeight());
+		endTurnButton.setX(SCREEN_WIDTH - endTurnButton.getWidth()
+				- quitButton.getWidth());
+		endTurnButton.setY(SCREEN_HEIGHT - endTurnButton.getHeight());
+
+		quitButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				goMenu();
+				return true;
+			}
+		});
+
+		endTurnButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				goGalaxy();
+				return true;
+			}
+		});
+
+
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
+		multiplexer.addProcessor(navBar);
 		Gdx.input.setInputProcessor(multiplexer);
 
 		// Add Actors to sector UI
 		final TextButton backButton_Galaxy = new TextButton("Back to Galaxy",
 				skin.get("default", TextButtonStyle.class));
-		Image bar = new Image(new Texture("sun.png"));
-		Image bar2 = new Image(new Texture("sun.png"));
-		sectorUI.addActor(bar);
-		sectorUI.addActor(bar2);
+
 		sectorUI.addActor(backButton_Galaxy);
-		bar.setScaleX(SCREEN_WIDTH);
-		bar.setHeight(SCREEN_HEIGHT / 10);
-		bar.setY(SCREEN_HEIGHT - bar.getHeight());
-		bar2.setScaleX(GALAXY_WIDTH);
-		bar2.setHeight(SCREEN_HEIGHT / 5);
-		bar2.setY(0);
+
 		backButton_Galaxy.setX(0);
 		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight());
 		backButton_Galaxy.addListener(new ClickListener() {
@@ -184,26 +218,13 @@ public class GameScene implements Screen {
 			}
 		});
 
-		Image bar3 = new Image(new Texture("sun.png"));
-		Image bar4 = new Image(new Texture("sun.png"));
-
 		planetUI.addActor(managefleet);
 		planetUI.addActor(manageInfrastructure);
 		planetUI.addActor(manageDefense);
 		planetUI.addActor(managementInterface);
-		// planetUI.addActor(def.getDefense());
-		// planetUI.addActor(inf.getInfrastructure());
-		// planetUI.addActor(fc.getFleetCommand());
-		planetUI.addActor(bar3);
-		planetUI.addActor(bar4);
+
 		planetUI.addActor(backButton_Sector);
 
-		bar3.setScaleX(SCREEN_WIDTH);
-		bar3.setHeight(SCREEN_HEIGHT / 10);
-		bar3.setY(SCREEN_HEIGHT - bar.getHeight());
-		bar4.setScaleX(GALAXY_WIDTH);
-		bar4.setHeight(SCREEN_HEIGHT / 5);
-		bar4.setY(0);
 		backButton_Sector.setX(0);
 		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight());
 		managefleet.setX(0);
@@ -224,18 +245,13 @@ public class GameScene implements Screen {
 
 		// Set galaxy stage to get inputs.
 		background = new Image(bgimg_galaxy);
-		Image bar5 = new Image(new Texture("sun.png"));
-		Image bar6 = new Image(new Texture("sun.png"));
-		bar5.setScaleX(SCREEN_WIDTH);
-		bar5.setHeight(SCREEN_HEIGHT / 10);
-		bar5.setY(SCREEN_HEIGHT - bar.getHeight());
-		bar6.setScaleX(GALAXY_WIDTH);
-		bar6.setHeight(SCREEN_HEIGHT / 5);
-		bar6.setY(0);
+
 		galaxyStage.addActor(background);
-		galaxyStage.addActor(bar5);
-		galaxyStage.addActor(bar6);
+
 		background.setFillParent(true);
+		navBar.addActor(quitButton);
+		navBar.addActor(endTurnButton);
+		
 
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
@@ -247,23 +263,6 @@ public class GameScene implements Screen {
 		galaxyStage.addActor(gridOverlay);
 	}
 
-	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (galaxyView) {
-			galaxyStage.act();
-			galaxyStage.draw();
-		} else if (sectorView) {
-			sectorStage.act();
-			sectorStage.draw();
-			sectorUI.draw();
-		} else if (planetView) {
-			planetStage.act();
-			planetStage.draw();
-			planetUI.draw();
-		}
-	}
-
 	public void resize(int width, int height) {
 		// Resize stage to fill window.
 		galaxyStage.getViewport().update(width, height, false);
@@ -271,6 +270,7 @@ public class GameScene implements Screen {
 		planetStage.getViewport().update(width, height, false);
 		sectorUI.getViewport().update(width, height, false);
 		planetUI.getViewport().update(width, height, false);
+		navBar.getViewport().update(width, height, false);
 	}
 
 	public void finalize() throws Throwable {
@@ -289,11 +289,13 @@ public class GameScene implements Screen {
 
 	public void switchView(Sector nextSector) {
 
+		curSector = nextSector;
 		selectSound.play();
 
 		// Clear stage to reuse it
 		sectorStage.clear();
 
+		nameLabel.setText(nextSector.getName());
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
 		Image sun = new Image(Sector.sunTypes[nextSector.sunType]);
@@ -302,10 +304,12 @@ public class GameScene implements Screen {
 		sun.setSize(SCREEN_HEIGHT, SCREEN_HEIGHT);
 		sun.setOrigin(SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
 		sun.setRotation(nextSector.sunRotation);
-		sun.setX(SCREEN_WIDTH - sun.getWidth() * (3.0f/8.0f));
+		sun.setX(SCREEN_WIDTH - sun.getWidth() * (3.0f / 8.0f));
 		sun.setY(SCREEN_HEIGHT / 2 - sun.getHeight() / 2);
 
+		
 		background.setFillParent(true);
+		
 
 		// Add all planet objects
 		for (int i = 0; i < nextSector.getNumBodies(); i++) {
@@ -326,6 +330,7 @@ public class GameScene implements Screen {
 		// System.out.println("Go to MyGame Method");
 		// Clear stage to reuse it
 		planetStage.clear();
+		nameLabel.setText(nextOrbitalBody.getName());
 
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
@@ -353,6 +358,7 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = false;
 		galaxyView = true;
+		nameLabel.setText("Aurora");
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.removeProcessor(sectorStage);
 		multiplexer.removeProcessor(sectorUI);
@@ -362,6 +368,7 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = true;
 		galaxyView = false;
+		nameLabel.setText(curSector.getName());
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.addProcessor(sectorUI);
 		multiplexer.removeProcessor(planetStage);
@@ -411,6 +418,7 @@ public class GameScene implements Screen {
 		// TODO Auto-generated method stub
 		musicLoop.play();
 		musicLoop.setLooping(true);
+		Gdx.input.setInputProcessor(multiplexer);
 
 	}
 
@@ -451,5 +459,11 @@ public class GameScene implements Screen {
 			planetUI.draw();
 
 		}
+
+		navBar.draw();
+	}
+	
+	public void goMenu() {
+		game.goMenu();
 	}
 }// end Game
