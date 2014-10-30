@@ -10,6 +10,7 @@ import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.Defense;
 import se300.destinytactics.game.scenes.FleetCommand;
 import se300.destinytactics.game.scenes.GalaxyScene;
+import se300.destinytactics.game.scenes.InfoBar;
 import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.game.scenes.NavBar;
 import se300.destinytactics.ui.Drawable;
@@ -66,6 +67,7 @@ public class GameScene implements Screen {
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
 			infoBarStage;
 	public NavBar navBar;
+	public InfoBar infoBar;
 	public static final int PADDING = 20;
 
 	public Table managementInterface;
@@ -87,8 +89,7 @@ public class GameScene implements Screen {
 	public float masterVolume = 0.5f;
 	public Image background;
 	public Sector curSector;
-	Label infoBar;
-	TextButton PlayerButton, PlayerButton2, PlayerButton3;
+	// Label infoBar;
 	TextField txt1, txt2;
 
 	public GameScene(DestinyTactics game, Skin skin) {
@@ -114,8 +115,10 @@ public class GameScene implements Screen {
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		infoBarStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),PADDING, this);
+		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
+				PADDING, this);
+		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
+				PADDING, this);
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -124,60 +127,13 @@ public class GameScene implements Screen {
 		// planetStage.setDebugAll(true);
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
-		navBar.setDebugAll(true);
-
-		// Infobar Label
-		infoBar = new Label("infoBar", skin);
-		infoBar.setX(SCREEN_WIDTH / 2 - infoBar.getWidth() / 2);
-		infoBar.setY(0);
-
-		// Player and infoBar shell
-		PlayerButton = new TextButton("Player Info", skin.get("default",
-				TextButtonStyle.class));
-		PlayerButton2 = new TextButton("Current game status", skin.get(
-				"default", TextButtonStyle.class));
-		PlayerButton3 = new TextButton("Current Fleet Status", skin.get(
-				"default", TextButtonStyle.class));
-		txt1 = new TextField("txt1", skin);
-
-		PlayerButton.setX(20);
-		PlayerButton.setY(3 * PlayerButton.getHeight());
-		PlayerButton2.setX(0);
-		PlayerButton2.setY(2 * PlayerButton.getHeight());
-		PlayerButton3.setX(0);
-		PlayerButton3.setY(PlayerButton.getHeight());
-		txt1.setX(SCREEN_WIDTH - txt1.getWidth());
-		txt1.setY(0);
-
-		infoBarStage.addActor(infoBar);
-		infoBarStage.addActor(PlayerButton);
-		infoBarStage.addActor(PlayerButton2);
-		infoBarStage.addActor(PlayerButton3);
-		infoBarStage.addActor(txt1);
+		//navBar.setDebugAll(true);
 
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.addProcessor(navBar);
-		multiplexer.addProcessor(infoBarStage);
+		multiplexer.addProcessor(infoBar);
 		Gdx.input.setInputProcessor(multiplexer);
-
-		// Add Actors to sector UI
-		final TextButton backButton_Galaxy = new TextButton("Back to Galaxy",
-				skin.get("default", TextButtonStyle.class));
-
-		sectorUI.addActor(backButton_Galaxy);
-
-		backButton_Galaxy.setX(PADDING);
-		backButton_Galaxy.setY(SCREEN_HEIGHT - backButton_Galaxy.getHeight()
-				- PADDING);
-		backButton_Galaxy.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				selectSound.play(masterVolume);
-				goGalaxy();
-				return true;
-			}
-		});
 
 		// Add Actors to planet UI
 		fc = new FleetCommand(skin);
@@ -191,8 +147,6 @@ public class GameScene implements Screen {
 		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
 		managementInterface.setX(GameScene.SCREEN_WIDTH / 2 - PADDING);
 
-		TextButton backButton_Sector = new TextButton("Back to Sector",
-				skin.get("default", TextButtonStyle.class));
 		TextButton managefleet = new TextButton("Fleet Command", skin.get(
 				"default", TextButtonStyle.class));
 		TextButton manageInfrastructure = new TextButton("Infrastructure",
@@ -233,26 +187,13 @@ public class GameScene implements Screen {
 		planetUI.addActor(manageDefense);
 		planetUI.addActor(managementInterface);
 
-		planetUI.addActor(backButton_Sector);
 
-		backButton_Sector.setX(PADDING);
-		backButton_Sector.setY(SCREEN_HEIGHT - backButton_Sector.getHeight()
-				- PADDING);
 		managefleet.setX(PADDING);
 		managefleet.setY(managefleet.getHeight() * 9);
 		manageInfrastructure.setX(PADDING);
 		manageInfrastructure.setY(managefleet.getHeight() * 8);
 		manageDefense.setX(PADDING);
 		manageDefense.setY(managefleet.getHeight() * 7);
-		backButton_Sector.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				selectSound.play(masterVolume);
-				goSystem();
-				return true;
-			}
-
-		});
 
 	}
 
@@ -453,9 +394,9 @@ public class GameScene implements Screen {
 			planetUI.draw();
 
 		}
-
+		navBar.act();
 		navBar.draw();
-		infoBarStage.draw();
+		infoBar.draw();
 	}
 
 	public void goMenu() {

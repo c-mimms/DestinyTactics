@@ -19,8 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Infobar {
+public class OldInfoBar extends Stage{
 
 	private Table container1, overviewWrapper, infobarFormWrapper, overview, infobarform;
 	private Label label1, label2;
@@ -29,8 +30,9 @@ public class Infobar {
 	
 	
 	
-	public Infobar(Skin skin){
-		this.skin = skin;
+	public OldInfoBar(Viewport vp, final GameScene myGame){
+		super(vp);
+		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		createOverview();
 		createinfobarform();
 		
@@ -39,6 +41,7 @@ public class Infobar {
 		container1.row();
 		
 		container1.setFillParent(true);
+		this.addActor(container1);
 		
 		
 	}
@@ -98,7 +101,7 @@ public class Infobar {
 		infobarform.add(new Label("label1", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		infobarform.row();
-		infobarform.add(new Label("labe;2", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
+		infobarform.add(new Label("label2", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
 		infobarFormWrapper.add("label1").bottom().expandX();
 		infobarFormWrapper.row().top();                 
