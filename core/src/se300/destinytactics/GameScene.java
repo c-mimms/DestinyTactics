@@ -11,6 +11,7 @@ import se300.destinytactics.game.scenes.Defense;
 import se300.destinytactics.game.scenes.FleetCommand;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.Infrastructure;
+import se300.destinytactics.game.scenes.NavBar;
 import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.Screen;
@@ -36,6 +37,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.javafx.scene.control.skin.LabelSkin;
 
@@ -62,7 +64,8 @@ public class GameScene implements Screen {
 	public static final int NUMBER_SECTORS = 20;
 
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
-			navBar, infoBarStage;
+			infoBarStage;
+	public NavBar navBar;
 	public static final int PADDING = 20;
 
 	public Table managementInterface;
@@ -84,9 +87,7 @@ public class GameScene implements Screen {
 	public float masterVolume = 0.5f;
 	public Image background;
 	public Sector curSector;
-	TextButton quitButton;
-	TextButton endTurnButton;
-	Label nameLabel, infoBar;
+	Label infoBar;
 	TextButton PlayerButton, PlayerButton2, PlayerButton3;
 	TextField txt1, txt2;
 
@@ -104,20 +105,17 @@ public class GameScene implements Screen {
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
 
-		
-
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
-		
 		// Create galaxy stage on game initialization.
-		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT), this);
+		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
+				SCREEN_HEIGHT), this);
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		infoBarStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		navBar = new Stage(new FitViewport(SCREEN_WIDTH + PADDING,
-				SCREEN_HEIGHT + PADDING));
+		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),PADDING, this);
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
@@ -126,15 +124,7 @@ public class GameScene implements Screen {
 		// planetStage.setDebugAll(true);
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
-		// navBar.setDebugAll(true);
-
-		// name Label buttons
-		nameLabel = new Label("Aurora", skin);
-		navBar.addActor(nameLabel);
-		nameLabel.setFontScale(2);
-		nameLabel.setAlignment(Align.center);
-		nameLabel.setX(SCREEN_WIDTH / 2);
-		nameLabel.setY(SCREEN_HEIGHT - nameLabel.getHeight());
+		navBar.setDebugAll(true);
 
 		// Infobar Label
 		infoBar = new Label("infoBar", skin);
@@ -164,33 +154,6 @@ public class GameScene implements Screen {
 		infoBarStage.addActor(PlayerButton2);
 		infoBarStage.addActor(PlayerButton3);
 		infoBarStage.addActor(txt1);
-
-		// quit and end turn buttons
-		quitButton = new TextButton("Quit", skin.get("default",
-				TextButtonStyle.class));
-		endTurnButton = new TextButton("End Turn", skin.get("default",
-				TextButtonStyle.class));
-		quitButton.setX(SCREEN_WIDTH - quitButton.getWidth());
-		quitButton.setY(SCREEN_HEIGHT - quitButton.getHeight());
-		endTurnButton.setX(SCREEN_WIDTH - endTurnButton.getWidth()
-				- quitButton.getWidth());
-		endTurnButton.setY(SCREEN_HEIGHT - endTurnButton.getHeight());
-
-		quitButton.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				goMenu();
-				return true;
-			}
-		});
-
-		endTurnButton.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				goGalaxy();
-				return true;
-			}
-		});
 
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
@@ -291,11 +254,6 @@ public class GameScene implements Screen {
 
 		});
 
-		// Set galaxy stage to get inputs.
-		navBar.addActor(quitButton);
-		navBar.addActor(endTurnButton);
-
-
 	}
 
 	public void resize(int width, int height) {
@@ -330,7 +288,7 @@ public class GameScene implements Screen {
 		// Clear stage to reuse it
 		sectorStage.clear();
 
-		nameLabel.setText(nextSector.getName());
+		navBar.setName(nextSector.getName());
 
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
@@ -364,8 +322,9 @@ public class GameScene implements Screen {
 		// System.out.println("Go to MyGame Method");
 		// Clear stage to reuse it
 		planetStage.clear();
-		nameLabel.setText(nextOrbitalBody.getName());
-		
+
+		navBar.setName(nextOrbitalBody.getName());
+
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
 		Image orbitalBody = new Image(
@@ -391,7 +350,7 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = false;
 		galaxyView = true;
-		nameLabel.setText(m_Galaxy.getName());
+		navBar.setName(m_Galaxy.getName());
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
@@ -403,7 +362,7 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = true;
 		galaxyView = false;
-		nameLabel.setText(curSector.getName());
+		navBar.setName(curSector.getName());
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.addProcessor(sectorUI);
 		multiplexer.removeProcessor(planetStage);
