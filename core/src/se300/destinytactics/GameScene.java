@@ -1,61 +1,36 @@
 package se300.destinytactics;
 
-import se300.destinytactics.game.AI;
-import se300.destinytactics.game.User;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
-import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.Defense;
 import se300.destinytactics.game.scenes.FleetCommand;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.InfoBar;
 import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.game.scenes.NavBar;
-import se300.destinytactics.ui.Drawable;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sun.javafx.scene.control.skin.LabelSkin;
 
 public class GameScene implements Screen {
 
-	// OLD Variables, Decide which need to be kept
-	// private SpriteBatch batch;
-	// private Rectangle sun;
-	// private Texture selImage;
-	// private Galaxy gameMap;
-	// private ArrayList<Drawable> objToDraw;
-	// private boolean start;
-	// public AI m_AI;
-	// public User m_User;
-	// ShapeRenderer renderer;
-	// Vector3 mousePos = new Vector3();
-	public Galaxy m_Galaxy;
 
 	// NEW variables, put necessary ones here.
 	public static final int SCREEN_WIDTH = 1024;
@@ -64,6 +39,8 @@ public class GameScene implements Screen {
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
 
+	//Galaxy model
+	public Galaxy m_Galaxy;
 	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
 			infoBarStage;
 	public NavBar navBar;
@@ -82,7 +59,6 @@ public class GameScene implements Screen {
 	public Texture backButton;
 	InputMultiplexer multiplexer;
 	public Skin skin;
-	private String spriteLib = "realorbitalbody";
 	public DestinyTactics game;
 	public Music musicLoop;
 	public Sound selectSound;
@@ -95,31 +71,33 @@ public class GameScene implements Screen {
 	public GameScene(DestinyTactics game, Skin skin) {
 		this.game = game;
 
+		//Load music and sounds (we should have a static sound/music class maybe?)
 		musicLoop = Gdx.audio.newMusic(Gdx.files
 				.internal("music/SimplicityIsBliss.mp3"));
-
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		bgimg = new Texture("StarfieldBackground.jpg");
+		
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
-		sectorSun = new Texture(spriteLib + "/sun1.png");
-		backButton = new Texture("backbutton.png");
 
+		//Generate the galaxy model.
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
-		// Create galaxy stage on game initialization.
+		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), this);
-		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, this);
 		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, this);
+		
+		//Generic stages to be removed from this scene
+		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 
+		
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
 		// galaxyStage.setDebugAll(true);
@@ -127,14 +105,21 @@ public class GameScene implements Screen {
 		// planetStage.setDebugAll(true);
 		// sectorUI.setDebugAll(true);
 		// planetUI.setDebugAll(true);
-		//navBar.setDebugAll(true);
+		// navBar.setDebugAll(true);
 
+		//Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.addProcessor(navBar);
 		multiplexer.addProcessor(infoBar);
 		Gdx.input.setInputProcessor(multiplexer);
 
+		
+		/////////////////////////////////////////////////////////////////////
+		//*******************************************************************
+		/////////////////////////////////////////////////////////////////////
+		//Planet UI stuff
+		
 		// Add Actors to planet UI
 		fc = new FleetCommand(skin);
 		inf = new Infrastructure(skin);
@@ -194,11 +179,17 @@ public class GameScene implements Screen {
 		manageInfrastructure.setY(managefleet.getHeight() * 8);
 		manageDefense.setX(PADDING);
 		manageDefense.setY(managefleet.getHeight() * 7);
+		
+
+		/////////////////////////////////////////////////////////////////////
+		//*******************************************************************
+		/////////////////////////////////////////////////////////////////////
+		//End Planet UI stuff
 
 	}
 
 	public void resize(int width, int height) {
-		// Resize stage to fill window.
+		// Resize stages to fill window.
 		galaxyStage.getViewport().update(width, height, false);
 		sectorStage.getViewport().update(width, height, false);
 		planetStage.getViewport().update(width, height, false);
