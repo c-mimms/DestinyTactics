@@ -9,6 +9,7 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.Defense;
 import se300.destinytactics.game.scenes.FleetCommand;
+import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.ui.Drawable;
 
@@ -102,10 +103,14 @@ public class GameScene implements Screen {
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		sectorSun = new Texture(spriteLib + "/sun1.png");
 		backButton = new Texture("backbutton.png");
-		Image gridOverlay = new Image(new Texture("images/gridOverlay-ps.png"));
 
+		
+
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
+
+		
 		// Create galaxy stage on game initialization.
-		galaxyStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT), this);
 		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -287,31 +292,9 @@ public class GameScene implements Screen {
 		});
 
 		// Set galaxy stage to get inputs.
-		background = new Image(bgimg_galaxy);
-
-		galaxyStage.addActor(background);
-
-		background.setFillParent(true);
 		navBar.addActor(quitButton);
 		navBar.addActor(endTurnButton);
 
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
-
-		gridOverlay.setFillParent(true);
-		gridOverlay.setTouchable(Touchable.disabled);
-		galaxyStage.addActor(gridOverlay);
-		for (int i = 0; i < m_Galaxy.sectors.length; i++) {
-			galaxyStage.addActor(m_Galaxy.sectors[i]);
-			String secName = m_Galaxy.sectors[i].getName();
-			Label tmpLabel = new Label(secName, skin);
-			galaxyStage.addActor(tmpLabel);
-			tmpLabel.setX(m_Galaxy.sectors[i].getX() - tmpLabel.getWidth() / 2);
-			if (Utility.random.nextBoolean()) {
-				tmpLabel.setY(m_Galaxy.sectors[i].getY() + tmpLabel.getHeight()/2);
-			} else {
-				tmpLabel.setY(m_Galaxy.sectors[i].getY() - tmpLabel.getHeight());
-			}
-		}
 
 	}
 
@@ -386,7 +369,7 @@ public class GameScene implements Screen {
 		// Add image background and stretch to fit
 		background = new Image(bgimg);
 		Image orbitalBody = new Image(
-				nextOrbitalBody.hotBod[nextOrbitalBody.getType()]);
+				OrbitalBody.hotBod[nextOrbitalBody.getType()]);
 		orbitalBody.setSize(1000, 1000);
 		planetStage.addActor(background);
 		planetStage.addActor(orbitalBody);
@@ -408,7 +391,7 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = false;
 		galaxyView = true;
-		nameLabel.setText("Aurora");
+		nameLabel.setText(m_Galaxy.getName());
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
