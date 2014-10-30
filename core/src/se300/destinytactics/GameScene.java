@@ -77,8 +77,9 @@ public class GameScene implements Screen {
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		
+
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
+		bgimg = new Texture("StarfieldBackground.jpg");
 
 		//Generate the galaxy model.
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
