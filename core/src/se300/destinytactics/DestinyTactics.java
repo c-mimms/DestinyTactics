@@ -38,6 +38,7 @@ public class DestinyTactics extends Game {
 		menuScreen = new MenuScene(this, skin);
 		
 		setScreen(menuScreen);
+		GameScene.preloadGalaxy();
 	}
 
 	@Override

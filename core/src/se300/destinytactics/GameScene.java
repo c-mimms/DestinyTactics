@@ -3,12 +3,12 @@ package se300.destinytactics;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
-import se300.destinytactics.game.scenes.Defense;
-import se300.destinytactics.game.scenes.FleetCommand;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.InfoBar;
-import se300.destinytactics.game.scenes.Infrastructure;
 import se300.destinytactics.game.scenes.NavBar;
+import se300.destinytactics.game.scenes.OrbitalBodyScene;
+import se300.destinytactics.game.scenes.OrbitalBodyUI;
+import se300.destinytactics.game.scenes.SectorScene;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
@@ -16,89 +16,108 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameScene implements Screen {
 
-
-	// NEW variables, put necessary ones here.
+	// Constants
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 640;
 	public static final int GALAXY_WIDTH = 1024;
 	public static final int GALAXY_HEIGHT = 640;
 	public static final int NUMBER_SECTORS = 20;
-
-	//Galaxy model
-	public Galaxy m_Galaxy;
-	public Stage galaxyStage, sectorStage, planetStage, sectorUI, planetUI,
-			infoBarStage;
-	public NavBar navBar;
-	public InfoBar infoBar;
 	public static final int PADDING = 20;
 
-	public Table managementInterface;
-	public FleetCommand fc;
-	public Infrastructure inf;
-	public Defense def;
-	public boolean sectorView = false;
+	// Galaxy model
+	public static Galaxy m_Galaxy;
+	
+	//Scenes
+	public Stage galaxyStage;
+	public NavBar navBar;
+	public InfoBar infoBar;
+	public OrbitalBodyUI planetUI;
+	public OrbitalBodyScene planetStage;
+	public SectorScene sectorStage;
+
+	//State variables
 	public boolean galaxyView = true;
+	public boolean sectorView = false;
 	public boolean planetView = false;
-	public Texture bgimg, bgimg_galaxy;
-	public Texture sectorSun;
-	public Texture backButton;
-	InputMultiplexer multiplexer;
-	public Skin skin;
+	
+	//Game logic required stuff
 	public DestinyTactics game;
+	InputMultiplexer multiplexer;
+	public Sector curSector;
+	
+	//Sound stuff
 	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
-	public Image background;
-	public Sector curSector;
-	// Label infoBar;
-	TextField txt1, txt2;
+	
+	
+	public static void preloadGalaxy(){
+
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
+	}
 
 	public GameScene(DestinyTactics game, Skin skin) {
+		
+		//Keep track of the game object so we can return to main menu
 		this.game = game;
 
-		//Load music and sounds (we should have a static sound/music class maybe?)
+		// Load music and sounds (we should have a static sound/music class
+		// maybe?)
 		musicLoop = Gdx.audio.newMusic(Gdx.files
 				.internal("music/SimplicityIsBliss.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
 
-		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
-		bgimg = new Texture("StarfieldBackground.jpg");
+		
+		// Generate the galaxy model.
+		//m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
 
-		//Generate the galaxy model.
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
+		long time = System.currentTimeMillis();
+		long time2 = System.currentTimeMillis();
+		
 		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), this);
+
+		System.out.println("Galaxy time taken: " + (System.currentTimeMillis()-time));
+
+		 time = System.currentTimeMillis();
+		
 		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, this);
+
+		System.out.println("Infobar time taken: " + (System.currentTimeMillis()-time));
+		 time = System.currentTimeMillis();
+		
 		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, this);
 		
-		//Generic stages to be removed from this scene
-		sectorStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		planetStage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		sectorUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
-		planetUI = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+
+		System.out.println("Navbar time taken: " + (System.currentTimeMillis()-time));
+
+		 time = System.currentTimeMillis();
+		
+		planetUI = new OrbitalBodyUI(new FitViewport(SCREEN_WIDTH,
+				SCREEN_HEIGHT), PADDING, this);
+
+		System.out.println("Planetui time taken: " + (System.currentTimeMillis()-time));
 
 		
+		// Create empty stages that are populated when selected
+		sectorStage = new SectorScene(new FitViewport(SCREEN_WIDTH,
+				SCREEN_HEIGHT), PADDING, this);
+		planetStage = new OrbitalBodyScene(new FitViewport(SCREEN_WIDTH,
+				SCREEN_HEIGHT), PADDING, this);
+
+
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
 		// galaxyStage.setDebugAll(true);
@@ -108,84 +127,15 @@ public class GameScene implements Screen {
 		// planetUI.setDebugAll(true);
 		// navBar.setDebugAll(true);
 
-		//Create multiplexer to get input from all stages
+		// Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.addProcessor(navBar);
 		multiplexer.addProcessor(infoBar);
 		Gdx.input.setInputProcessor(multiplexer);
 
-		
-		/////////////////////////////////////////////////////////////////////
-		//*******************************************************************
-		/////////////////////////////////////////////////////////////////////
-		//Planet UI stuff
-		
-		// Add Actors to planet UI
-		fc = new FleetCommand(skin);
-		inf = new Infrastructure(skin);
-		def = new Defense(skin);
+		System.out.println("Total time taken: " + (System.currentTimeMillis()-time2));
 
-		managementInterface = new Table();
-		managementInterface.add(fc.getFleetCommand()).expand().top();
-		managementInterface.setHeight(GameScene.SCREEN_HEIGHT * 7 / 10);
-		managementInterface.setWidth(GameScene.SCREEN_WIDTH / 2);
-		managementInterface.setY(GameScene.SCREEN_HEIGHT * 2 / 10);
-		managementInterface.setX(GameScene.SCREEN_WIDTH / 2 - PADDING);
-
-		TextButton managefleet = new TextButton("Fleet Command", skin.get(
-				"default", TextButtonStyle.class));
-		TextButton manageInfrastructure = new TextButton("Infrastructure",
-				skin.get("default", TextButtonStyle.class));
-		TextButton manageDefense = new TextButton("Defense", skin.get(
-				"default", TextButtonStyle.class));
-
-		// Add Click listeners. Changes the loaded form and the toggled button.
-		managefleet.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				selectSound.play(masterVolume);
-				setManagementInterface("Fleet");
-				return true;
-			}
-		});
-
-		manageInfrastructure.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				selectSound.play(masterVolume);
-				setManagementInterface("Infrastructure");
-				return true;
-			}
-		});
-
-		manageDefense.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				selectSound.play(masterVolume);
-				setManagementInterface("Defense");
-				return true;
-			}
-		});
-
-		planetUI.addActor(managefleet);
-		planetUI.addActor(manageInfrastructure);
-		planetUI.addActor(manageDefense);
-		planetUI.addActor(managementInterface);
-
-
-		managefleet.setX(PADDING);
-		managefleet.setY(managefleet.getHeight() * 9);
-		manageInfrastructure.setX(PADDING);
-		manageInfrastructure.setY(managefleet.getHeight() * 8);
-		manageDefense.setX(PADDING);
-		manageDefense.setY(managefleet.getHeight() * 7);
-		
-
-		/////////////////////////////////////////////////////////////////////
-		//*******************************************************************
-		/////////////////////////////////////////////////////////////////////
-		//End Planet UI stuff
 
 	}
 
@@ -194,7 +144,6 @@ public class GameScene implements Screen {
 		galaxyStage.getViewport().update(width, height, false);
 		sectorStage.getViewport().update(width, height, false);
 		planetStage.getViewport().update(width, height, false);
-		sectorUI.getViewport().update(width, height, false);
 		planetUI.getViewport().update(width, height, false);
 		navBar.getViewport().update(width, height, false);
 	}
@@ -209,74 +158,29 @@ public class GameScene implements Screen {
 		planetStage.dispose();
 	}
 
-	public void endTurn() {
-
-	}
-
 	public void switchView(Sector nextSector) {
 
-		curSector = nextSector;
 		selectSound.play();
-
-		// Clear stage to reuse it
-		sectorStage.clear();
-
-		navBar.setName(nextSector.getName());
-
-		// Add image background and stretch to fit
-		background = new Image(bgimg);
-		Image sun = new Image(Sector.sunTypes[nextSector.sunType]);
-		sectorStage.addActor(background);
-		sectorStage.addActor(sun);
-		sun.setSize(SCREEN_HEIGHT, SCREEN_HEIGHT);
-		sun.setOrigin(SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
-		sun.setRotation(nextSector.sunRotation);
-		sun.setX(SCREEN_WIDTH - sun.getWidth() * (3.0f / 8.0f));
-		sun.setY(SCREEN_HEIGHT / 2 - sun.getHeight() / 2);
-
-		background.setFillParent(true);
-
-		// Add all planet objects
-		for (int i = 0; i < nextSector.getNumBodies(); i++) {
-			sectorStage.addActor(nextSector.bodyList[i]);
-		}
-
+		curSector = nextSector;
+		
+		sectorStage.changeSector(nextSector);
 		galaxyView = false;
 		planetView = false;
 		sectorView = true;
 		multiplexer.addProcessor(sectorStage);
-		multiplexer.addProcessor(sectorUI);
 		multiplexer.removeProcessor(galaxyStage);
 	}
 
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
 
 		selectSound.play();
-		// System.out.println("Go to MyGame Method");
-		// Clear stage to reuse it
-		planetStage.clear();
-
-		navBar.setName(nextOrbitalBody.getName());
-
-		// Add image background and stretch to fit
-		background = new Image(bgimg);
-		Image orbitalBody = new Image(
-				OrbitalBody.hotBod[nextOrbitalBody.getType()]);
-		orbitalBody.setSize(1000, 1000);
-		planetStage.addActor(background);
-		planetStage.addActor(orbitalBody);
-		orbitalBody.setX(SCREEN_WIDTH / 4 - orbitalBody.getWidth() / 2);
-		orbitalBody.setY(SCREEN_HEIGHT / 2 - orbitalBody.getHeight() / 2);
-
-		background.setFillParent(true);
-
+		planetStage.changePlanet(nextOrbitalBody);
 		planetView = true;
 		galaxyView = false;
 		sectorView = false;
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
-		multiplexer.removeProcessor(sectorUI);
 	}
 
 	public void goGalaxy() {
@@ -288,7 +192,6 @@ public class GameScene implements Screen {
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
-		multiplexer.removeProcessor(sectorUI);
 	}
 
 	public void goSystem() {
@@ -297,52 +200,13 @@ public class GameScene implements Screen {
 		galaxyView = false;
 		navBar.setName(curSector.getName());
 		multiplexer.addProcessor(sectorStage);
-		multiplexer.addProcessor(sectorUI);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
 	}
 
-	public int getGameState() {
-		return 0;
-	}
-
-	public void setGameState() {
-	}
-
-	public void setManagementInterface(String formType) {
-		Cell cell = getFormCell();
-
-		if (cell.hasActor()) {
-			cell.clearActor();
-
-			if (formType == "Fleet") {
-				cell.setActor(fc.getFleetCommand());
-			} else if (formType == "Infrastructure") {
-				cell.setActor(inf.getInfrastructure());
-			} else if (formType == "Defense") {
-				cell.setActor(def.getDefense());
-			}
-		}
-	}
-
-	// Private Methods
-	private Cell getFormCell() {
-		Cell cell;
-
-		cell = managementInterface.getCell(fc.getFleetCommand());
-		if (cell == null) {
-			cell = managementInterface.getCell(inf.getInfrastructure());
-		}
-		if (cell == null) {
-			cell = managementInterface.getCell(def.getDefense());
-		}
-
-		return cell;
-	}
-
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		//Start music and take input when you switch to this window
 		musicLoop.play();
 		musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
@@ -371,6 +235,7 @@ public class GameScene implements Screen {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (galaxyView) {
@@ -379,7 +244,6 @@ public class GameScene implements Screen {
 		} else if (sectorView) {
 			sectorStage.act();
 			sectorStage.draw();
-			sectorUI.draw();
 		} else if (planetView) {
 			planetStage.act();
 			planetStage.draw();
@@ -394,4 +258,4 @@ public class GameScene implements Screen {
 	public void goMenu() {
 		game.goMenu();
 	}
-}// end Game
+}

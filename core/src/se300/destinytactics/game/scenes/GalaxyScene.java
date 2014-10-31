@@ -37,6 +37,7 @@ public class GalaxyScene extends Stage{
 		this.addActor(gridOverlay);
 		
 		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
+			if(myGame.m_Galaxy.sectors[i]==null)break;
 			this.addActor(myGame.m_Galaxy.sectors[i]);
 			String secName = myGame.m_Galaxy.sectors[i].getName();
 			Label tmpLabel = new Label(secName, skin);

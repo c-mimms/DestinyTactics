@@ -3,14 +3,10 @@ package se300.destinytactics.game.mapgen;
 import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
@@ -85,9 +81,6 @@ public class Sector extends Actor {
 		name = Names.newName();
 		this.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-				//System.out.println("Hello from " + this);
-				// Game, etc.
 
 				switchView();
 				return true;
