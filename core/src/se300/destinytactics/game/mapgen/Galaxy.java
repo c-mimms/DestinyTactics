@@ -23,8 +23,9 @@ public class Galaxy {
 	public GameScene thisgame;
 	public int minSpacing = 75;
 
-	public Galaxy(int x, int y, int n){
+	public Galaxy(int x, int y, int n, GameScene thisgame){
 		
+		this.thisgame = thisgame;
 		numSystems = n;
 		sizeX = x;
 		sizeY = y;

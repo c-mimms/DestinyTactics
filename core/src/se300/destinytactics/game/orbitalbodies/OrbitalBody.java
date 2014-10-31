@@ -6,11 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
@@ -18,9 +15,7 @@ import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.ui.Button;
-import se300.destinytactics.ui.Drawable;
 
 /**
  * @author John
@@ -74,7 +69,6 @@ public abstract class OrbitalBody extends Actor {
 		sector = sect;
 		controlState = 0;
 		galaxy = Sector.galaxy;
-		thisgame = sect.thisgame;
 		
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
 		

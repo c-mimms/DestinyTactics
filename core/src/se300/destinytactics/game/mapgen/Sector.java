@@ -47,7 +47,6 @@ public class Sector extends Actor {
 	//New variables
 	private static final double EDGE_EXCLUSION = 60;
 	private static final int SPRITE_SIZE = 15;
-	public GameScene thisgame;
 	public int sunType;
 	public float sunRotation;
 	public int padding = 50;
@@ -92,6 +91,7 @@ public class Sector extends Actor {
 	public void switchView(){
 		
 		galaxy.thisgame.switchView(this);
+		
 		
 	}
 	public void finalize() throws Throwable {

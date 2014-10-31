@@ -59,13 +59,15 @@ public class GameScene implements Screen {
 	
 	public static void preloadGalaxy(){
 
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
 	}
 
 	public GameScene(DestinyTactics game, Skin skin) {
 		
+		
 		//Keep track of the game object so we can return to main menu
 		this.game = game;
+		m_Galaxy.thisgame = this;
 
 		// Load music and sounds (we should have a static sound/music class
 		// maybe?)
