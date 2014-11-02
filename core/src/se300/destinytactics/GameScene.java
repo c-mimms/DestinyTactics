@@ -71,7 +71,7 @@ public class GameScene implements Screen {
 		
 		//Keep track of the game object so we can return to main menu
 		this.game = game;
-		m_Galaxy.thisgame = this;
+		//m_Galaxy.thisgame = this;
 		curPlayer = new Player();
 
 		// Load music and sounds (we should have a static sound/music class
@@ -82,13 +82,13 @@ public class GameScene implements Screen {
 				.internal("sounds/select2.wav"));
 
 
-		
-		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
-		//m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
-
 		//Time each scene generation.
 		long time = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
+		
+		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS,this);
+
 		
 		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,

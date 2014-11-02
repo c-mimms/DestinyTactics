@@ -42,7 +42,7 @@ public class DestinyTactics extends Game {
 		//Generate galaxy and time how long it takes. I am putting this on a separate thread later...
 		 long startTime = System.currentTimeMillis();
 		 //(new PreloadGalaxyThread()).start();
-		 GameScene.preloadGalaxy();
+		 //GameScene.preloadGalaxy();
 		 long estimatedTime = System.currentTimeMillis() - startTime;
 		 System.out.println("Generate galaxy : " + estimatedTime);
 	}
