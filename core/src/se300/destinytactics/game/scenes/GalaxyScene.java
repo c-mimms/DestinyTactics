@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GalaxyScene extends Stage{
@@ -40,9 +41,12 @@ public class GalaxyScene extends Stage{
 			if(myGame.m_Galaxy.sectors[i]==null)break;
 			this.addActor(myGame.m_Galaxy.sectors[i]);
 			String secName = myGame.m_Galaxy.sectors[i].getName();
+			
 			Label tmpLabel = new Label(secName, skin);
 			this.addActor(tmpLabel);
-			tmpLabel.setX(myGame.m_Galaxy.sectors[i].getX() - tmpLabel.getWidth() / 2);
+			tmpLabel.setX(myGame.m_Galaxy.sectors[i].getX() + myGame.m_Galaxy.sectors[i].getWidth()/2 - tmpLabel.getWidth() / 2);
+			tmpLabel.setAlignment(Align.center);
+			
 			if (Utility.random.nextBoolean()) {
 				tmpLabel.setY(myGame.m_Galaxy.sectors[i].getY() + tmpLabel.getHeight()/2);
 			} else {

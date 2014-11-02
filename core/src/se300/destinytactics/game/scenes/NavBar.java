@@ -32,12 +32,12 @@ public class NavBar extends Stage {
 		this.myGame = myGame;
 		this.edgePadding = padding;
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		nameLabel = new Label("Aurora", skin);
+		nameLabel = new Label(myGame.m_Galaxy.getName(), skin);
 		this.addActor(nameLabel);
 
 		nameLabel.setAlignment(Align.center);
 		nameLabel.setFontScale(2);
-		nameLabel.setX(DestinyTactics.SCREEN_WIDTH / 2);
+		nameLabel.setX(DestinyTactics.SCREEN_WIDTH / 2 - nameLabel.getWidth()/2);
 		nameLabel.setY(DestinyTactics.SCREEN_HEIGHT - nameLabel.getHeight()
 				- padding);
 
@@ -68,7 +68,7 @@ public class NavBar extends Stage {
 		endTurnButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				myGame.goGalaxy();
+				myGame.endTurn();
 				return true;
 			}
 		});
@@ -114,7 +114,6 @@ public class NavBar extends Stage {
 	}
 
 	public void setName(String name) {
-		System.out.println(name);
 		nameLabel.setText(name);
 	}
 	

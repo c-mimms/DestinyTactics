@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
@@ -26,8 +27,11 @@ public abstract class OrbitalBody extends Actor {
 
 	public static Galaxy galaxy;
 	private int controlState;
+	public Player owner;
 	private Fleet fleet;
-	private int miningEfficiency = 0;
+	private int miningEfficiency = 1;
+	protected int resource = 0;
+	protected int resource2 = 0;
 	private String name;
 	protected int orbitRadius;
 	public Sector sector;
@@ -69,6 +73,8 @@ public abstract class OrbitalBody extends Actor {
 		sector = sect;
 		controlState = 0;
 		galaxy = Sector.galaxy;
+		controlState = 1;
+		owner = null;
 		
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
 		
@@ -85,6 +91,7 @@ public abstract class OrbitalBody extends Actor {
 	
 	public void switchToPlanetView(){
 		//System.out.println("In switchToPlanetView()...");
+		owner = galaxy.thisgame.curPlayer;
 		galaxy.thisgame.switchToPlanetView(this);
 	}
 
@@ -139,5 +146,12 @@ public abstract class OrbitalBody extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha){
 		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+	}
+	
+	public void act(float time){
+		if(controlState == 1 && owner != null){
+			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
+			owner.addResource(resource * miningEfficiency);
+		}
 	}
 }// end OrbitalBody

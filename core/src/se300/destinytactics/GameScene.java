@@ -1,5 +1,6 @@
 package se300.destinytactics;
 
+import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
@@ -56,6 +57,9 @@ public class GameScene implements Screen {
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
 	
+	//Players?
+	public Player curPlayer;
+	
 	
 	public static void preloadGalaxy(){
 
@@ -68,6 +72,7 @@ public class GameScene implements Screen {
 		//Keep track of the game object so we can return to main menu
 		this.game = game;
 		m_Galaxy.thisgame = this;
+		curPlayer = new Player();
 
 		// Load music and sounds (we should have a static sound/music class
 		// maybe?)
@@ -78,10 +83,10 @@ public class GameScene implements Screen {
 
 
 		
-		// Generate the galaxy model.
+		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
 		//m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS);
 
-
+		//Time each scene generation.
 		long time = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
 		
@@ -122,12 +127,11 @@ public class GameScene implements Screen {
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
-		// galaxyStage.setDebugAll(true);
-		// sectorStage.setDebugAll(true);
-		// planetStage.setDebugAll(true);
-		// sectorUI.setDebugAll(true);
-		// planetUI.setDebugAll(true);
-		// navBar.setDebugAll(true);
+//		 galaxyStage.setDebugAll(true);
+//		 sectorStage.setDebugAll(true);
+//		 planetStage.setDebugAll(true);
+//		 planetUI.setDebugAll(true);
+//		 navBar.setDebugAll(true);
 
 		// Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
@@ -166,9 +170,12 @@ public class GameScene implements Screen {
 		curSector = nextSector;
 		
 		sectorStage.changeSector(nextSector);
+		
 		galaxyView = false;
 		planetView = false;
 		sectorView = true;
+		
+		
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(galaxyStage);
 	}
@@ -177,9 +184,12 @@ public class GameScene implements Screen {
 
 		selectSound.play();
 		planetStage.changePlanet(nextOrbitalBody);
+		
+		
 		planetView = true;
 		galaxyView = false;
 		sectorView = false;
+		
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
@@ -189,7 +199,9 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = false;
 		galaxyView = true;
+		
 		navBar.setName(m_Galaxy.getName());
+		
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
@@ -200,7 +212,9 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = true;
 		galaxyView = false;
+		
 		navBar.setName(curSector.getName());
+		
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
@@ -241,23 +255,28 @@ public class GameScene implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (galaxyView) {
-			galaxyStage.act();
 			galaxyStage.draw();
 		} else if (sectorView) {
-			sectorStage.act();
 			sectorStage.draw();
 		} else if (planetView) {
-			planetStage.act();
 			planetStage.draw();
 			planetUI.draw();
 
 		}
 		navBar.act();
 		navBar.draw();
+		infoBar.act();
 		infoBar.draw();
 	}
 
 	public void goMenu() {
 		game.goMenu();
+	}
+	
+	public void endTurn() {
+		galaxyStage.act();
+		planetStage.act();
+		sectorStage.act();
+		goGalaxy();
 	}
 }

@@ -21,8 +21,6 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 
 	private int miningEfficiency2;
 	private int miningEfficiency1;
-	private int resource;
-	private int resource2;
 	private Structure structure[];
 	public Structure m_Structure;
 
@@ -30,8 +28,8 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		super(radius,sector);
 		miningEfficiency1 = 0;
 		miningEfficiency2 = 0;
-		resource = (int) Math.random()*1000;
-		resource2 = (int) Math.random()*1000;
+		resource = (int) (Math.random()*1000);
+		resource2 = (int) (Math.random()*1000);
 		
 		type = Utility.random.nextInt(8)+2; //Use only planet images
 		this.setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));

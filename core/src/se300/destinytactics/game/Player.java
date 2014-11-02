@@ -9,17 +9,21 @@ package se300.destinytactics.game;
 public class Player {
 
 	private String name;
-	private int Score;
+	private int score;
+	private int resource1 = 0;
+	private int resource2;
 
 	public Player(){
-
+		name = "Player 1";
+		score = 0;
+		
 	}
 
 	public void finalize() throws Throwable {
 
 	}
 	public String getName(){
-		return "";
+		return name;
 	}
 
 	public String getRace(){
@@ -30,11 +34,18 @@ public class Player {
 		return "";
 	}
 
-	public int setScore(){
-		return 0;
+	public int getScore(){
+		return score;
 	}
 
 	public void takeTurn(){
 
+	}
+	
+	public void addResource(int num){
+		resource1 += num;
+	}
+	public int getResource(){
+		return resource1;
 	}
 }//end Player
