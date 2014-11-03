@@ -19,7 +19,7 @@ public class DestinyTactics extends Game {
 	HighScoresScene scoreScreen;
 	SetupScene setupScreen;
 	MultiplayerScreen multiplayerScreen;
-	Skin skin;
+	Skin skin,skin2;
 	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
@@ -27,7 +27,7 @@ public class DestinyTactics extends Game {
 	@Override
 	public void create() {
 		// Specify the UI Skin
-		//skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
 		skin = new Skin(Gdx.files.internal("data/Holo-dark-hdpi.json"), new TextureAtlas("data/Holo-dark-hdpi.atlas"));
 		musicLoop = Gdx.audio.newMusic(Gdx.files
 				.internal("music/Butterfly.mp3"));
@@ -70,7 +70,7 @@ public class DestinyTactics extends Game {
 	
 	public void startGame(){
 		if (gameScreen == null) {
-			gameScreen = new GameScene(this, skin);
+			gameScreen = new GameScene(this, skin2);
 		}
 		
 		//destroyCurrentScreen();
