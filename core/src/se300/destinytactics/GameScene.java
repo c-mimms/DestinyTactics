@@ -255,6 +255,7 @@ public class GameScene implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (galaxyView) {
+			galaxyStage.act();
 			galaxyStage.draw();
 		} else if (sectorView) {
 			sectorStage.draw();

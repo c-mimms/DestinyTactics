@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
@@ -22,8 +24,7 @@ import se300.destinytactics.ui.Button;
  */
 public class Sector extends Actor {
 
-	
-	//Old variables, clean these
+	// Old variables, clean these
 	public static Galaxy galaxy;
 	private int controlState;
 	private int numBodies;
@@ -33,25 +34,36 @@ public class Sector extends Actor {
 	private int posY;
 	public Button m_Button;
 	public static String imagePath = "images/orbitalbodies/suns";
-	private static Texture sprite1= new Texture(
+	private static Texture sprite1 = new Texture(
 			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
-			
+
 	public static Texture sunTypes[] = {
-		new Texture(imagePath + "/blueSun.png"),
-		new Texture(imagePath + "/neonSun.png"),
-		new Texture(imagePath + "/orangeSun.png"),
-		new Texture(imagePath + "/redSun.png"),
-		new Texture(imagePath + "/tealSun.png"),
-		new Texture(imagePath + "/yellowSun.png")};
+			new Texture(imagePath + "/blueSun.png"),
+			new Texture(imagePath + "/neonSun.png"),
+			new Texture(imagePath + "/orangeSun.png"),
+			new Texture(imagePath + "/redSun.png"),
+			new Texture(imagePath + "/tealSun.png"),
+			new Texture(imagePath + "/yellowSun.png") };
+
+	public static Texture circles[] = {
+			new Texture(Gdx.files.internal("images/blueSelect.png")),
+			new Texture(Gdx.files.internal("images/redSelect.png")) };
+
+	public static Image myCircle = new Image(circles[0]);
 	
-	//New variables
+	// New variables
 	private static final double EDGE_EXCLUSION = 60;
-	private static final int SPRITE_SIZE = 15;
+	private static final int SPRITE_SIZE = 14;
 	public int sunType;
 	public float sunRotation;
 	public int padding = 50;
+	public boolean hovering = false;
+
 	public Sector() {
 
+		myCircle.setOrigin(Align.center);
+		myCircle.setSize(50, 50);
+		
 		super.setVisible(true);
 		this.sunType = Utility.random.nextInt(6);
 		this.sunRotation = Utility.random.nextFloat()*360;
@@ -84,18 +96,34 @@ public class Sector extends Actor {
 				switchView();
 				return true;
 			}
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+				hoverOn();
+			}
+			public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+				hoverOff();
+			}
 
 		});
 	}
 
-	public void switchView(){
-		
+	public void switchView() {
+		controlState = 1;
 		galaxy.thisgame.switchView(this);
-		
-		
+
 	}
+
 	public void finalize() throws Throwable {
 		super.finalize();
+	}
+
+	public void hoverOn() {
+		hovering = true;
+		myCircle.setX(getX()+this.getOriginX() - (myCircle.getWidth()/2));
+		myCircle.setY(getY()+this.getOriginY() - (myCircle.getHeight()/2));
+	}
+
+	public void hoverOff() {
+		hovering = false;
 	}
 
 	public String getName() {
@@ -132,6 +160,15 @@ public class Sector extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
-
+		if (hovering) {
+			myCircle.draw(batch, parentAlpha);
+		}
+		if(controlState == 1){
+			batch.draw(circles[1], getXPos()+7-25, getYPos()+7-25, 25, 25,50,50,1,1,myCircle.getRotation(),0,0,circles[1].getWidth(),circles[1].getHeight(),false,false);
+		}
+	}
+	
+	public void act(float time){
+		myCircle.rotateBy(time*3);
 	}
 }// end Sector
