@@ -25,13 +25,13 @@ public class NavBar extends Stage {
 	int buttonPadding = 5;
 	TextButton backButton_Sector,backButton_Galaxy;
 
-	public NavBar(Viewport vp, int padding, final GameScene myGame) {
+	public NavBar(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
 		// Call super constructor
 		super(vp);
 		this.myGame = myGame;
 		this.edgePadding = padding;
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		this.skin = skin;
 		nameLabel = new Label(myGame.m_Galaxy.getName(), skin);
 		this.addActor(nameLabel);
 

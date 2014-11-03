@@ -24,12 +24,12 @@ public class OrbitalBodyUI extends Stage {
 	int edgePadding;
 	int buttonPadding = 5;
 
-	public OrbitalBodyUI(Viewport vp, int padding, final GameScene myGame) {
+	public OrbitalBodyUI(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
 		super(vp);
 		this.myGame = myGame;
 		edgePadding = padding;
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		this.skin = skin;
 		fc = new FleetCommand(skin);
 		inf = new Infrastructure(skin);
 		def = new Defense(skin);

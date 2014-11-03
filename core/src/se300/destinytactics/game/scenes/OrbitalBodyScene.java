@@ -22,12 +22,12 @@ public class OrbitalBodyScene extends Stage {
 	static Texture bgimg = new Texture("StarfieldBackground.jpg");
 	static Image background = new Image(bgimg);
 
-	public OrbitalBodyScene(Viewport vp, int padding, final GameScene myGame) {
+	public OrbitalBodyScene(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
 		super(vp);
 		this.myGame = myGame;
 		edgePadding = padding;
-		
+		this.skin = skin;
 		
 	}
 	

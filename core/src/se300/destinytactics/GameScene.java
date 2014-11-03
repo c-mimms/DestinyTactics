@@ -87,25 +87,25 @@ public class GameScene implements Screen {
 		long time2 = System.currentTimeMillis();
 		
 		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS,this);
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
 		
 		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
-				SCREEN_HEIGHT), this);
+				SCREEN_HEIGHT), skin, this);
 
 		System.out.println("Galaxy time taken: " + (System.currentTimeMillis()-time));
 
 		 time = System.currentTimeMillis();
 		
 		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
-				PADDING, this);
+				PADDING, skin, this);
 
 		System.out.println("Infobar time taken: " + (System.currentTimeMillis()-time));
 		 time = System.currentTimeMillis();
 		
 		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
-				PADDING, this);
+				PADDING, skin, this);
 		
 
 		System.out.println("Navbar time taken: " + (System.currentTimeMillis()-time));
@@ -113,16 +113,16 @@ public class GameScene implements Screen {
 		 time = System.currentTimeMillis();
 		
 		planetUI = new OrbitalBodyUI(new FitViewport(SCREEN_WIDTH,
-				SCREEN_HEIGHT), PADDING, this);
+				SCREEN_HEIGHT), PADDING, skin, this);
 
 		System.out.println("Planetui time taken: " + (System.currentTimeMillis()-time));
 
 		
 		// Create empty stages that are populated when selected
 		sectorStage = new SectorScene(new FitViewport(SCREEN_WIDTH,
-				SCREEN_HEIGHT), PADDING, this);
+				SCREEN_HEIGHT), PADDING, skin, this);
 		planetStage = new OrbitalBodyScene(new FitViewport(SCREEN_WIDTH,
-				SCREEN_HEIGHT), PADDING, this);
+				SCREEN_HEIGHT), PADDING, skin, this);
 
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF

@@ -31,11 +31,11 @@ public class InfoBar extends Stage{
 	
 	
 	
-	public InfoBar(Viewport vp, int padding, final GameScene myGame){
+	public InfoBar(Viewport vp, int padding, Skin skin, final GameScene myGame){
 		super(vp);
 		this.myGame = myGame;
 		edgePadding = padding;
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		this.skin = skin;
 		
 		infobar = new Table(skin);
 		

@@ -21,10 +21,10 @@ public class GalaxyScene extends Stage{
 	public Skin skin;
 	
 	
-	public GalaxyScene(FitViewport vp, GameScene myGame) {
+	public GalaxyScene(FitViewport vp, Skin skin, GameScene myGame) {
 		super(vp);
 		this.myGame = myGame;
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		this.skin = skin;
 
 		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
 		Image gridOverlay = new Image(new Texture("images/gridOverlay-ps.png"));
