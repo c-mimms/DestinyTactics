@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DestinyTactics extends Game {
@@ -26,7 +27,8 @@ public class DestinyTactics extends Game {
 	@Override
 	public void create() {
 		// Specify the UI Skin
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		//skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		skin = new Skin(Gdx.files.internal("data/Holo-dark-hdpi.json"), new TextureAtlas("data/Holo-dark-hdpi.atlas"));
 		musicLoop = Gdx.audio.newMusic(Gdx.files
 				.internal("music/Butterfly.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
