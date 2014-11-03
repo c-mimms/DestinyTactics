@@ -32,7 +32,7 @@ public class GameScene implements Screen {
 	public static final int PADDING = 20;
 
 	// Galaxy model
-	public static Galaxy m_Galaxy;
+	public Galaxy m_Galaxy;
 	
 	//Scenes
 	public Stage galaxyStage;
@@ -61,10 +61,10 @@ public class GameScene implements Screen {
 	public Player curPlayer;
 	
 	
-	public static void preloadGalaxy(){
-
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
-	}
+//	public static void preloadGalaxy(){
+//
+//		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
+//	}
 
 	public GameScene(DestinyTactics game, Skin skin) {
 		

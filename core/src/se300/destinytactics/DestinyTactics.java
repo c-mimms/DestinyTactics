@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DestinyTactics extends Game {
@@ -19,6 +17,7 @@ public class DestinyTactics extends Game {
 	MenuScene menuScreen;
 	HighScoresScene scoreScreen;
 	SetupScene setupScreen;
+	MultiplayerScreen multiplayerScreen;
 	Skin skin;
 	public Music musicLoop;
 	public Sound selectSound;
@@ -96,5 +95,18 @@ public class DestinyTactics extends Game {
 		if (currentScreen != null) {
 			currentScreen = null;
 		}
+	}
+	
+	public void multiplayerSetup(){
+		if (multiplayerScreen == null) {
+			multiplayerScreen = new MultiplayerScreen(this, skin);
+		}
+		
+		//destroyCurrentScreen();
+		
+		if (!musicLoop.isPlaying()){
+			musicLoop.play();
+		}
+		setScreen(multiplayerScreen);
 	}
 }

@@ -3,7 +3,6 @@ package se300.destinytactics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -70,7 +69,7 @@ public class HighScoresScene implements Screen{
 		menu.row().height(150);
 		menu.add("High Scores").top();
 		menu.row().height(300);
-		menu.add(headers).top().expand().fill().width(game.SCREEN_WIDTH - game.PADDING);
+		menu.add(headers).top().expand().fill().width(DestinyTactics.SCREEN_WIDTH - DestinyTactics.PADDING);
 		menu.row();
 		menu.add(menuButton);
 		menu.row().space(50);
