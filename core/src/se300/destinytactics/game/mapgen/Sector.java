@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -35,7 +36,7 @@ public class Sector extends Actor {
 	public Button m_Button;
 	public static String imagePath = "images/orbitalbodies/suns";
 	private static Texture sprite1 = new Texture(
-			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
+			Gdx.files.internal("realorbitalbody/SectorIcon.png"),true);
 
 	public static Texture sunTypes[] = {
 			new Texture(imagePath + "/blueSun.png"),
@@ -60,7 +61,7 @@ public class Sector extends Actor {
 	public boolean hovering = false;
 
 	public Sector() {
-
+		sprite1.setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
 		
