@@ -35,7 +35,7 @@ public class GameScene implements Screen {
 	public Galaxy m_Galaxy;
 	
 	//Scenes
-	public Stage galaxyStage;
+	public GalaxyScene galaxyStage;
 	public NavBar navBar;
 	public InfoBar infoBar;
 	public OrbitalBodyUI planetUI;
@@ -275,7 +275,7 @@ public class GameScene implements Screen {
 	}
 	
 	public void endTurn() {
-		galaxyStage.act();
+		galaxyStage.endTurn();
 		planetStage.act();
 		sectorStage.act();
 		goGalaxy();

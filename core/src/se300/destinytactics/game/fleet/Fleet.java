@@ -1,54 +1,73 @@
 package se300.destinytactics.game.fleet;
 
-import se300.destinytactics.game.Player;
-import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import se300.destinytactics.game.Player;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 /**
  * @author simonsr1
  * @version 1.0
  * @created 10-Oct-2014 5:49:01 PM
  */
-public class Fleet {
+public class Fleet extends Actor {
 
 	private OrbitalBody destination;
-	private int distance;
-	private int fleetGalacticTravelSpeed;
+	private int distanceToDestination;
+	private int fleetGalacticTravelSpeed = 50;
 	private int fleetSectorTravelSpeed;
 	private OrbitalBody location;
 	private String name;
 	private Player playerAssignment;
 	private int ships[];
 	public Ship m_Ship;
+	public float percentTravelled = 0f;
+	private Sector sectorDestination;
+	private Sector sectorLocation;
+	private static ShapeRenderer renderer = new ShapeRenderer();
 
-	public Fleet(){
+	// TODO Replace with read fleet sprite
+	private static Texture sprite1 = new Texture(
+			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
 
+	private int SPRITE_SIZE = 10;
+
+	public Fleet() {
+		super();
 	}
 
 	public void finalize() throws Throwable {
 
 	}
-	public OrbitalBody getDestination(){
-		return null;
+
+	public OrbitalBody getDestination() {
+		return destination;
 	}
 
-	public int getFleetGalacticTravelSpeed(){
+	public int getFleetGalacticTravelSpeed() {
 		return 0;
 	}
 
-	public int getFleetSectorTravelSpeed(){
+	public int getFleetSectorTravelSpeed() {
 		return 0;
 	}
 
-	public OrbitalBody getLocation(){
-		return null;
+	public OrbitalBody getLocation() {
+		return location;
 	}
 
-	public String getName(){
+	public String getName() {
 		return "";
 	}
 
-	public Player getPlayerAssignment(){
+	public Player getPlayerAssignment() {
 		return null;
 	}
 
@@ -56,7 +75,7 @@ public class Fleet {
 	 * 
 	 * @param unitType
 	 */
-	public int getShipCount(Ship unitType){
+	public int getShipCount(Ship unitType) {
 		return 0;
 	}
 
@@ -65,7 +84,41 @@ public class Fleet {
 	 * @param unitType
 	 * @param num
 	 */
-	public void getShipCount(Ship unitType, int num){
+	public void getShipCount(Ship unitType, int num) {
+
+	}
+
+	/**
+	 * Moves fleet closer to destination. If it reaches destination, set new
+	 * location and clear destination. Otherwise, updates percentage complete to
+	 * draw on galaxy map
+	 * 
+	 * @param location
+	 */
+	public void moveFleet() {
+		this.distanceToDestination -= this.fleetGalacticTravelSpeed;
+		if (distanceToDestination <= 0) {
+			System.out.println("Loc: " + location.getName() + "\n Destination: " + destination.getName());
+			this.location = destination;
+			sectorLocation = sectorDestination;
+			distanceToDestination = 0;
+			this.destination = null;
+			sectorDestination = null;
+			percentTravelled = 0f;
+			this.setX(sectorLocation.getX());
+			this.setY(sectorLocation.getY());
+			
+		}
+		// TODO add a totalDistance variable so this calculation doesn't have to
+		// run constantly
+		else {
+			percentTravelled = (float) distanceToDestination
+					/ (float) location.getDistance(destination);
+			float difx = sectorLocation.getX() - sectorDestination.getX() ;
+			float dify = sectorLocation.getY() - sectorDestination.getY() ;
+			this.setX(sectorDestination.getX() + (difx * percentTravelled));
+			this.setY(sectorDestination.getY() + (dify * percentTravelled));
+		}
 
 	}
 
@@ -73,11 +126,24 @@ public class Fleet {
 	 * 
 	 * @param location
 	 */
-	public Fleet moveFleet(OrbitalBody location){
-		return null;
+	public void setLocation(OrbitalBody loc) {
+		this.location = loc;
+		sectorLocation = location.getSector();
 	}
 
-	public void recalculateFleetSpeeds(){
+	/**
+	 * Sets destination Orbiting Body and sector and updates distance to the
+	 * destination
+	 * 
+	 * @param dest
+	 */
+	public void setDestination(OrbitalBody dest) {
+		this.destination = dest;
+		sectorDestination = destination.getSector();
+		distanceToDestination = location.getDistance(destination);
+	}
+
+	public void recalculateFleetSpeeds() {
 
 	}
 
@@ -85,7 +151,32 @@ public class Fleet {
 	 * 
 	 * @param player
 	 */
-	public void setPlayerAssignment(Player player){
+	public void setPlayerAssignment(Player player) {
+		
+	}
+
+	public void draw(Batch batch, float parentAlpha) {
+
+		batch.setColor(this.getColor());
+		if (destination != null) {
+			batch.draw(sprite1, getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+		}
+		batch.end();
+
+		renderer.setProjectionMatrix(batch.getProjectionMatrix());
+		renderer.setTransformMatrix(batch.getTransformMatrix());
+
+		renderer.begin(ShapeType.Line);
+		renderer.setColor(Color.WHITE);
+		renderer.line(sectorLocation.getX() + (sectorLocation.getWidth() / 2),
+				sectorLocation.getY() + (sectorLocation.getHeight() / 2),
+				sectorDestination.getX() + (sectorDestination.getWidth() / 2),
+				sectorDestination.getY() + (sectorDestination.getHeight() / 2));
+		renderer.end();
+
+		batch.begin();
+
+		batch.setColor(Color.WHITE);
 
 	}
-}//end Fleet
+}// end Fleet
