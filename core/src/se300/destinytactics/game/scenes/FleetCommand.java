@@ -297,6 +297,14 @@ public class FleetCommand {
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
 		TextButton submitButton = new TextButton("Build Units", skin.get("default", TextButtonStyle.class));
 		
+		submitButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				buildUnits();
+				return true;
+			}
+
+		});
+		
 		buildFormWrapper.add("Build Units").colspan(3).left().expandX();
 		buildFormWrapper.row().top();                 
 		buildFormWrapper.add(formScroll).expand().colspan(3).fill().top();
@@ -374,4 +382,11 @@ public class FleetCommand {
 		attackFormWrapper.setWidth(GameScene.SCREEN_WIDTH/2);
 		attackFormWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
+
+	
+	private void buildUnits() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

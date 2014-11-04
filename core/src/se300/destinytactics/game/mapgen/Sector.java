@@ -3,6 +3,7 @@ package se300.destinytactics.game.mapgen;
 import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -35,9 +36,18 @@ public class Sector extends Actor {
 	private int posY;
 	public Button m_Button;
 	public static String imagePath = "images/orbitalbodies/suns";
+	
+	//TODO Remove after player color array is created
 	private static Texture sprite1 = new Texture(
 			Gdx.files.internal("realorbitalbody/SectorIcon.png"),true);
 
+	//TODO Replace with player color array with SectorIcon from above with 8 different colors + white
+	public static Texture circles[] = {
+			new Texture(Gdx.files.internal("images/blueSelect.png")),
+			new Texture(Gdx.files.internal("images/redSelect.png")) };
+
+	public static Image myCircle = new Image(circles[0]);
+	
 	public static Texture sunTypes[] = {
 			new Texture(imagePath + "/blueSun.png"),
 			new Texture(imagePath + "/neonSun.png"),
@@ -46,11 +56,6 @@ public class Sector extends Actor {
 			new Texture(imagePath + "/tealSun.png"),
 			new Texture(imagePath + "/yellowSun.png") };
 
-	public static Texture circles[] = {
-			new Texture(Gdx.files.internal("images/blueSelect.png")),
-			new Texture(Gdx.files.internal("images/redSelect.png")) };
-
-	public static Image myCircle = new Image(circles[0]);
 	
 	// New variables
 	private static final double EDGE_EXCLUSION = 60;
@@ -157,13 +162,18 @@ public class Sector extends Actor {
 	public int getState() {
 		return controlState;
 	}
+	
 
 	public void draw(Batch batch, float parentAlpha) {
 
+		batch.setColor(this.getColor());
 		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
 		if (hovering) {
 			myCircle.draw(batch, parentAlpha);
 		}
+
+		batch.setColor(Color.WHITE);
+		
 		if(controlState == 1){
 			batch.draw(circles[1], getXPos()+7-25, getYPos()+7-25, 25, 25,50,50,1,1,myCircle.getRotation(),0,0,circles[1].getWidth(),circles[1].getHeight(),false,false);
 		}

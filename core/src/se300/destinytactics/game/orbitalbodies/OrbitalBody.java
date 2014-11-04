@@ -35,6 +35,7 @@ public abstract class OrbitalBody extends Actor {
 	private String name;
 	protected int orbitRadius;
 	public Sector sector;
+	//public 
 	public Fleet m_Fleet;
 	public Button m_Button;
 	public Random rand;
@@ -139,6 +140,8 @@ public abstract class OrbitalBody extends Actor {
 	public int getType() {
 		return type;
 	}
+	
+	
 	
 	public int getSpriteSize() {
 		return SPRITE_SIZE;
