@@ -3,6 +3,7 @@ package se300.destinytactics.game.mapgen;
 import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -27,6 +28,7 @@ import se300.destinytactics.ui.Button;
 public class Sector extends Actor {
 
 	// Old variables, clean these
+	public static int test;
 	public Galaxy galaxy;
 	private int controlState;
 	private int numBodies;
@@ -34,29 +36,23 @@ public class Sector extends Actor {
 	public OrbitalBody bodyList[];
 	private int posX;
 	private int posY;
-	public Button m_Button;
-	public static String imagePath = "images/orbitalbodies/suns";
-	
-	//TODO Remove after player color array is created
-	private static Texture sprite1 = new Texture(
-			Gdx.files.internal("realorbitalbody/SectorIcon.png"),true);
 
-	//TODO Replace with player color array with SectorIcon from above with 8 different colors + white
+	public Button m_Button;
+
+	// TODO Remove after player color array is created
+	private static Texture sprite1 = new Texture(
+			Gdx.files.internal("realorbitalbody/SectorIcon.png"), true);
+
+	// TODO Replace with player color array with SectorIcon from above with 8
+	// different colors + white
 	public static Texture circles[] = {
 			new Texture(Gdx.files.internal("images/blueSelect.png")),
 			new Texture(Gdx.files.internal("images/redSelect.png")) };
 
 	public static Image myCircle = new Image(circles[0]);
-	
-	public static Texture sunTypes[] = {
-			new Texture(imagePath + "/blueSun.png"),
-			new Texture(imagePath + "/neonSun.png"),
-			new Texture(imagePath + "/orangeSun.png"),
-			new Texture(imagePath + "/redSun.png"),
-			new Texture(imagePath + "/tealSun.png"),
-			new Texture(imagePath + "/yellowSun.png") };
+	public static AssetManager manager = new AssetManager();
+	public static Texture sunTypes[];
 
-	
 	// New variables
 	private static final double EDGE_EXCLUSION = 60;
 	private static final int SPRITE_SIZE = 14;
@@ -65,22 +61,29 @@ public class Sector extends Actor {
 	public int padding = 50;
 	public boolean hovering = false;
 
+
+
 	public Sector(Galaxy gal) {
 
 		galaxy = gal;
-		
-		sprite1.setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
+		sunTypes = Assets.getSunTypes();
+		sprite1.setFilter(TextureFilter.MipMapLinearLinear,
+				TextureFilter.Linear);
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
-		
+
 		super.setVisible(true);
 		this.sunType = Utility.random.nextInt(6);
-		this.sunRotation = Utility.random.nextFloat()*360;
+		this.sunRotation = Utility.random.nextFloat() * 360;
 		controlState = 0;
 		numBodies = (int) (Math.random() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
-		posY = (int) (GameScene.SCREEN_HEIGHT/5 + padding + (Utility.random.nextInt((GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE)-GameScene.SCREEN_HEIGHT/5 - (padding * 2))));
+		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
+		posY = (int) (GameScene.SCREEN_HEIGHT / 5 + padding + (Utility.random
+				.nextInt((GameScene.SCREEN_HEIGHT - GameScene.SCREEN_HEIGHT
+						/ 10 - SPRITE_SIZE)
+						- GameScene.SCREEN_HEIGHT / 5 - (padding * 2))));
 
 		this.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
 		setWidth(SPRITE_SIZE);
@@ -89,8 +92,6 @@ public class Sector extends Actor {
 		setX(posX);
 		setY(posY);
 
-
-		long time = System.currentTimeMillis();
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
@@ -101,20 +102,22 @@ public class Sector extends Actor {
 			}
 		}
 
-		long time3 = System.currentTimeMillis();
-		System.out.println("Planet create time : " + (time3-time));
-		
 		name = Names.newName();
 		this.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 
 				switchView();
 				return true;
 			}
-			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
 				hoverOn();
 			}
-			public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
 				hoverOff();
 			}
 
@@ -133,8 +136,8 @@ public class Sector extends Actor {
 
 	public void hoverOn() {
 		hovering = true;
-		myCircle.setX(getX()+this.getOriginX() - (myCircle.getWidth()/2));
-		myCircle.setY(getY()+this.getOriginY() - (myCircle.getHeight()/2));
+		myCircle.setX(getX() + this.getOriginX() - (myCircle.getWidth() / 2));
+		myCircle.setY(getY() + this.getOriginY() - (myCircle.getHeight() / 2));
 	}
 
 	public void hoverOff() {
@@ -171,7 +174,6 @@ public class Sector extends Actor {
 	public int getState() {
 		return controlState;
 	}
-	
 
 	public void draw(Batch batch, float parentAlpha) {
 
@@ -182,13 +184,15 @@ public class Sector extends Actor {
 		}
 
 		batch.setColor(Color.WHITE);
-		
-		if(controlState == 1){
-			batch.draw(circles[1], getXPos()+7-25, getYPos()+7-25, 25, 25,50,50,1,1,myCircle.getRotation(),0,0,circles[1].getWidth(),circles[1].getHeight(),false,false);
+
+		if (controlState == 1) {
+			batch.draw(circles[1], getXPos() + 7 - 25, getYPos() + 7 - 25, 25,
+					25, 50, 50, 1, 1, myCircle.getRotation(), 0, 0,
+					circles[1].getWidth(), circles[1].getHeight(), false, false);
 		}
 	}
-	
-	public void act(float time){
-		myCircle.rotateBy(time*3);
+
+	public void act(float time) {
+		myCircle.rotateBy(time * 3);
 	}
 }// end Sector

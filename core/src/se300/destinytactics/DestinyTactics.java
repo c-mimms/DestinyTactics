@@ -1,5 +1,9 @@
 package se300.destinytactics;
 
+import se300.destinytactics.game.mapgen.Assets;
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -26,6 +30,8 @@ public class DestinyTactics extends Game {
 	
 	@Override
 	public void create() {
+		Assets.queueLoading();
+		
 		// Specify the UI Skin
 		skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
 		skin = new Skin(Gdx.files.internal("data/Holo-dark-hdpi.json"), new TextureAtlas("data/Holo-dark-hdpi.atlas"));
@@ -43,6 +49,7 @@ public class DestinyTactics extends Game {
 
 	@Override
 	public void render() {
+		Assets.update();
 		if (getScreen() != null) {
 			getScreen().render(0);
 		}
@@ -62,6 +69,7 @@ public class DestinyTactics extends Game {
 	}
 	
 	public void startGame(){
+		Assets.finish();
 		if (gameScreen == null) {
 			gameScreen = new GameScene(this, skin2);
 		}

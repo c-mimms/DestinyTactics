@@ -47,7 +47,8 @@ public class OrbitalBodyScene extends Stage {
 
 		
 		Image orbitalBody = new Image(
-				OrbitalBody.hotBod[nextOrbitalBody.getType()]);
+				OrbitalBody.planets[nextOrbitalBody.getType()]);
+		//orbitalBody.setDrawable(OrbitalBody.hotBod[nextOrbitalBody.getType()]);
 		orbitalBody.setSize(1000, 1000);
 		this.addActor(orbitalBody);
 		

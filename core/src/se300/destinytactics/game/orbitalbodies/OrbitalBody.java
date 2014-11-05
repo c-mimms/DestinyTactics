@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.mapgen.Assets;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
@@ -39,24 +40,26 @@ public abstract class OrbitalBody extends Actor {
 	public Fleet m_Fleet;
 	public Button m_Button;
 	public Random rand;
+	public static int test ; 
 	public int type;
 	private static String spriteLib = "realorbitalbody";
 	private static String imagelib = "images/orbitalbodies/planets";
-	
+	public static Texture[] planets;
 	// Import all planet textures
-	public static Texture[] hotBod = {
-			new Texture(Gdx.files.internal(spriteLib + "/activatedgate.png"),true),
-			new Texture(Gdx.files.internal(spriteLib + "/deactivatedgate.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/red1.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/red2.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/redWater1.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/redWater2.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/water1.png"),true),
-			new Texture(Gdx.files.internal(imagelib + "/water2.png"),true),
-			new Texture(Gdx.files.internal(spriteLib + "/station1.png"),true),
-			new Texture(Gdx.files.internal(spriteLib + "/station2.png"),true) };
+//	public static Texture[] hotBod = {
+//			new Texture(Gdx.files.internal(spriteLib + "/activatedgate.png"),true),
+//			new Texture(Gdx.files.internal(spriteLib + "/deactivatedgate.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/red1.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/red2.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/redWater1.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/redWater2.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/water1.png"),true),
+//			new Texture(Gdx.files.internal(imagelib + "/water2.png"),true),
+//			new Texture(Gdx.files.internal(spriteLib + "/station1.png"),true),
+//			new Texture(Gdx.files.internal(spriteLib + "/station2.png"),true) };
+//	
 	
 	public static final int SPRITE_SIZE = 40;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
@@ -64,10 +67,12 @@ public abstract class OrbitalBody extends Actor {
 	public Texture texture;
 	public GameScene thisgame;
 
+	
 	public OrbitalBody(int radius, Sector sect){
 
-		for(int i = 0; i < hotBod.length; i++){
-			hotBod[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
+		planets = Assets.getPlanetTypes();
+		for(int i = 0; i < planets.length; i++){
+			planets[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 		}
 		orbitRadius = radius;
 		name = Names.newName();
@@ -148,7 +153,7 @@ public abstract class OrbitalBody extends Actor {
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha){
-		batch.draw(hotBod[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 	}
 	
 	public void act(float time){

@@ -4,6 +4,7 @@ import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.InfoBar;
 import se300.destinytactics.game.scenes.NavBar;
@@ -33,8 +34,8 @@ public class GameScene implements Screen {
 
 	// Galaxy model
 	public Galaxy m_Galaxy;
-	
-	//Scenes
+
+	// Scenes
 	public GalaxyScene galaxyStage;
 	public NavBar navBar;
 	public InfoBar infoBar;
@@ -42,36 +43,34 @@ public class GameScene implements Screen {
 	public OrbitalBodyScene planetStage;
 	public SectorScene sectorStage;
 
-	//State variables
+	// State variables
 	public boolean galaxyView = true;
 	public boolean sectorView = false;
 	public boolean planetView = false;
-	
-	//Game logic required stuff
+
+	// Game logic required stuff
 	public DestinyTactics game;
 	InputMultiplexer multiplexer;
 	public Sector curSector;
-	
-	//Sound stuff
+
+	// Sound stuff
 	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;
-	
-	//Players?
+
+	// Players?
 	public Player curPlayer;
-	
-	
-//	public static void preloadGalaxy(){
-//
-//		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
-//	}
+
+	// public static void preloadGalaxy(){
+	//
+	// m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
+	// }
 
 	public GameScene(DestinyTactics game, Skin skin) {
-		
-		
-		//Keep track of the game object so we can return to main menu
+
+		// Keep track of the game object so we can return to main menu
 		this.game = game;
-		//m_Galaxy.thisgame = this;
+		// m_Galaxy.thisgame = this;
 		curPlayer = new Player();
 
 		// Load music and sounds (we should have a static sound/music class
@@ -81,58 +80,36 @@ public class GameScene implements Screen {
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-
-		//Time each scene generation.
-		long time2 = System.currentTimeMillis();
-
-		long time = System.currentTimeMillis();
-		
-		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
+		// Generate the galaxy model. Moved this to DestinyTactics so it is
+		// preloaded
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
-		
 		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), skin, this);
 
-		System.out.println("Galaxy time taken: " + (System.currentTimeMillis()-time));
-
-		time = System.currentTimeMillis();
-		
 		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, skin, this);
 
-		System.out.println("Infobar time taken: " + (System.currentTimeMillis()-time));
-		 time = System.currentTimeMillis();
-		
 		navBar = new NavBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, skin, this);
-		
 
-		System.out.println("Navbar time taken: " + (System.currentTimeMillis()-time));
-
-		 time = System.currentTimeMillis();
-		
 		planetUI = new OrbitalBodyUI(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), PADDING, skin, this);
 
-		System.out.println("Planetui time taken: " + (System.currentTimeMillis()-time));
-
-		
 		// Create empty stages that are populated when selected
 		sectorStage = new SectorScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), PADDING, skin, this);
 		planetStage = new OrbitalBodyScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), PADDING, skin, this);
 
-
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
-//		 galaxyStage.setDebugAll(true);
-//		 sectorStage.setDebugAll(true);
-//		 planetStage.setDebugAll(true);
-//		 planetUI.setDebugAll(true);
-//		 navBar.setDebugAll(true);
+		// galaxyStage.setDebugAll(true);
+		// sectorStage.setDebugAll(true);
+		// planetStage.setDebugAll(true);
+		// planetUI.setDebugAll(true);
+		// navBar.setDebugAll(true);
 
 		// Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
@@ -140,9 +117,6 @@ public class GameScene implements Screen {
 		multiplexer.addProcessor(navBar);
 		multiplexer.addProcessor(infoBar);
 		Gdx.input.setInputProcessor(multiplexer);
-
-		System.out.println("Total time taken: " + (System.currentTimeMillis()-time2));
-
 
 	}
 
@@ -169,14 +143,13 @@ public class GameScene implements Screen {
 
 		selectSound.play();
 		curSector = nextSector;
-		
+
 		sectorStage.changeSector(nextSector);
-		
+
 		galaxyView = false;
 		planetView = false;
 		sectorView = true;
-		
-		
+
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(galaxyStage);
 	}
@@ -185,12 +158,11 @@ public class GameScene implements Screen {
 
 		selectSound.play();
 		planetStage.changePlanet(nextOrbitalBody);
-		
-		
+
 		planetView = true;
 		galaxyView = false;
 		sectorView = false;
-		
+
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
@@ -200,9 +172,9 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = false;
 		galaxyView = true;
-		
+
 		navBar.setName(m_Galaxy.getName());
-		
+
 		multiplexer.addProcessor(galaxyStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
@@ -213,9 +185,9 @@ public class GameScene implements Screen {
 		planetView = false;
 		sectorView = true;
 		galaxyView = false;
-		
+
 		navBar.setName(curSector.getName());
-		
+
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(planetStage);
 		multiplexer.removeProcessor(planetUI);
@@ -223,7 +195,7 @@ public class GameScene implements Screen {
 
 	@Override
 	public void show() {
-		//Start music and take input when you switch to this window
+		// Start music and take input when you switch to this window
 		musicLoop.play();
 		musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
@@ -274,7 +246,7 @@ public class GameScene implements Screen {
 	public void goMenu() {
 		game.goMenu();
 	}
-	
+
 	public void endTurn() {
 		galaxyStage.endTurn();
 		planetStage.act();
