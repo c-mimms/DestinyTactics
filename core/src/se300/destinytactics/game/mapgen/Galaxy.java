@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import se300.destinytactics.GameScene;
 import se300.destinytactics.ui.Drawable;
+import se300.destinytactics.game.mapgen.Sector;
 
 /**
  * @author John
@@ -24,21 +25,31 @@ public class Galaxy {
 	public int minSpacing = 75;
 
 	public Galaxy(int x, int y, int n, GameScene thisgame){
-		
+
+
+		long time1 = System.currentTimeMillis();
 		this.thisgame = thisgame;
 		numSystems = n;
 		sizeX = x;
 		sizeY = y;
+
 		sectors = new Sector[numSystems];
-		map = new Quadtree(new Rectangle(0, 0, sizeX, sizeY));
 		name = Names.newName();
-		Sector.galaxy = this;
-	
+		//Sector.setGalaxy(this);
+
+		long time = System.currentTimeMillis();
+		long time3,time5;
 		for (int i = 0; i < numSystems; i++) {
 			boolean placeFree = false;
 			Sector temp = null;
 			while(!placeFree){
-				temp  = new Sector();
+
+				time3 = System.currentTimeMillis();
+				temp  = new Sector(this);
+
+				time5 = System.currentTimeMillis();
+				System.out.println("Sector create time taken: "+ (time5-time3));
+				
 				placeFree = true;
 				for(int j = 0; j < sectors.length; j ++){
 					if(sectors[j] == null) break;
@@ -50,9 +61,10 @@ public class Galaxy {
 				
 			}
 			sectors[i] = temp;
-			map.insert(sectors[i]);
 		}
+		long time2 = System.currentTimeMillis();
 
+		System.out.println("Sector placement time taken: "+ (time2-time));
 
 	}
 

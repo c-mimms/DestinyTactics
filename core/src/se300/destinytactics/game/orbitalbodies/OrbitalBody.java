@@ -73,7 +73,7 @@ public abstract class OrbitalBody extends Actor {
 		name = Names.newName();
 		sector = sect;
 		controlState = 0;
-		galaxy = Sector.galaxy;
+		//galaxy = sector.galaxy;
 		controlState = 1;
 		owner = null;
 		
@@ -92,8 +92,8 @@ public abstract class OrbitalBody extends Actor {
 	
 	public void switchToPlanetView(){
 		//System.out.println("In switchToPlanetView()...");
-		owner = galaxy.thisgame.curPlayer;
-		galaxy.thisgame.switchToPlanetView(this);
+		owner = sector.galaxy.thisgame.curPlayer;
+		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
 
 	public void finalize() throws Throwable {

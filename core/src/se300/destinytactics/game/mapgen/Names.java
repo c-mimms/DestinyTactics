@@ -16,7 +16,6 @@ public class Names {
 	};
 
 	public Names(){
-
 	}
 
 	public void finalize() throws Throwable {

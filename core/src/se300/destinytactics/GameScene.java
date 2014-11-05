@@ -83,8 +83,9 @@ public class GameScene implements Screen {
 
 
 		//Time each scene generation.
-		long time = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
+
+		long time = System.currentTimeMillis();
 		
 		// Generate the galaxy model. Moved this to DestinyTactics so it is preloaded
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
@@ -96,7 +97,7 @@ public class GameScene implements Screen {
 
 		System.out.println("Galaxy time taken: " + (System.currentTimeMillis()-time));
 
-		 time = System.currentTimeMillis();
+		time = System.currentTimeMillis();
 		
 		infoBar = new InfoBar(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT),
 				PADDING, skin, this);

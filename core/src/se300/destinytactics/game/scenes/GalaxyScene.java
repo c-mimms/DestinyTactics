@@ -27,7 +27,11 @@ public class GalaxyScene extends Stage{
 	
 	
 	public GalaxyScene(FitViewport vp, Skin skin, GameScene myGame) {
+
+		
 		super(vp);
+		
+		long time = System.currentTimeMillis();
 		this.myGame = myGame;
 		this.skin = skin;
 
@@ -59,6 +63,8 @@ public class GalaxyScene extends Stage{
 				tmpLabel.setY(myGame.m_Galaxy.sectors[i].getY() - tmpLabel.getHeight());
 			}
 		}
+		
+		
 		this.addActor(test);
 		test.setColor(new Color(0, 0, 1, 1));
 		test.setLocation(myGame.m_Galaxy.sectors[0].bodyList[0]);
@@ -68,6 +74,9 @@ public class GalaxyScene extends Stage{
 		test2.setColor(new Color(1, 0, 0, 1));
 		test2.setLocation(myGame.m_Galaxy.sectors[1].bodyList[0]);
 		test2.setDestination(myGame.m_Galaxy.sectors[7].bodyList[0]);
+		
+		long time2 = System.currentTimeMillis();
+		System.out.println("Add sectors to galaxy map time : " + (time2 - time));
 		
 		
 	}

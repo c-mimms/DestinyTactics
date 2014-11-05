@@ -27,7 +27,7 @@ import se300.destinytactics.ui.Button;
 public class Sector extends Actor {
 
 	// Old variables, clean these
-	public static Galaxy galaxy;
+	public Galaxy galaxy;
 	private int controlState;
 	private int numBodies;
 	private String name;
@@ -65,7 +65,10 @@ public class Sector extends Actor {
 	public int padding = 50;
 	public boolean hovering = false;
 
-	public Sector() {
+	public Sector(Galaxy gal) {
+
+		galaxy = gal;
+		
 		sprite1.setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
@@ -86,6 +89,8 @@ public class Sector extends Actor {
 		setX(posX);
 		setY(posY);
 
+
+		long time = System.currentTimeMillis();
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
@@ -95,6 +100,10 @@ public class Sector extends Actor {
 				bodyList[i] = new Planet(i, this);
 			}
 		}
+
+		long time3 = System.currentTimeMillis();
+		System.out.println("Planet create time : " + (time3-time));
+		
 		name = Names.newName();
 		this.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
