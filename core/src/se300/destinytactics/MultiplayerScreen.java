@@ -60,6 +60,11 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	Boolean inLobby = false;
 	LobbyStage lobby;
 
+	/**
+	 * Create new Multiplayer screen.
+	 * @param game  Parent game class that contains this screen.
+	 * @param skin  Skin to use for the screen.
+	 */
 	public MultiplayerScreen(DestinyTactics game, Skin skin) {
 
 		this.game = game;
@@ -151,6 +156,9 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	}
 
 	@Override
+	/**
+	 * Render method for screen.
+	 */
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -164,33 +172,54 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	}
 
 	@Override
+	/**
+	 * Called on screen resize.
+	 */
 	public void resize(int width, int height) {
 		menuStage.getViewport().update(width, height, false);
 	}
 
 	@Override
+	/**
+	 * Called when screen is shown.
+	 */
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
 
 	@Override
+	/**
+	 * Called when screen is hidden.
+	 */
 	public void hide() {
 	}
 
 	@Override
+	/**
+	 * Called when game loses focus.
+	 */
 	public void pause() {
 	}
 
 	@Override
+	/**
+	 * Called when game gains focus.
+	 */
 	public void resume() {
 	}
 
 	@Override
+	/**
+	 * Dispose of this screen.
+	 */
 	public void dispose() {
 		menuStage.dispose();
 	}
 
+	/**
+	 * Go to main menu.
+	 */
 	public void goMenu() {
 		game.goMenu();
 	}
@@ -282,6 +311,9 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 		menuStage.addActor(messageD);
 	}
 
+	/**
+	 * Called on successful login. Changes stage to games lobby.
+	 */
 	private void goToLobby() {
 		lobby = new LobbyStage(menuStage.getViewport(), game.PADDING, skin,
 				this);
