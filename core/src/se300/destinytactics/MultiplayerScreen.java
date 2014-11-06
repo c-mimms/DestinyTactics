@@ -287,9 +287,9 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	 */
 	public void http(OrderedMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		// System.out.println(orderedMap);
-		String message = map.get("MESSAGE").toString();
-		userID = Float.valueOf(map.get("USERID", "-1").toString()).intValue();
+		System.out.println(map);
+		String message = map.get("message").toString();
+		userID = Float.valueOf(map.get("userID", "-1").toString()).intValue();
 		Dialog messageD = new Dialog("Status", skin) {
 			protected void result(Object obj) {
 				if (userID != -1) {
