@@ -27,7 +27,7 @@ public class GalaxyScene extends Stage{
 	Fleet test2  = new Fleet();
 	private Group sectors, sectorNames;
 	
-	public static final int PARALLAX = 20;
+	public static final int PARALLAX = -10;
 	
 	
 	public GalaxyScene(FitViewport vp, Skin skin, GameScene myGame) {
@@ -44,7 +44,7 @@ public class GalaxyScene extends Stage{
 
 		this.addActor(background);
 		//background.setFillParent(true);
-		background.setSize(getWidth() + 2*PARALLAX, getHeight() + 2*PARALLAX);
+		background.setSize(getWidth() + PARALLAX, getHeight() + PARALLAX);
 
 		gridOverlay.setFillParent(true);
 		gridOverlay.setTouchable(Touchable.disabled);
