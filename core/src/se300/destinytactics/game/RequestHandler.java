@@ -14,7 +14,7 @@ import com.badlogic.gdx.Net.HttpResponseListener;
 public class RequestHandler implements HttpResponseListener {
 
 //Map to store JSON results in
-private OrderedMap<String, String> resultMap = new OrderedMap<String, String>();
+private OrderedMap<String, Object> resultMap = new OrderedMap<String, Object>();
 
 // 0 is success, 1 is failure, 2 is cancelled, -1 is incomplete
 public int status = -1;
@@ -25,7 +25,7 @@ public int status = -1;
 		String ret = httpResponse.getResultAsString();
 		
 		Json json = new Json();
-		OrderedMap<String, String> map = json.fromJson(OrderedMap.class, ret);
+		OrderedMap<String, Object> map = json.fromJson(OrderedMap.class, ret);
 		map.get("MESSAGE");
 		status = 0;
 		resultMap = map;
@@ -46,7 +46,7 @@ public int status = -1;
 
 	}
 	
-	public OrderedMap<String, String> getMap(){
+	public OrderedMap<String, Object> getMap(){
 		return resultMap;
 	}
 

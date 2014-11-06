@@ -40,9 +40,8 @@ import java.util.Map;
 
 import se300.destinytactics.game.WebRequest;
 
+public class MultiplayerScreen implements Screen, MakesRequests {
 
-public class MultiplayerScreen implements Screen, MakesRequests{
-	
 	public DestinyTactics game;
 	public Skin skin;
 	public Sound selectSound;
@@ -50,82 +49,91 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 	public Stage menuStage;
 	public Table menu;
 	public float masterVolume = 0.5f;
+	private int userID;
 	public Texture bgimg;
 	public Image logo, background;
-	public TextButton loginButton, registerButton,  menuButton;
+	public TextButton loginButton, registerButton, menuButton;
 	public TextField username, password, email;
 	MessageDigest messageDigest;
-	String name , passwordHash;
+	String name, passwordHash;
 	Label status;
-	
-	public MultiplayerScreen(DestinyTactics game, Skin skin){
-		
+	Boolean inLobby = false;
+	LobbyStage lobby;
+
+	public MultiplayerScreen(DestinyTactics game, Skin skin) {
+
 		this.game = game;
-		this.skin = skin; 
-		
+		this.skin = skin;
+
 		try {
 			messageDigest = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
-		
+
 		bgimg = new Texture("MenuBackground.jpg");
 		background = new Image(bgimg);
-		menuStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
-		
+		menuStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH,
+				DestinyTactics.SCREEN_HEIGHT));
+
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(menuStage);
 		Gdx.input.setInputProcessor(multiplexer);
-		
+
 		menu = new Table();
-		//menu.setDebug(true);
-		
-		loginButton = new TextButton("Login", skin.get("default", TextButtonStyle.class));
-		registerButton = new TextButton("Register",skin.get("default", TextButtonStyle.class));
-		menuButton = new TextButton("Back to Menu", skin.get("default", TextButtonStyle.class));
-		username = new TextField("",skin.get("default",TextFieldStyle.class));
-		password = new TextField("",skin.get("default",TextFieldStyle.class));
-		email = new TextField("",skin.get("default",TextFieldStyle.class));
+		// menu.setDebug(true);
+
+		loginButton = new TextButton("Login", skin.get("default",
+				TextButtonStyle.class));
+		registerButton = new TextButton("Register", skin.get("default",
+				TextButtonStyle.class));
+		menuButton = new TextButton("Back to Menu", skin.get("default",
+				TextButtonStyle.class));
+		username = new TextField("", skin.get("default", TextFieldStyle.class));
+		password = new TextField("", skin.get("default", TextFieldStyle.class));
+		email = new TextField("", skin.get("default", TextFieldStyle.class));
 		password.setPasswordMode(true);
 		password.setPasswordCharacter('*');
 		password.setMessageText("Password");
 		username.setMessageText("Name");
 		email.setMessageText("Email");
 
-		status = new Label("",game.skin2);
-		
+		status = new Label("", game.skin2);
+
 		loginButton.setWidth(menuButton.getWidth());
 		registerButton.setWidth(menuButton.getWidth());
-		
-		
+
 		loginButton.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 				selectSound.play(masterVolume);
 				login();
 				return true;
 			}
 		});
-		
+
 		registerButton.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 				selectSound.play(masterVolume);
 				registerPlayer();
 				return true;
 			}
 		});
-		
+
 		menuButton.addListener(new ClickListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 				selectSound.play(masterVolume);
 				goMenu();
 				return true;
 			}
 		});
-		
+
 		menu.setFillParent(true);
 		menu.row().space(50);
 		menu.add(loginButton);
@@ -146,19 +154,24 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		menuStage.act();
-		menuStage.draw();
+		if (inLobby) {
+			lobby.act();
+			lobby.draw();
+		} else {
+			menuStage.act();
+			menuStage.draw();
+		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		menuStage.getViewport().update(width, height, false);	
+		menuStage.getViewport().update(width, height, false);
 	}
 
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
-		
+
 	}
 
 	@Override
@@ -177,87 +190,104 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 	public void dispose() {
 		menuStage.dispose();
 	}
-	
+
 	public void goMenu() {
 		game.goMenu();
 	}
-	
+
 	/**
 	 * Registers player
 	 */
-	public void registerPlayer(){
+	public void registerPlayer() {
 
 		name = username.getText();
 		messageDigest.update(password.getText().getBytes());
 		passwordHash = new String(messageDigest.digest());
 		String emailStr = email.getText();
-		
-		 Map<String, String> parameters = new HashMap<String,String>();
-		 parameters.put("method", "createUser");
-		 parameters.put("username", name);
-		 parameters.put("password", passwordHash);
-		 parameters.put("email", emailStr);
-		 parameters.put("firstName", name);
-		 parameters.put("lastName", name);
-		 parameters.put("returnFormat", "JSON");
-		 
-		 HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
-		 httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
-		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
-		 httpGet.setTimeOut(0);
 
-		 WebRequest registerReq = new WebRequest(this, httpGet);
-		 registerReq.start();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "createUser");
+		parameters.put("username", name);
+		parameters.put("password", passwordHash);
+		parameters.put("email", emailStr);
+		parameters.put("firstName", name);
+		parameters.put("lastName", name);
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest registerReq = new WebRequest(this, httpGet);
+		registerReq.start();
 	}
-	
+
 	/**
 	 * Logs player in.
 	 */
-	public void login(){
-		//TODO add code to return true if it works. 
+	public void login() {
+		// TODO add code to return true if it works.
 
 		name = username.getText();
-		//Hash password using SHA256
+		// Hash password using SHA256
 		messageDigest.update(password.getText().getBytes());
 		passwordHash = new String(messageDigest.digest());
 
-		 Map<String, String> parameters = new HashMap<String,String>();
-		 parameters.put("method", "loginUser");
-		 parameters.put("username", name);
-		 parameters.put("password", passwordHash);
-		 parameters.put("returnFormat", "JSON");
-		 
-		 HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
-		 httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
-		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
-		 httpGet.setTimeOut(0);
-		 
-		 WebRequest loginReq = new WebRequest(this, httpGet);
-		 loginReq.start();
-		 
-		
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "loginUser");
+		parameters.put("username", name);
+		parameters.put("password", passwordHash);
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest loginReq = new WebRequest(this, httpGet);
+		loginReq.start();
+
 	}
-	
 
 	@Override
 	/**
 	 * Called when http request is completed. Executes code as result of request.
 	 */
-	public void http(OrderedMap<String, String> orderedMap) {
+	public void http(OrderedMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		//System.out.println(orderedMap);
-		String message = orderedMap.get("MESSAGE");
-		System.out.println(message);
-		Dialog messageD = new Dialog("Status",skin);
+		// System.out.println(orderedMap);
+		String message = map.get("MESSAGE").toString();
+		userID = Float.valueOf(map.get("USERID", "-1").toString()).intValue();
+		Dialog messageD = new Dialog("Status", skin) {
+			protected void result(Object obj) {
+				if (userID != -1) {
+					goToLobby();
+				}
+			}
+		};
+
 		Label mes = new Label(message, skin);
 		mes.setAlignment(Align.center);
 		mes.setWrap(true);
 		messageD.getContentTable().add(mes).width(800);
 		messageD.button("Ok");
 		messageD.pack();
-		messageD.setPosition(menuStage.getWidth()/2 - messageD.getWidth()/2, menuStage.getHeight()/2- messageD.getHeight()/2);
+		messageD.setPosition(
+				menuStage.getWidth() / 2 - messageD.getWidth() / 2,
+				menuStage.getHeight() / 2 - messageD.getHeight() / 2);
 
 		menuStage.addActor(messageD);
 	}
-	
+
+	private void goToLobby() {
+		lobby = new LobbyStage(menuStage.getViewport(), game.PADDING, skin,
+				this);
+		multiplexer.clear();
+		multiplexer.addProcessor(lobby);
+		inLobby = true;
+	}
+
 }

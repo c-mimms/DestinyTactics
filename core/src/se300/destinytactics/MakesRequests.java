@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.OrderedMap;
 
 public interface MakesRequests {
 
-	void http(OrderedMap<String, String> orderedMap);
+	//void http(OrderedMap<String, String> orderedMap);
+
+	void http(OrderedMap<String, Object> map);
 	
 }
