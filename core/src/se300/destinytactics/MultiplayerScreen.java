@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
@@ -42,6 +44,7 @@ import se300.destinytactics.game.WebRequest;
 public class MultiplayerScreen implements Screen, MakesRequests{
 	
 	public DestinyTactics game;
+	public Skin skin;
 	public Sound selectSound;
 	public InputMultiplexer multiplexer;
 	public Stage menuStage;
@@ -58,6 +61,7 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 	public MultiplayerScreen(DestinyTactics game, Skin skin){
 		
 		this.game = game;
+		this.skin = skin; 
 		
 		try {
 			messageDigest = MessageDigest.getInstance("SHA-256");
@@ -178,8 +182,11 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 		game.goMenu();
 	}
 	
+	/**
+	 * Registers player
+	 */
 	public void registerPlayer(){
-		//TODO add code to send stuff to server
+
 		name = username.getText();
 		messageDigest.update(password.getText().getBytes());
 		passwordHash = new String(messageDigest.digest());
@@ -203,9 +210,11 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 		 registerReq.start();
 	}
 	
-	
+	/**
+	 * Logs player in.
+	 */
 	public void login(){
-		//TODO add code to send login and return true if it works. 
+		//TODO add code to return true if it works. 
 
 		name = username.getText();
 		//Hash password using SHA256
@@ -231,11 +240,24 @@ public class MultiplayerScreen implements Screen, MakesRequests{
 	
 
 	@Override
+	/**
+	 * Called when http request is completed. Executes code as result of request.
+	 */
 	public void http(OrderedMap<String, String> orderedMap) {
 		// TODO Auto-generated method stub
 		//System.out.println(orderedMap);
 		String message = orderedMap.get("MESSAGE");
 		System.out.println(message);
+		Dialog messageD = new Dialog("Status",skin);
+		Label mes = new Label(message, skin);
+		mes.setAlignment(Align.center);
+		mes.setWrap(true);
+		messageD.getContentTable().add(mes).width(800);
+		messageD.button("Ok");
+		messageD.pack();
+		messageD.setPosition(menuStage.getWidth()/2 - messageD.getWidth()/2, menuStage.getHeight()/2- messageD.getHeight()/2);
+
+		menuStage.addActor(messageD);
 	}
 	
 }
