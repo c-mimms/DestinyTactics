@@ -19,7 +19,9 @@ private OrderedMap<String, Object> resultMap = new OrderedMap<String, Object>();
 // 0 is success, 1 is failure, 2 is cancelled, -1 is incomplete
 public int status = -1;
 	
-	
+	/**
+	 * Default method that is called on successful HTTP response.
+	 */
 	public void handleHttpResponse(HttpResponse httpResponse) {
 		
 		String ret = httpResponse.getResultAsString();
@@ -31,6 +33,9 @@ public int status = -1;
 		resultMap = map;
 	}
 
+	/**
+	 * Called when HTTP request fails.
+	 */
 	public void failed(Throwable t) {
 		// status = "failed";
 		// do stuff here based on the failed attempt
@@ -39,6 +44,9 @@ public int status = -1;
 	}
 
 	@Override
+	/**
+	 * Called when HTTP request is cancelled.
+	 */
 	public void cancelled() {
 		// TODO Auto-generated method stub
 		System.out.println("Cancelled");
@@ -46,10 +54,18 @@ public int status = -1;
 
 	}
 	
+	/**
+	 * Return map of results of HTTP request, only makes sense for JSON requests.
+	 * @return map of JSON results <String, Object>
+	 */
 	public OrderedMap<String, Object> getMap(){
 		return resultMap;
 	}
 
+	/**
+	 * Gets status of http request.
+	 * @return  0 on success, 1 on failure, 2 on cancelled, -1 while incomplete
+	 */
 	public int getStatus(){
 		return status;
 	}

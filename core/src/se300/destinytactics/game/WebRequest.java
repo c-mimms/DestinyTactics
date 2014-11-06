@@ -10,14 +10,23 @@ public class WebRequest extends Thread {
 	MakesRequests cl;
 	HttpRequest httpGet;
 	
+	/**
+	 * Create a new http request thread.
+	 * @param cl Calling class, when HTTP request finished, will call http() method of this class.
+	 * @param httpGet An HttpRequest with all parameters set.
+	 */
 	public WebRequest(MakesRequests cl, HttpRequest httpGet){
 		this.cl = cl;
 		this.httpGet = httpGet;
 	}
 	
+	/**
+	 * Run the HttpRequest thread.
+	 */
 	public void run(){
 		send();
 		try {
+			//End this thread.
 			this.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -25,10 +34,14 @@ public class WebRequest extends Thread {
 		}
 	}
 	
+	/**
+	 * Send the http request and wait for result.
+	 */
 	public void send() {
 
 		RequestHandler req = new RequestHandler();
 		Gdx.net.sendHttpRequest(httpGet, req);
+		//Check if the request has returned yet
 		while (req.getStatus() == -1) {
 			
 			try {
@@ -39,6 +52,8 @@ public class WebRequest extends Thread {
 			}
 			
 		}
+		
+		//Call the http function of calling class and pass in the JSON map.
 		cl.http(req.getMap());
 		
 	}
