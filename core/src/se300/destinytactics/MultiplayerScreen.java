@@ -1,6 +1,10 @@
 package se300.destinytactics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net.HttpMethods;
+import com.badlogic.gdx.Net.HttpRequest;
+import com.badlogic.gdx.Net.HttpResponse;
+import com.badlogic.gdx.Net.HttpResponseListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -8,9 +12,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,10 +24,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MultiplayerScreen implements Screen{
@@ -38,6 +50,7 @@ public class MultiplayerScreen implements Screen{
 	public TextField username, password, email;
 	MessageDigest messageDigest;
 	String name , passwordHash;
+	Label status;
 	
 	public MultiplayerScreen(DestinyTactics game, Skin skin){
 		
@@ -76,6 +89,8 @@ public class MultiplayerScreen implements Screen{
 		username.setMessageText("Name");
 		email.setMessageText("Email");
 
+		status = new Label("",game.skin2);
+		
 		loginButton.setWidth(menuButton.getWidth());
 		registerButton.setWidth(menuButton.getWidth());
 		
@@ -114,7 +129,6 @@ public class MultiplayerScreen implements Screen{
 		menu.row().space(50);
 		menu.add(menuButton);
 		menu.add(email);
-		
 		menu.setX(game.PADDING);
 		menu.setY(game.PADDING);
 		menuStage.addActor(background);
@@ -163,20 +177,93 @@ public class MultiplayerScreen implements Screen{
 	
 	public void registerPlayer(){
 		//TODO add code to send stuff to server
-		name = username.getMessageText();
-		messageDigest.update(password.getMessageText().getBytes());
+		name = username.getText();
+		messageDigest.update(password.getText().getBytes());
 		passwordHash = new String(messageDigest.digest());
+		String emailStr = email.getText();
+		
+		 Map<String, String> parameters = new HashMap<String,String>();
+		 parameters.put("method", "createUser");
+		 parameters.put("username", name);
+		 parameters.put("password", passwordHash);
+		 parameters.put("email", emailStr);
+		 parameters.put("firstName", name);
+		 parameters.put("lastName", name);
+		 parameters.put("returnFormat", "JSON");
+		 
+		 HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		 httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
+		 httpGet.setTimeOut(0);
+		 System.out.println(httpGet.getContent());
+		 
+
+		 Gdx.net.sendHttpRequest (httpGet, new HttpResponseListener() {
+		        public void handleHttpResponse(HttpResponse httpResponse) {
+		                String ret = httpResponse.getResultAsString();
+		                //do stuff here based on response
+						System.out.println(ret);
+						status.setText(ret);
+		        }
+		 
+		        public void failed(Throwable t) {
+		                //status = "failed";
+		                //do stuff here based on the failed attempt
+					System.out.println("Fail");
+		        }
+				@Override
+				public void cancelled() {
+					// TODO Auto-generated method stub
+					System.out.println("Cancelled");
+					
+				}
+		 });
 	}
 	
 	public void login(){
 		//TODO add code to send login and return true if it works. 
 
-		name = username.getMessageText();
+		name = username.getText();
 		//Hash password using SHA256
-		//TODO For more security generate salt also...
-		messageDigest.update(password.getMessageText().getBytes());
+		messageDigest.update(password.getText().getBytes());
 		passwordHash = new String(messageDigest.digest());
-		//passwordHash = password.getMessageText().hashCode();
+
+		 Map<String, String> parameters = new HashMap<String,String>();
+		 parameters.put("method", "loginUser");
+		 parameters.put("username", name);
+		 parameters.put("password", passwordHash);
+		 parameters.put("returnFormat", "JSON");
+		 
+		 HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		 httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
+		 httpGet.setTimeOut(0);
+		 
+
+		 Gdx.net.sendHttpRequest (httpGet, new HttpResponseListener() {
+		        public void handleHttpResponse(HttpResponse httpResponse) {
+		                String ret = httpResponse.getResultAsString();
+		                //do stuff here based on response
+		                Json json = new Json();
+		                ObjectMap<String,String> map = json.fromJson(ObjectMap.class, ret);
+						System.out.println(ret);
+						//ret = map.get("MESSAGE");
+						status.setText(ret);
+		        }
+		 
+		        public void failed(Throwable t) {
+		                //status = "failed";
+		                //do stuff here based on the failed attempt
+					System.out.println("Fail");
+		        }
+				@Override
+				public void cancelled() {
+					// TODO Auto-generated method stub
+					System.out.println("Cancelled");
+					
+				}
+		 });
+		 
 		
 	}
 	

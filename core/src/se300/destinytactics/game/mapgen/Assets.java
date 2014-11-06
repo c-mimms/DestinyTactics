@@ -1,21 +1,14 @@
 package se300.destinytactics.game.mapgen;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	public static AssetManager manager = new AssetManager();
 
-	// In here we'll put everything that needs to be loaded in this format:
-	// manager.load("file location in assets", fileType.class);
-	//
-	// libGDX AssetManager currently supports: Pixmap, Texture, BitmapFont,
-	// TextureAtlas, TiledAtlas, TiledMapRenderer, Music and Sound.
 	/**
 	 * Queue all items to be loaded
 	 */
