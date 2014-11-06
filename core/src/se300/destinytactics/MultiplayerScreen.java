@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.security.MessageDigest;
@@ -35,8 +36,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import se300.destinytactics.game.WebRequest;
 
-public class MultiplayerScreen implements Screen{
+
+public class MultiplayerScreen implements Screen, MakesRequests{
 	
 	public DestinyTactics game;
 	public Sound selectSound;
@@ -195,30 +198,11 @@ public class MultiplayerScreen implements Screen{
 		 httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
 		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
 		 httpGet.setTimeOut(0);
-		 System.out.println(httpGet.getContent());
-		 
 
-		 Gdx.net.sendHttpRequest (httpGet, new HttpResponseListener() {
-		        public void handleHttpResponse(HttpResponse httpResponse) {
-		                String ret = httpResponse.getResultAsString();
-		                //do stuff here based on response
-						System.out.println(ret);
-						status.setText(ret);
-		        }
-		 
-		        public void failed(Throwable t) {
-		                //status = "failed";
-		                //do stuff here based on the failed attempt
-					System.out.println("Fail");
-		        }
-				@Override
-				public void cancelled() {
-					// TODO Auto-generated method stub
-					System.out.println("Cancelled");
-					
-				}
-		 });
+		 WebRequest registerReq = new WebRequest(this, httpGet);
+		 registerReq.start();
 	}
+	
 	
 	public void login(){
 		//TODO add code to send login and return true if it works. 
@@ -239,32 +223,19 @@ public class MultiplayerScreen implements Screen{
 		 httpGet.setContent(HttpParametersUtils.convertHttpParameters(parameters));
 		 httpGet.setTimeOut(0);
 		 
-
-		 Gdx.net.sendHttpRequest (httpGet, new HttpResponseListener() {
-		        public void handleHttpResponse(HttpResponse httpResponse) {
-		                String ret = httpResponse.getResultAsString();
-		                //do stuff here based on response
-		                Json json = new Json();
-		                ObjectMap<String,String> map = json.fromJson(ObjectMap.class, ret);
-						System.out.println(ret);
-						//ret = map.get("MESSAGE");
-						status.setText(ret);
-		        }
-		 
-		        public void failed(Throwable t) {
-		                //status = "failed";
-		                //do stuff here based on the failed attempt
-					System.out.println("Fail");
-		        }
-				@Override
-				public void cancelled() {
-					// TODO Auto-generated method stub
-					System.out.println("Cancelled");
-					
-				}
-		 });
+		 WebRequest loginReq = new WebRequest(this, httpGet);
+		 loginReq.start();
 		 
 		
+	}
+	
+
+	@Override
+	public void http(OrderedMap<String, String> orderedMap) {
+		// TODO Auto-generated method stub
+		//System.out.println(orderedMap);
+		String message = orderedMap.get("MESSAGE");
+		System.out.println(message);
 	}
 	
 }
