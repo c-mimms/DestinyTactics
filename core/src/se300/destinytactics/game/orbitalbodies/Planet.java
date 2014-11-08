@@ -70,6 +70,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	
 	//Act method
 	public void act(float time){
+		super.act(time);
 		if(controlState == 1 && owner != null){
 			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
 			owner.addResource(resourcePerTurn); //Basically the get resource method
