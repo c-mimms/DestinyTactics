@@ -1,22 +1,19 @@
 package se300.destinytactics.ui;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import se300.destinytactics.DestinyTactics;
-import se300.destinytactics.GameScene;
+
+import com.badlogic.gdx.math.Interpolation;
 import se300.destinytactics.game.mapgen.Sector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.sun.javafx.scene.paint.GradientUtils.Point;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
+
 
 public class ToolTip extends Window {
 
@@ -43,6 +40,7 @@ public class ToolTip extends Window {
 		add("Control State: " + controlState);
 		add("Coordinates: " + position.x + "," + position.y);
 		
+		addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
 		
 	}
 	

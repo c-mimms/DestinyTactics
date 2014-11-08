@@ -138,7 +138,7 @@ public class InfoBar extends Stage{
 		if(myGame.sectorView){
 			setSector(myGame.curSector.getName());
 		}
-		playerResources.setText("" + myGame.curPlayer.getResource());
+		playerResources.setText("" + myGame.localPlayer.getResource());
 	}
 	
 		

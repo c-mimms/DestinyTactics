@@ -223,7 +223,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	public void goMenu() {
 		game.goMenu();
 	}
-
+	
 	/**
 	 * Registers player
 	 */
