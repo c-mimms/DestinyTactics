@@ -19,6 +19,7 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.orbitalbodies.Station;
 import se300.destinytactics.ui.Button;
+import se300.destinytactics.ui.ToolTip;
 
 /**
  * @author John
@@ -122,6 +123,8 @@ public class Sector extends Actor {
 			}
 
 		});
+		
+		this.addListener(new ToolTip(this));
 	}
 
 	public void switchView() {

@@ -15,12 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Infrastructure {
+	public GameScene myGame;
 	private Table container, overviewWrapper, buildFormWrapper, overview, buildForm;
 	public Skin skin;
 	
 	// Public Methods
-	public Infrastructure(Skin skin) {
+	public Infrastructure(Skin skin, final GameScene myGame) {
 		this.skin = skin;
+		this.myGame = myGame;
 		
 		// Build the overview and forms
 		createOverview();
@@ -101,16 +103,35 @@ public class Infrastructure {
 		buildForm.row();
 		buildForm.add(new Label("Shipyard", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Shipyard = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		//BUTTON CLICKABLE
+		upgradeButton_Shipyard.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		        System.out.println("Upgrade Shipyard");
+		        return true;
+		}});
 		buildForm.add(upgradeButton_Shipyard).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Gas Mining Facilities", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_GasMining = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		//BUTTON CLICKABLE
+		upgradeButton_GasMining.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		        System.out.println("Upgrade Gas");
+		        return true;
+		}});
 		buildForm.add(upgradeButton_GasMining).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Refinery", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Refinery = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		//BUTTON CLICKABLE
+		upgradeButton_Refinery.addListener(new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+		        System.out.println("Upgrade Mine");
+		        myGame.curOrbitalBody.mineLevelUp();
+		        return true;
+		}});
 		buildForm.add(upgradeButton_Refinery).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
 		

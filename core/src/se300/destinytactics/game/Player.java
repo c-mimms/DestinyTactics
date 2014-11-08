@@ -10,7 +10,7 @@ public class Player {
 
 	private String name;
 	private int score;
-	private int resource1 = 0;
+	private int resource1 = 500;
 	private int resource2;
 
 	public Player(){
@@ -44,6 +44,10 @@ public class Player {
 	
 	public void addResource(int num){
 		resource1 += num;
+	}
+	
+	public void spendResource(int num){
+		resource1 -= num;
 	}
 	public int getResource(){
 		return resource1;

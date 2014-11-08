@@ -23,4 +23,16 @@ public class MinorStar extends OrbitalBody {
 		
 	}
 
+	@Override
+	public void mineLevelUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getMineLevel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }//end Minor Star

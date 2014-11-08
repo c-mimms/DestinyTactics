@@ -27,12 +27,9 @@ import se300.destinytactics.ui.Button;
 public abstract class OrbitalBody extends Actor {
 
 	public static Galaxy galaxy;
-	private int controlState;
+	protected int controlState;
 	public Player owner;
 	private Fleet fleet;
-	private int miningEfficiency = 1;
-	protected int resource = 0;
-	protected int resource2 = 0;
 	private String name;
 	protected int orbitRadius;
 	public Sector sector;
@@ -65,11 +62,14 @@ public abstract class OrbitalBody extends Actor {
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
 	public static final int XEDGEEXCLUSION = GameScene.SCREEN_WIDTH-275;
 	public Texture texture;
-	public GameScene thisgame;
+	public GameScene myGame;
+	public OrbitalBody body;
+	
+	//Mining Variable Initialization
 
 	
-	public OrbitalBody(int radius, Sector sect){
-
+	public OrbitalBody(int radius, Sector sect){		
+		
 		planets = Assets.getPlanetTypes();
 		for(int i = 0; i < planets.length; i++){
 			planets[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
@@ -80,23 +80,23 @@ public abstract class OrbitalBody extends Actor {
 		controlState = 0;
 		//galaxy = sector.galaxy;
 		controlState = 1;
-		owner = null;
+		owner = new Player();
 		
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		        //System.out.println("Listen Clicker added... calling switchToPlanetView()");
 		        switchToPlanetView();
 		        return true;
 		    }
 		});
 		
 		
+		
+		
 	}
 	
 	public void switchToPlanetView(){
-		//System.out.println("In switchToPlanetView()...");
 		owner = sector.galaxy.thisgame.curPlayer;
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
@@ -157,9 +157,12 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	public void act(float time){
-		if(controlState == 1 && owner != null){
-			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
-			owner.addResource(resource * miningEfficiency);
-		}
 	}
+	
+	//I guess abstract?
+	public abstract void mineLevelUp();
+	public abstract Integer getMineLevel();
+	//The Methods below relate to the shipyard implemented
+	
+	
 }// end OrbitalBody

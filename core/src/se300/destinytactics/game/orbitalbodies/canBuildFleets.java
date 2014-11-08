@@ -9,9 +9,23 @@ package se300.destinytactics.game.orbitalbodies;
 public interface canBuildFleets {
 
 	public static int shipyardLevel = 0;
+	public static int shipyardSize = 0;
 
-	public void getLevel();
+	/**
+	 * Gets shipyard level
+	 * @return shipyardLevel
+	 */
+	public int getShipyardLevel();
+	
+	/**
+	 * Gets shipyard size
+	 * @return shipyardSize
+	 */
+	public int getShipyardSize();
 
+	/**
+	 * Shipyard level increases by 1. Resources are used. Shipyard cost increases. Shipyard size increases.
+	 */
 	public void incrementLevel();
 
 }
