@@ -18,6 +18,7 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.ui.Button;
+import se300.destinytactics.ui.ToolTip;
 
 /**
  * @author John
@@ -39,24 +40,8 @@ public abstract class OrbitalBody extends Actor {
 	public Random rand;
 	public static int test ; 
 	public int type;
-	private static String spriteLib = "realorbitalbody";
-	private static String imagelib = "images/orbitalbodies/planets";
 	public static Texture[] planets;
-	// Import all planet textures
-//	public static Texture[] hotBod = {
-//			new Texture(Gdx.files.internal(spriteLib + "/activatedgate.png"),true),
-//			new Texture(Gdx.files.internal(spriteLib + "/deactivatedgate.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/life1.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/red1.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/red2.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/redWater1.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/redWater2.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/water1.png"),true),
-//			new Texture(Gdx.files.internal(imagelib + "/water2.png"),true),
-//			new Texture(Gdx.files.internal(spriteLib + "/station1.png"),true),
-//			new Texture(Gdx.files.internal(spriteLib + "/station2.png"),true) };
-//	
+	
 	
 	public static final int SPRITE_SIZE = 40;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
@@ -64,6 +49,9 @@ public abstract class OrbitalBody extends Actor {
 	public Texture texture;
 	public GameScene myGame;
 	public OrbitalBody body;
+	
+	boolean hovering;
+	ToolTip toolTip;
 	
 	//Mining Variable Initialization
 
@@ -82,6 +70,8 @@ public abstract class OrbitalBody extends Actor {
 		controlState = 1;
 		owner = new Player();
 		
+		setHeight(SPRITE_SIZE);
+		setWidth(SPRITE_SIZE);
 		setBounds(0,0,SPRITE_SIZE, SPRITE_SIZE);
 		
 		addListener(new ClickListener(){
@@ -89,6 +79,17 @@ public abstract class OrbitalBody extends Actor {
 		        switchToPlanetView();
 		        return true;
 		    }
+		    
+		    public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn();
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+			
 		});
 		
 		
@@ -151,12 +152,31 @@ public abstract class OrbitalBody extends Actor {
 	public int getSpriteSize() {
 		return SPRITE_SIZE;
 	}
+	
+	public void hoverOn() {		
+		toolTip = new ToolTip(name, this);
+		hovering = true;
+	}
+
+	public void hoverOff() {
+		toolTip.remove();
+		hovering = false;
+	}
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha){
+		if (hovering) {
+			toolTip.draw(batch, parentAlpha);
+		
+		} else {
+			
+		}
 		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 	}
 	
 	public void act(float time){
+		super.act(time);
+
 	}
 	
 	//I guess abstract?

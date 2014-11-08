@@ -107,7 +107,7 @@ public class GameScene implements Screen {
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
 		// galaxyStage.setDebugAll(true);
-		// sectorStage.setDebugAll(true);
+		sectorStage.setDebugAll(true);
 		// planetStage.setDebugAll(true);
 		// planetUI.setDebugAll(true);
 		// navBar.setDebugAll(true);
@@ -234,8 +234,10 @@ public class GameScene implements Screen {
 			galaxyStage.act();
 			galaxyStage.draw();
 		} else if (sectorView) {
+			sectorStage.act();
 			sectorStage.draw();
 		} else if (planetView) {
+			planetStage.act();
 			planetStage.draw();
 			planetUI.draw();
 

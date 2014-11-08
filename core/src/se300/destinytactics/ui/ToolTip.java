@@ -3,6 +3,7 @@ package se300.destinytactics.ui;
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -42,9 +43,22 @@ public class ToolTip extends Window {
 		add("Orbital Bodies: " + numBodies);
 		add("Control State: " + controlState);
 		add("Coordinates: " + position.x + "," + position.y);
-		
-		
 	}
 	
+	public ToolTip(String name, OrbitalBody body) {
+		super(name, skin);
+		body.sector.galaxy.thisgame.sectorStage.addActor(this); //LOLOL
+		String sector = body.sector.getName();
+		controlState = body.getState();
+		String owner = body.owner.getName();
+		int mine = body.getMineLevel();
+		float x = body.getX();
+		float y = body.getY();
+		
+		setPosition(x+body.SPRITE_SIZE+10, y-this.getHeight()/2);
+		add("Sector: " + sector);
+		add("Control State: " + controlState);
+		add("Mine Level: " + mine);
+	}
 	
 }

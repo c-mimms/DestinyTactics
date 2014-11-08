@@ -61,5 +61,8 @@ public class SectorScene extends Stage {
 			this.addActor(nextSector.bodyList[i]);
 		}
 	}
+	public void act(float time) {
+		super.act(time);
+	}
 }
 
