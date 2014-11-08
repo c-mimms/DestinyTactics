@@ -101,6 +101,7 @@ public abstract class OrbitalBody extends Actor {
 	public void switchToPlanetView(){
 		hoverOff();
 		owner = sector.galaxy.thisgame.localPlayer;
+		hoverOff();
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
 
@@ -170,6 +171,7 @@ public abstract class OrbitalBody extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha){
 		if (hovering) {
+			
 			toolTip.draw(batch, parentAlpha);
 		
 		} else {
