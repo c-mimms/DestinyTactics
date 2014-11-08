@@ -60,7 +60,8 @@ public class GameScene implements Screen {
 	public float masterVolume = 0.5f;
 
 	// Players?
-	public Player curPlayer;
+	public static Player localPlayer;
+	public Player onlinePlayers[];
 
 	// public static void preloadGalaxy(){
 	//
@@ -72,7 +73,7 @@ public class GameScene implements Screen {
 		// Keep track of the game object so we can return to main menu
 		this.game = game;
 		// m_Galaxy.thisgame = this;
-		curPlayer = new Player();
+		localPlayer = new Player();
 
 		// Load music and sounds (we should have a static sound/music class
 		// maybe?)
