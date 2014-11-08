@@ -109,8 +109,8 @@ public class GalaxyScene extends Stage {
 		super.act(time);
 		int mousex = Gdx.input.getX();
 		int mousey = Gdx.input.getY();
-		float movex = -(mousex - (this.getWidth() / 2)) / (this.getWidth() / 2);
-		float movey = (mousey - (this.getHeight() / 2))
+		float movex = (mousex - (this.getWidth() / 2)) / (this.getWidth() / 2);
+		float movey = -(mousey - (this.getHeight() / 2))
 				/ (this.getHeight() / 2);
 
 		background.setPosition(-movex * PARALLAX - 3*PARALLAX, -movey * PARALLAX- 2*PARALLAX);

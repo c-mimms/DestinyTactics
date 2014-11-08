@@ -65,7 +65,7 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 	@Override
 	public Integer getMineLevel() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 
