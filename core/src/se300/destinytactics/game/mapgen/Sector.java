@@ -55,12 +55,15 @@ public class Sector extends Actor {
 	public static Texture sunTypes[];
 
 	// New variables
-	private static final double EDGE_EXCLUSION = 60;
-	private static final int SPRITE_SIZE = 14;
+	public static final double EDGE_EXCLUSION = 60;
+	public static final int SPRITE_SIZE = 14;
 	public int sunType;
 	public float sunRotation;
 	public int padding = 50;
 	public boolean hovering = false;
+	
+	//ToolTip
+	public ToolTip toolTip;
 
 
 
@@ -124,11 +127,14 @@ public class Sector extends Actor {
 
 		});
 		
-		this.addListener(new ToolTip(this));
+		
+		//ToolTip
+
 	}
 
 	public void switchView() {
 		controlState = 1;
+		toolTip.remove();
 		galaxy.thisgame.switchView(this);
 
 	}
@@ -137,13 +143,15 @@ public class Sector extends Actor {
 		super.finalize();
 	}
 
-	public void hoverOn() {
+	public void hoverOn() {		
+		toolTip = new ToolTip(name, this);
 		hovering = true;
 		myCircle.setX(getX() + this.getOriginX() - (myCircle.getWidth() / 2));
 		myCircle.setY(getY() + this.getOriginY() - (myCircle.getHeight() / 2));
 	}
 
 	public void hoverOff() {
+		toolTip.remove();
 		hovering = false;
 	}
 
@@ -181,10 +189,15 @@ public class Sector extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.setColor(this.getColor());
-		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
 		if (hovering) {
 			myCircle.draw(batch, parentAlpha);
+			toolTip.draw(batch, parentAlpha);
+		
+		} else {
+			
 		}
+		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
+
 
 		batch.setColor(Color.WHITE);
 
