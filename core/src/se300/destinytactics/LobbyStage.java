@@ -36,7 +36,7 @@ public class LobbyStage extends Stage {
 	private int userID;
 	public Texture bgimg;
 	public Image logo, background;
-	public TextButton createGameB, menuButton;
+	public TextButton createGameButton, menuButton;
 	MessageDigest messageDigest;
 	String name, passwordHash;
 	Label status;
@@ -55,12 +55,12 @@ public class LobbyStage extends Stage {
 		menu = new Table();
 		// menu.setDebug(true);
 
-		createGameB = new TextButton("Create Game", skin.get("default",
+		createGameButton = new TextButton("Create Game", skin.get("default",
 				TextButtonStyle.class));
 		menuButton = new TextButton("Back to Menu", skin.get("default",
 				TextButtonStyle.class));
 
-		createGameB.setWidth(menuButton.getWidth());
+		createGameButton.setWidth(menuButton.getWidth());
 
 		menuButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -70,8 +70,16 @@ public class LobbyStage extends Stage {
 			}
 		});
 
+		createGameButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				goMenu();
+				return true;
+			}
+		});
+
 		menu.setFillParent(true);
-		menu.add(createGameB);
+		menu.add(createGameButton);
 		menu.add(menuButton);
 		menu.setX(padding);
 		menu.setY(padding);
@@ -81,6 +89,9 @@ public class LobbyStage extends Stage {
 
 	public void goMenu() {
 		myGame.goMenu();
+	}
+	public void createGame() {
+		myGame.game.startGame();
 	}
 
 }
