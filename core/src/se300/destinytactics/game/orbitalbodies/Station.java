@@ -44,6 +44,30 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 		
 	}
 
+	@Override
+	public int getShipyardLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getShipyardSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void mineLevelUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getMineLevel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

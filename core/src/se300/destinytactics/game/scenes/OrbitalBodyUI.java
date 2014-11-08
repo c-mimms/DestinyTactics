@@ -31,7 +31,7 @@ public class OrbitalBodyUI extends Stage {
 		edgePadding = padding;
 		this.skin = skin;
 		fc = new FleetCommand(skin);
-		inf = new Infrastructure(skin);
+		inf = new Infrastructure(skin, myGame);
 		def = new Defense(skin);
 
 		managementInterface = new Table();

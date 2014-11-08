@@ -39,5 +39,17 @@ public class JumpGate extends OrbitalBody {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public void mineLevelUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getMineLevel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }//end JumpGate

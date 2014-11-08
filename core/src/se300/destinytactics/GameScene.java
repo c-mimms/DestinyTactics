@@ -52,6 +52,7 @@ public class GameScene implements Screen {
 	public DestinyTactics game;
 	InputMultiplexer multiplexer;
 	public Sector curSector;
+	public OrbitalBody curOrbitalBody;
 
 	// Sound stuff
 	public Music musicLoop;
@@ -157,6 +158,8 @@ public class GameScene implements Screen {
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
 
 		selectSound.play();
+		curOrbitalBody = nextOrbitalBody;
+		
 		planetStage.changePlanet(nextOrbitalBody);
 
 		planetView = true;
