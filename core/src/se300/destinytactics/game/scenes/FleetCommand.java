@@ -1,6 +1,7 @@
 package se300.destinytactics.game.scenes;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Fleet;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,10 +19,12 @@ public class FleetCommand {
 	private Table container, overviewWrapper, moveFormWrapper, buildFormWrapper, attackFormWrapper, overview, moveForm, buildForm, attackForm;
 	private TextButton buildButton, moveButton, attackButton;
 	public Skin skin;
+	public GameScene myGame;
 	
 	// Public Methods
-	public FleetCommand(Skin skin) {
+	public FleetCommand(Skin skin,  GameScene myGame) {
 		this.skin = skin;
+		this.myGame = myGame;
 		
 		// Create management buttons (displayed within overview)
 		buildButton = new TextButton("Build Units", skin.get("default", TextButtonStyle.class));
@@ -259,7 +262,7 @@ public class FleetCommand {
 		
 		buildForm.row();
 		buildForm.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		TextField unitCountTextBox = new TextField("", skin);
+		final TextField unitCountTextBox = new TextField("", skin);
 		//unitCountTextBox.DigitsOnlyFilter();
 		buildForm.add(unitCountTextBox).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
@@ -299,7 +302,8 @@ public class FleetCommand {
 		
 		submitButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				buildUnits();
+				buildUnits(Integer.parseInt(unitCountTextBox.getText()));
+				
 				return true;
 			}
 
@@ -384,8 +388,10 @@ public class FleetCommand {
 	}
 
 	
-	private void buildUnits() {
+	private void buildUnits(int x) {
 		// TODO Auto-generated method stub
+		int tmp[] = {x};
+		myGame.curOrbitalBody.m_Fleet = new Fleet(myGame.curOrbitalBody,tmp);
 		
 	}
 	

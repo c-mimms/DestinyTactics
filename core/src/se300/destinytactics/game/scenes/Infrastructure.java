@@ -103,6 +103,8 @@ public class Infrastructure {
 		buildForm.row();
 		buildForm.add(new Label("Shipyard", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Shipyard = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		
+		
 		//BUTTON CLICKABLE
 		upgradeButton_Shipyard.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -114,6 +116,8 @@ public class Infrastructure {
 		buildForm.row();
 		buildForm.add(new Label("Gas Mining Facilities", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_GasMining = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		
+		
 		//BUTTON CLICKABLE
 		upgradeButton_GasMining.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -125,6 +129,8 @@ public class Infrastructure {
 		buildForm.row();
 		buildForm.add(new Label("Refinery", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Refinery = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
+		
+		
 		//BUTTON CLICKABLE
 		upgradeButton_Refinery.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

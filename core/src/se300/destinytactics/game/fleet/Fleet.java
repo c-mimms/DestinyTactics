@@ -39,9 +39,13 @@ public class Fleet extends Actor {
 
 	private int SPRITE_SIZE = 10;
 
-	public Fleet() {
+	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
+		location = loc;
+		//sectorLocation = location.sector;
+		this.ships = ship;
 		this.setSize(10, 10);
+		System.out.println("New fleet created at " + location);
 	}
 
 	public void finalize() throws Throwable {

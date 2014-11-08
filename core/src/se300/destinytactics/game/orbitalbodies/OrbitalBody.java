@@ -3,11 +3,14 @@ package se300.destinytactics.game.orbitalbodies;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
@@ -17,6 +20,7 @@ import se300.destinytactics.game.mapgen.Assets;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.ToolTip;
 
@@ -41,7 +45,12 @@ public abstract class OrbitalBody extends Actor {
 	public static int test ; 
 	public int type;
 	public static Texture[] planets;
-	
+
+	public static Texture circles[] = {
+			new Texture(Gdx.files.internal("images/blueSelect.png")),
+			new Texture(Gdx.files.internal("images/redSelect.png")) };
+
+	public Image myCircle = new Image(circles[0]);
 	
 	public static final int SPRITE_SIZE = 40;
 	public static final int YEDGEEXCLUSION = GameScene.SCREEN_HEIGHT-GameScene.SCREEN_HEIGHT/10-SPRITE_SIZE; 
@@ -57,7 +66,7 @@ public abstract class OrbitalBody extends Actor {
 
 	
 	public OrbitalBody(int radius, Sector sect){		
-		
+
 		planets = Assets.getPlanetTypes();
 		for(int i = 0; i < planets.length; i++){
 			planets[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
@@ -69,6 +78,14 @@ public abstract class OrbitalBody extends Actor {
 		//galaxy = sector.galaxy;
 		controlState = 1;
 		owner = new Player();
+		myCircle.setOrigin(Align.center);
+		myCircle.setSize(50, 50);
+		myCircle.setPosition(getX()+30, getY()+30);
+		
+		
+
+		setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
+		setX(XEDGEEXCLUSION-150*orbitRadius);
 		
 		setHeight(SPRITE_SIZE);
 		setWidth(SPRITE_SIZE);
@@ -164,8 +181,9 @@ public abstract class OrbitalBody extends Actor {
 	public void hoverOff() {
 		hovering = false;
 		toolTip.remove();
+		if(this.getStage()!=null){
 		this.getStage().mouseMoved(0, 1);
-		
+		}
 	}
 	
 	@Override
@@ -173,9 +191,13 @@ public abstract class OrbitalBody extends Actor {
 		if (hovering) {
 			
 			toolTip.draw(batch, parentAlpha);
-		
+
+			batch.setColor(Color.WHITE);
 		} else {
 			
+		}
+		if(m_Fleet != null){
+			myCircle.draw(batch, parentAlpha);
 		}
 		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 	}

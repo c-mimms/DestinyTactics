@@ -22,8 +22,8 @@ public class GalaxyScene extends Stage {
 	public Texture bgimg_galaxy;
 	public GameScene myGame;
 	public Skin skin;
-	Fleet test = new Fleet();
-	Fleet test2 = new Fleet();
+	Fleet test = new Fleet(null,null);
+	Fleet test2 = new Fleet(null,null);
 	private Group sectors, sectorNames;
 
 	public static final int PARALLAX = 10;
@@ -43,7 +43,6 @@ public class GalaxyScene extends Stage {
 				* PARALLAX);
 
 		this.addActor(background);
-		// background.setFillParent(true);
 
 		gridOverlay.setFillParent(true);
 		gridOverlay.setTouchable(Touchable.disabled);
