@@ -134,7 +134,7 @@ public class Sector extends Actor {
 
 	public void switchView() {
 		controlState = 1;
-		hoverOff();
+		toolTip.remove();
 		galaxy.thisgame.switchView(this);
 
 	}
@@ -151,8 +151,8 @@ public class Sector extends Actor {
 	}
 
 	public void hoverOff() {
-		hovering = false;
 		toolTip.remove();
+		hovering = false;
 	}
 
 	public String getName() {
@@ -189,6 +189,9 @@ public class Sector extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.setColor(this.getColor());
+		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
+		batch.setColor(Color.WHITE);
+		
 		if (hovering) {
 			myCircle.draw(batch, parentAlpha);
 			toolTip.draw(batch, parentAlpha);
@@ -196,10 +199,6 @@ public class Sector extends Actor {
 		} else {
 			
 		}
-		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
-
-
-		batch.setColor(Color.WHITE);
 
 		if (controlState == 1) {
 			batch.draw(circles[1], getXPos() + 7 - 25, getYPos() + 7 - 25, 25,

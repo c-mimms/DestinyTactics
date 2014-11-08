@@ -166,6 +166,8 @@ public abstract class OrbitalBody extends Actor {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha){
+		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+		
 		if (hovering) {
 			
 			toolTip.draw(batch, parentAlpha);
@@ -173,7 +175,7 @@ public abstract class OrbitalBody extends Actor {
 		} else {
 			
 		}
-		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+		
 	}
 	
 	public void act(float time){

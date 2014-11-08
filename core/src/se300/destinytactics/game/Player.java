@@ -14,7 +14,7 @@ public class Player {
 	private int resource2;
 
 	public Player(){
-		name = "Player 1";
+		name = "Halo Guy 117";
 		score = 0;
 		
 	}
