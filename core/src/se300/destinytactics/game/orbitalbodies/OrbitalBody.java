@@ -76,6 +76,7 @@ public abstract class OrbitalBody extends Actor {
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				hoverOff();
 		        switchToPlanetView();
 		        return true;
 		    }
@@ -98,6 +99,7 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	public void switchToPlanetView(){
+		hoverOff();
 		owner = sector.galaxy.thisgame.localPlayer;
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
@@ -161,6 +163,8 @@ public abstract class OrbitalBody extends Actor {
 	public void hoverOff() {
 		hovering = false;
 		toolTip.remove();
+		this.getStage().mouseMoved(0, 1);
+		
 	}
 	
 	@Override
@@ -176,7 +180,6 @@ public abstract class OrbitalBody extends Actor {
 	
 	public void act(float time){
 		super.act(time);
-
 	}
 	
 	//I guess abstract?

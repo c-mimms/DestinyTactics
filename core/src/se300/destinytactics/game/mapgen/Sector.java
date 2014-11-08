@@ -133,8 +133,8 @@ public class Sector extends Actor {
 	}
 
 	public void switchView() {
-		controlState = 1;
 		hoverOff();
+		controlState = 1;
 		galaxy.thisgame.switchView(this);
 
 	}
@@ -153,6 +153,7 @@ public class Sector extends Actor {
 	public void hoverOff() {
 		hovering = false;
 		toolTip.remove();
+		this.getStage().mouseMoved(0, 1);
 	}
 
 	public String getName() {

@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class ToolTip extends Window {
 
-	Dialog toolTip;
 	static Skin skin = new Skin(Gdx.files.internal("data/Holo-dark-hdpi.json"), new TextureAtlas("data/Holo-dark-hdpi.atlas"));
 
 	int controlState;
@@ -59,6 +58,8 @@ public class ToolTip extends Window {
 		add("Sector: " + sector);
 		add("Control State: " + controlState);
 		add("Mine Level: " + mine);
+		super.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
+		
 	}
 	
 }
