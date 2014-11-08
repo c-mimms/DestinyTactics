@@ -41,6 +41,7 @@ public class Fleet extends Actor {
 
 	public Fleet() {
 		super();
+		this.setSize(10, 10);
 	}
 
 	public void finalize() throws Throwable {
@@ -105,8 +106,8 @@ public class Fleet extends Actor {
 			this.destination = null;
 			sectorDestination = null;
 			percentTravelled = 0f;
-			this.setX(sectorLocation.getX());
-			this.setY(sectorLocation.getY());
+			this.setX(sectorLocation.getX()+(sectorLocation.getWidth()/2) - (getWidth()/2));
+			this.setY(sectorLocation.getY()+(sectorLocation.getHeight()/2) - (getHeight()/2));
 			
 		}
 		// TODO add a totalDistance variable so this calculation doesn't have to
@@ -116,8 +117,9 @@ public class Fleet extends Actor {
 					/ (float) location.getDistance(destination);
 			float difx = sectorLocation.getX() - sectorDestination.getX() ;
 			float dify = sectorLocation.getY() - sectorDestination.getY() ;
-			this.setX(sectorDestination.getX() + (difx * percentTravelled));
-			this.setY(sectorDestination.getY() + (dify * percentTravelled));
+			//TODO make everything have a getCenterX() and setCenter() so we don't have to do this...
+			this.setX(sectorDestination.getX()+(sectorDestination.getWidth()/2) - (getWidth()/2) + (difx * percentTravelled));
+			this.setY(sectorDestination.getY()+(sectorDestination.getHeight()/2) - (getHeight()/2) + (dify * percentTravelled));
 		}
 
 	}
