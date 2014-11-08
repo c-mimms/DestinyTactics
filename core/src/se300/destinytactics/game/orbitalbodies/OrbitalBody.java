@@ -159,8 +159,8 @@ public abstract class OrbitalBody extends Actor {
 	}
 
 	public void hoverOff() {
-		toolTip.remove();
 		hovering = false;
+		toolTip.remove();
 	}
 	
 	@Override

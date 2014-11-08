@@ -40,12 +40,9 @@ public class ToolTip extends Window {
 		add("Orbital Bodies: " + numBodies);
 		add("Control State: " + controlState);
 		add("Coordinates: " + position.x + "," + position.y);
-<<<<<<< HEAD
 		
 		addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
 		
-=======
->>>>>>> origin/development
 	}
 	
 	public ToolTip(String name, OrbitalBody body) {
