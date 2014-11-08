@@ -304,6 +304,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 		messageD.getContentTable().add(mes).width(800);
 		messageD.button("Ok");
 		messageD.pack();
+		messageD.setMovable(false);
 		messageD.setPosition(
 				menuStage.getWidth() / 2 - messageD.getWidth() / 2,
 				menuStage.getHeight() / 2 - messageD.getHeight() / 2);
