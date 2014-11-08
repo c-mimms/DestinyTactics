@@ -85,6 +85,9 @@ public class ToolTip extends Window {
 		pack();
 		setPosition(x+body.SPRITE_SIZE+10, y-this.getHeight()/2 + body.SPRITE_SIZE/2);
 
+		
+		super.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
+		
 	}
 	
 }
