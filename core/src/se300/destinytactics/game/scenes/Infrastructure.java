@@ -72,7 +72,12 @@ public class Infrastructure {
 		
 		overview.row();
 		overview.add(new Label("Gas Mining Facilities", skin)).width(GameScene.SCREEN_WIDTH/4);
-		overview.add("Lv. 3").width(GameScene.SCREEN_WIDTH/4);
+		if(myGame.curOrbitalBody != null){
+			overview.add(new Label("Lv. " + myGame.curOrbitalBody.getMineLevel(), skin)).width(GameScene.SCREEN_WIDTH/4);
+		} else {
+			overview.add(new Label("Lv. " + 0, skin)).width(GameScene.SCREEN_WIDTH/4);
+
+		}
 		
 		overview.row();
 		overview.add(new Label("Refinery", skin)).expandX().fillX();
@@ -143,4 +148,5 @@ public class Infrastructure {
 		buildFormWrapper.setWidth(GameScene.SCREEN_WIDTH/2);
 		buildFormWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
+	
 }

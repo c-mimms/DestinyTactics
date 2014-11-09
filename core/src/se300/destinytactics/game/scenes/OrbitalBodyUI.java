@@ -120,4 +120,8 @@ public class OrbitalBodyUI extends Stage {
 
 		return cell;
 	}
+
+	public void act(float time){
+		super.act(time);
+	}
 }

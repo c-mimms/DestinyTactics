@@ -68,7 +68,7 @@ public abstract class OrbitalBody extends Actor {
 		controlState = 0;
 		//galaxy = sector.galaxy;
 		controlState = 1;
-		owner = new Player();
+		owner = GameScene.localPlayer;
 		
 		setHeight(SPRITE_SIZE);
 		setWidth(SPRITE_SIZE);

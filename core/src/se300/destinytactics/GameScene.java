@@ -240,6 +240,7 @@ public class GameScene implements Screen {
 		} else if (planetView) {
 			planetStage.act();
 			planetStage.draw();
+			planetUI.act();
 			planetUI.draw();
 
 		}
