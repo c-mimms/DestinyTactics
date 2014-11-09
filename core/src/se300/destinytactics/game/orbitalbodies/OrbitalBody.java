@@ -149,6 +149,7 @@ public abstract class OrbitalBody extends Actor {
 	
 	public void switchToPlanetView(){
 		owner = sector.galaxy.thisgame.localPlayer;
+		sector.galaxy.thisgame.localPlayer.addOrbitalBody(this);
 		this.getStage().mouseMoved(20, 20);
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
@@ -224,6 +225,8 @@ public abstract class OrbitalBody extends Actor {
 	public abstract void mineLevelUp();
 	public abstract Integer getMineLevel();
 	//The Methods below relate to the shipyard implemented
+	
+	public abstract void endTurn();
 	
 	
 }// end OrbitalBody

@@ -1,6 +1,7 @@
 package se300.destinytactics.game.scenes;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,6 +24,7 @@ public class OrbitalBodyUI extends Stage {
 	public Defense def;
 	int edgePadding;
 	int buttonPadding = 5;
+	public GalaxyMap map;
 
 	public OrbitalBodyUI(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
@@ -30,6 +32,7 @@ public class OrbitalBodyUI extends Stage {
 		this.myGame = myGame;
 		edgePadding = padding;
 		this.skin = skin;
+		map = new GalaxyMap(skin,myGame);
 		fc = new FleetCommand(skin,myGame);
 		inf = new Infrastructure(skin, myGame);
 		def = new Defense(skin);
@@ -123,5 +126,10 @@ public class OrbitalBodyUI extends Stage {
 
 	public void act(float time){
 		super.act(time);
+	}
+	
+	public OrbitalBody getDestination(){
+		this.addActor(map);
+		return null;
 	}
 }

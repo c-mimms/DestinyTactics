@@ -42,7 +42,7 @@ public class Fleet extends Actor {
 	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
 		location = loc;
-		//sectorLocation = location.sector;
+		// sectorLocation = location.sector;
 		this.ships = ship;
 		this.setSize(10, 10);
 		System.out.println("New fleet created at " + location);
@@ -72,12 +72,25 @@ public class Fleet extends Actor {
 		return "";
 	}
 
+	/**
+	 * Return player that owns fleet
+	 * @return
+	 */
 	public Player getPlayerAssignment() {
-		return null;
+		return playerAssignment;
 	}
+	/**
+	 * Set fleet owner
+	 * @param player
+	 */
+	public void setPlayerAssignment(Player player) {
+		playerAssignment = player;
+	}
+	
+
 
 	/**
-	 * 
+	 * Get number of ships in fleet
 	 * @param unitType
 	 */
 	public int getShipCount(Ship unitType) {
@@ -101,29 +114,41 @@ public class Fleet extends Actor {
 	 * @param location
 	 */
 	public void moveFleet() {
-		this.distanceToDestination -= this.fleetGalacticTravelSpeed;
-		if (distanceToDestination <= 0) {
-			System.out.println("Loc: " + location.getName() + "\n Destination: " + destination.getName());
-			this.location = destination;
-			sectorLocation = sectorDestination;
-			distanceToDestination = 0;
-			this.destination = null;
-			sectorDestination = null;
-			percentTravelled = 0f;
-			this.setX(sectorLocation.getX()+(sectorLocation.getWidth()/2) - (getWidth()/2));
-			this.setY(sectorLocation.getY()+(sectorLocation.getHeight()/2) - (getHeight()/2));
-			
-		}
-		// TODO add a totalDistance variable so this calculation doesn't have to
-		// run constantly
-		else {
-			percentTravelled = (float) distanceToDestination
-					/ (float) location.getDistance(destination);
-			float difx = sectorLocation.getX() - sectorDestination.getX() ;
-			float dify = sectorLocation.getY() - sectorDestination.getY() ;
-			//TODO make everything have a getCenterX() and setCenter() so we don't have to do this...
-			this.setX(sectorDestination.getX()+(sectorDestination.getWidth()/2) - (getWidth()/2) + (difx * percentTravelled));
-			this.setY(sectorDestination.getY()+(sectorDestination.getHeight()/2) - (getHeight()/2) + (dify * percentTravelled));
+		//If it has a destination
+		if (this.sectorDestination != null) {
+			this.distanceToDestination -= this.fleetGalacticTravelSpeed;
+			if (distanceToDestination <= 0) {
+				System.out.println("Loc: " + location.getName()
+						+ "\n Destination: " + destination.getName());
+				this.location = destination;
+				sectorLocation = sectorDestination;
+				distanceToDestination = 0;
+				this.destination = null;
+				sectorDestination = null;
+				percentTravelled = 0f;
+				this.setX(sectorLocation.getX()
+						+ (sectorLocation.getWidth() / 2) - (getWidth() / 2));
+				this.setY(sectorLocation.getY()
+						+ (sectorLocation.getHeight() / 2) - (getHeight() / 2));
+
+			}
+			// TODO add a totalDistance variable so this calculation doesn't
+			// have to
+			// run constantly
+			else {
+				percentTravelled = (float) distanceToDestination
+						/ (float) location.getDistance(destination);
+				float difx = sectorLocation.getX() - sectorDestination.getX();
+				float dify = sectorLocation.getY() - sectorDestination.getY();
+				// TODO make everything have a getCenterX() and setCenter() so
+				// we don't have to do this...
+				this.setX(sectorDestination.getX()
+						+ (sectorDestination.getWidth() / 2) - (getWidth() / 2)
+						+ (difx * percentTravelled));
+				this.setY(sectorDestination.getY()
+						+ (sectorDestination.getHeight() / 2)
+						- (getHeight() / 2) + (dify * percentTravelled));
+			}
 		}
 
 	}
@@ -153,19 +178,13 @@ public class Fleet extends Actor {
 
 	}
 
-	/**
-	 * 
-	 * @param player
-	 */
-	public void setPlayerAssignment(Player player) {
-		
-	}
 
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.setColor(this.getColor());
 		if (destination != null) {
-			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE, SPRITE_SIZE);
+			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE,
+					SPRITE_SIZE);
 		}
 		batch.end();
 

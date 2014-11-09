@@ -42,6 +42,7 @@ public class FleetCommand {
 		moveButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				setForm("Move");
+				moveFleet();
 				return true;
 			}
 		});
@@ -391,8 +392,16 @@ public class FleetCommand {
 	private void buildUnits(int x) {
 		// TODO Auto-generated method stub
 		int tmp[] = {x};
-		myGame.curOrbitalBody.m_Fleet = new Fleet(myGame.curOrbitalBody,tmp);
+		Fleet fl = new Fleet(myGame.curOrbitalBody,tmp);
+		myGame.curOrbitalBody.m_Fleet = fl;
+		myGame.localPlayer.addFleet(fl);
 		
+	
 	}
 	
+	private void moveFleet(){
+		if(myGame.curOrbitalBody.m_Fleet !=null){
+			myGame.planetUI.getDestination();
+		}
+	}
 }

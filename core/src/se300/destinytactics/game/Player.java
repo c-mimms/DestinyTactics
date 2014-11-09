@@ -1,5 +1,10 @@
 package se300.destinytactics.game;
 
+import java.util.ArrayList;
+
+import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+
 
 /**
  * @author John
@@ -12,10 +17,14 @@ public class Player {
 	private int score;
 	private int resource1 = 500;
 	private int resource2;
+	public ArrayList<OrbitalBody> ownedBodies;
+	public ArrayList<Fleet> fleets;
 
 	public Player(){
 		name = "Halo Guy 117";
 		score = 0;
+		ownedBodies = new ArrayList<OrbitalBody>();
+		fleets = new ArrayList<Fleet>();
 		
 	}
 
@@ -51,5 +60,33 @@ public class Player {
 	}
 	public int getResource(){
 		return resource1;
+	}
+
+	public void addOrbitalBody(OrbitalBody ob){
+		ownedBodies.add(ob);
+	}
+	
+	public void removeOrbitalBody(OrbitalBody ob){
+		ownedBodies.remove(ob);
+	}
+	
+	public void addFleet(Fleet fl){
+		fleets.add(fl);
+		fl.setPlayerAssignment(this);
+	}
+	
+	public void removeFleet(Fleet fl){
+		fleets.remove(fl);
+	}
+
+	public void endTurn() {
+		// TODO Auto-generated method stub
+		for(OrbitalBody ob :ownedBodies){
+			ob.endTurn();
+		}
+		for(Fleet fl : fleets){
+			fl.moveFleet();
+		}
+		
 	}
 }//end Player
