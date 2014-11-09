@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Sector;
@@ -39,11 +40,11 @@ public class Fleet extends Actor {
 			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
 
 	private int SPRITE_SIZE = 10;
+	private float angle = 0;
 
 	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
 		setLocation(loc);
-		// sectorLocation = location.sector;
 		this.ships = ship;
 		this.setSize(10, 10);
 		System.out.println("New fleet created at " + location.getName());
@@ -75,23 +76,25 @@ public class Fleet extends Actor {
 
 	/**
 	 * Return player that owns fleet
+	 * 
 	 * @return
 	 */
 	public Player getPlayerAssignment() {
 		return playerAssignment;
 	}
+
 	/**
 	 * Set fleet owner
+	 * 
 	 * @param player
 	 */
 	public void setPlayerAssignment(Player player) {
 		playerAssignment = player;
 	}
-	
-
 
 	/**
 	 * Get number of ships in fleet
+	 * 
 	 * @param unitType
 	 */
 	public int getShipCount(Ship unitType) {
@@ -115,12 +118,12 @@ public class Fleet extends Actor {
 	 * @param location
 	 */
 	public void moveFleet() {
-		//If it has a destination
+		// If it has a destination
 		if (this.sectorDestination != null) {
 			this.distanceToDestination -= this.fleetGalacticTravelSpeed;
 			if (distanceToDestination <= 0) {
-//				System.out.println("Loc: " + location.getName()
-//						+ "\n Destination: " + destination.getName());
+				// System.out.println("Loc: " + location.getName()
+				// + "\n Destination: " + destination.getName());
 				this.location = destination;
 				sectorLocation = sectorDestination;
 				distanceToDestination = 0;
@@ -155,12 +158,14 @@ public class Fleet extends Actor {
 	}
 
 	/**
+	 * Set location of the fleet
 	 * 
 	 * @param location
 	 */
 	public void setLocation(OrbitalBody loc) {
 		this.location = loc;
 		sectorLocation = location.getSector();
+		location.m_Fleet = this;
 	}
 
 	/**
@@ -175,35 +180,45 @@ public class Fleet extends Actor {
 		distanceToDestination = location.getDistance(destination);
 	}
 
-	public void recalculateFleetSpeeds() {
-
-	}
-
-
+	/**
+	 * Draw the fleet
+	 */
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(this.getColor());
-		
-		
-		if (destination != null) {
-			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE,
-					SPRITE_SIZE);
+
+		if (this.getStage().getClass() == GalaxyScene.class) {
+
+			if (destination != null) {
+				batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE,
+						SPRITE_SIZE);
+			}
+			batch.end();
+
+			renderer.setProjectionMatrix(batch.getProjectionMatrix());
+			renderer.setTransformMatrix(batch.getTransformMatrix());
+
+			renderer.begin(ShapeType.Line);
+			renderer.setColor(Color.WHITE);
+			renderer.line(sectorLocation.getX()
+					+ (sectorLocation.getWidth() / 2), sectorLocation.getY()
+					+ (sectorLocation.getHeight() / 2),
+					sectorDestination.getX()
+							+ (sectorDestination.getWidth() / 2),
+					sectorDestination.getY()
+							+ (sectorDestination.getHeight() / 2));
+			renderer.end();
+
+			batch.begin();
+		} else {
+			
+			batch.draw(sprite1, this.getLocation().getX(Align.center)-5 + (float)(40*Math.sin(angle)), this
+					.getLocation().getY(Align.center)-5 + (float)(40*Math.cos(angle)), SPRITE_SIZE, SPRITE_SIZE);
+
 		}
-		batch.end();
-
-		renderer.setProjectionMatrix(batch.getProjectionMatrix());
-		renderer.setTransformMatrix(batch.getTransformMatrix());
-
-		renderer.begin(ShapeType.Line);
-		renderer.setColor(Color.WHITE);
-		renderer.line(sectorLocation.getX() + (sectorLocation.getWidth() / 2),
-				sectorLocation.getY() + (sectorLocation.getHeight() / 2),
-				sectorDestination.getX() + (sectorDestination.getWidth() / 2),
-				sectorDestination.getY() + (sectorDestination.getHeight() / 2));
-		renderer.end();
-
-		batch.begin();
-
 		batch.setColor(Color.WHITE);
 
 	}
-}// end Fleet
+	public void act(float time){
+		angle += time * 2;
+	}
+}

@@ -2,6 +2,8 @@ package se300.destinytactics.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
+
 import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
@@ -19,13 +21,14 @@ public class Player {
 	private int resource2;
 	public ArrayList<OrbitalBody> ownedBodies;
 	public ArrayList<Fleet> fleets;
-
+	public Color color;
+	
 	public Player(){
 		name = "Halo Guy 117";
 		score = 0;
 		ownedBodies = new ArrayList<OrbitalBody>();
 		fleets = new ArrayList<Fleet>();
-		
+		color = new Color(1,0,0,1);
 	}
 
 	public void finalize() throws Throwable {
@@ -49,6 +52,9 @@ public class Player {
 
 	public void takeTurn(){
 
+	}
+	public Color getColor(){
+		return color;
 	}
 	
 	public void addResource(int num){

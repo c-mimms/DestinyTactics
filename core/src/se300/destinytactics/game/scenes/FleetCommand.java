@@ -395,6 +395,7 @@ public class FleetCommand {
 		Fleet fl = new Fleet(myGame.curOrbitalBody,tmp);
 		myGame.curOrbitalBody.m_Fleet = fl;
 		myGame.localPlayer.addFleet(fl);
+		myGame.curOrbitalBody.getStage().addActor(fl);
 		
 	
 	}

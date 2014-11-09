@@ -159,6 +159,13 @@ public abstract class OrbitalBody extends Actor {
 //		}
 	}
 	
+	public boolean hasFleet(){
+		if(this.m_Fleet != null){
+			return true;
+		}
+		return false;
+	}
+	
 	public void switchToPlanetView(){
 		owner = sector.galaxy.thisgame.localPlayer;
 		sector.galaxy.thisgame.localPlayer.addOrbitalBody(this);
@@ -192,7 +199,7 @@ public abstract class OrbitalBody extends Actor {
 	public abstract void getMiningEfficiency();
 
 	public Fleet getFleet() {
-		return fleet;
+		return m_Fleet;
 	}
 
 	public Sector getSector() {
@@ -222,10 +229,9 @@ public abstract class OrbitalBody extends Actor {
 		
 		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 		
-		if(m_Fleet != null){
-			myCircle.draw(batch, parentAlpha);
-		}
-		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+//		if(m_Fleet != null){
+//			myCircle.draw(batch, parentAlpha);
+//		}
 		
 	}
 	
