@@ -1,5 +1,7 @@
 package se300.destinytactics.game.orbitalbodies;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -7,8 +9,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -34,8 +38,8 @@ public abstract class OrbitalBody extends Actor {
 	public static Galaxy galaxy;
 	protected int controlState;
 	public Player owner;
-	private Fleet fleet;
-	private String name;
+	public Fleet fleet;
+	public String name;
 	protected int orbitRadius;
 	public Sector sector;
 	//public 
@@ -86,6 +90,7 @@ public abstract class OrbitalBody extends Actor {
 
 		setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
 		setX(XEDGEEXCLUSION-150*orbitRadius);
+
 		
 		setHeight(SPRITE_SIZE);
 		setWidth(SPRITE_SIZE);
@@ -116,9 +121,8 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	public void switchToPlanetView(){
-		hoverOff();
+		System.out.println("Hovering off");
 		owner = sector.galaxy.thisgame.localPlayer;
-		hoverOff();
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
 
@@ -173,8 +177,13 @@ public abstract class OrbitalBody extends Actor {
 		return SPRITE_SIZE;
 	}
 	
-	public void hoverOn() {		
+	public void hoverOn() {	
+		if(toolTip ==null){
 		toolTip = new ToolTip(name, this);
+		}
+		this.getStage().addActor(toolTip);
+		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
+		
 		hovering = true;
 	}
 
@@ -188,24 +197,14 @@ public abstract class OrbitalBody extends Actor {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha){
+		
 		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
 		
-		if (hovering) {
-			
-			toolTip.draw(batch, parentAlpha);
-
-			batch.setColor(Color.WHITE);
-		} else {
-			
-		}
-<<<<<<< HEAD
 		if(m_Fleet != null){
 			myCircle.draw(batch, parentAlpha);
 		}
 		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
-=======
 		
->>>>>>> origin/development
 	}
 	
 	public void act(float time){

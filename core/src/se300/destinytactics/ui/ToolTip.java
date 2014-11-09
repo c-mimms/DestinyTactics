@@ -32,7 +32,7 @@ public class ToolTip extends Window {
 	public ToolTip(String name , Sector sector) {
 		//Init
 		super(name, skin);
-		sector.galaxy.thisgame.galaxyStage.addActor(this);
+		//sector.galaxy.thisgame.galaxyStage.addActor(this);
 		numBodies = sector.getNumBodies();
 		controlState = sector.getState();
 		position = sector.getPos();
@@ -62,13 +62,11 @@ public class ToolTip extends Window {
 		if(position.x > DestinyTactics.SCREEN_WIDTH-200)
 			setPosition(position.x-this.getWidth()-20, position.y-this.getHeight()/2);
 		
-		addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
-		
 	}
 	
 	public ToolTip(String name, OrbitalBody body) {
 		super(name, skin);
-		body.sector.galaxy.thisgame.sectorStage.addActor(this); //LOLOL
+		//body.sector.galaxy.thisgame.sectorStage.addActor(this); //LOLOL
 		String sector = body.sector.getName();
 		controlState = body.getState();
 		String owner = body.owner.getName();
@@ -85,8 +83,6 @@ public class ToolTip extends Window {
 		pack();
 		setPosition(x+body.SPRITE_SIZE+10, y-this.getHeight()/2 + body.SPRITE_SIZE/2);
 
-		
-		super.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
 		
 	}
 	

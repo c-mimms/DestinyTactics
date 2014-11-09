@@ -46,6 +46,8 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 		type = Utility.random.nextInt(8)+2; //Use only planet images
 
+		setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
+		setX(XEDGEEXCLUSION-150*orbitRadius);
 	}
 
 	public void finalize() throws Throwable {
