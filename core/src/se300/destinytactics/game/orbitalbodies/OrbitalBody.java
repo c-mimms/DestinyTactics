@@ -5,6 +5,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -98,7 +99,7 @@ public abstract class OrbitalBody extends Actor {
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				hoverOff();
+			
 		        switchToPlanetView();
 		        return true;
 		    }
@@ -110,6 +111,7 @@ public abstract class OrbitalBody extends Actor {
 
 			public void exit(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
+				//System.out.println("Exit at " + x + ", " + y);
 				hoverOff();
 			}
 			
@@ -120,9 +122,34 @@ public abstract class OrbitalBody extends Actor {
 		
 	}
 	
+	/**
+	 * Run when mouse hovers on planet
+	 */
+	public void hoverOn() {	
+		if(toolTip ==null){
+		toolTip = new ToolTip(name, this);
+		}
+		this.getStage().addActor(toolTip);
+		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
+		
+		hovering = true;
+	}
+
+	/**
+	 * Run when mouse hovers off of planet
+	 */
+	public void hoverOff() {
+		hovering = false;
+		toolTip.remove();
+//		if(this.getStage()!=null){
+//		this.getStage().mouseMoved(0, 1);
+//		}
+	}
+	
+	
 	public void switchToPlanetView(){
-		System.out.println("Hovering off");
 		owner = sector.galaxy.thisgame.localPlayer;
+		this.getStage().mouseMoved(20, 20);
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
 
@@ -130,12 +157,9 @@ public abstract class OrbitalBody extends Actor {
 		super.finalize();
 	}
 
-	public void click() {
-
-	}
 
 	/**
-	 * 
+	 * Finds distance between any two orbital bodies.
 	 * @param body
 	 */
 	public int getDistance(OrbitalBody body) {
@@ -145,6 +169,9 @@ public abstract class OrbitalBody extends Actor {
 		return bodyPos + otherBodyPos + sectorDist;
 	}
 
+	/**
+	 * Returns name of body
+	 */
 	public String getName() {
 		return name;
 	}
@@ -176,25 +203,7 @@ public abstract class OrbitalBody extends Actor {
 	public int getSpriteSize() {
 		return SPRITE_SIZE;
 	}
-	
-	public void hoverOn() {	
-		if(toolTip ==null){
-		toolTip = new ToolTip(name, this);
-		}
-		this.getStage().addActor(toolTip);
-		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
-		
-		hovering = true;
-	}
 
-	public void hoverOff() {
-		hovering = false;
-		toolTip.remove();
-		if(this.getStage()!=null){
-		this.getStage().mouseMoved(0, 1);
-		}
-	}
-	
 	@Override
 	public void draw(Batch batch, float parentAlpha){
 		

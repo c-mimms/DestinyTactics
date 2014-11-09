@@ -5,6 +5,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -115,23 +116,18 @@ public class Sector extends Actor {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				hoverOff();
 				switchView();
 				return true;
 			}
 
 			public void enter(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
-				System.out.println(fromActor);
-				System.out.println("x   " + x + "   y   " + y);
-				if (fromActor != null && fromActor.getClass() == Image.class) {
-					hoverOn();
-					event.stop();
-				}
+				hoverOn();
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
+				//System.out.println("Exit at " + x + ", " + y);
 				hoverOff();
 			}
 
@@ -141,18 +137,11 @@ public class Sector extends Actor {
 
 	}
 
-	public void switchView() {
-		controlState = 1;
-		galaxy.thisgame.switchView(this);
-
-	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
+	/**
+	 * Run when mouse hovers over sector
+	 */
 	public void hoverOn() {
-		System.out.println("Hovering on " + name);
+//		System.out.println("Hovering on " + name);
 		if (toolTip == null) {
 			toolTip = new ToolTip(name, this);
 		}
@@ -168,13 +157,28 @@ public class Sector extends Actor {
 		// 2));
 	}
 
+	/**
+	 * Run when mouse hovers off sector
+	 */
 	public void hoverOff() {
 		System.out.println("Hovering off " + name);
 		if(toolTip != null)
 			toolTip.remove();
 		hovering = false;
-		this.getStage().mouseMoved(0, 200);
+		//this.getStage().mouseMoved(0, 200);
 
+	}
+
+	public void switchView() {
+		controlState = 1;
+		this.getStage().touchDown(20, 20, 0, Input.Buttons.LEFT);
+		this.getStage().mouseMoved(20, 20);
+		galaxy.thisgame.switchView(this);
+
+	}
+
+	public void finalize() throws Throwable {
+		super.finalize();
 	}
 
 	public String getName() {
@@ -231,6 +235,8 @@ public class Sector extends Actor {
 
 	public void act(float time) {
 		super.act(time);
+		//this.getStage().mouseMoved(0, 1);
+		//this.getStage().touchUp(5, 5, 1, 1);
 		myCircle.rotateBy(time * 3);
 	}
 }// end Sector
