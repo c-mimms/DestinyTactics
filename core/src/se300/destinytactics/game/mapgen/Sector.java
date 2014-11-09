@@ -39,8 +39,7 @@ public class Sector extends Actor {
 	private int numBodies;
 	private String name;
 	public OrbitalBody bodyList[];
-	private int posX;
-	private int posY;
+	private int posX, posY;
 
 	public Button m_Button;
 
@@ -65,6 +64,7 @@ public class Sector extends Actor {
 	public float sunRotation;
 	public int padding = 50;
 	public boolean hovering = false;
+	public int orig_posX, orig_posY;
 
 	// ToolTip
 	public ToolTip toolTip;
@@ -97,6 +97,8 @@ public class Sector extends Actor {
 		setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
 		setX(posX);
 		setY(posY);
+		orig_posX = posX;
+		orig_posY = posY;
 
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
@@ -191,6 +193,14 @@ public class Sector extends Actor {
 
 	public int getYPos() {
 		return posY;
+	}
+	
+	public int getOrigXPos() {
+		return orig_posX;
+	}
+
+	public int getOrigYPos() {
+		return orig_posY;
 	}
 
 	public int getNumBodies() {

@@ -1,8 +1,14 @@
 package se300.destinytactics.game.scenes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
+import se300.destinytactics.ui.SectorLabel;
+import se300.destinytactics.ui.SectorLines;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -25,6 +30,8 @@ public class GalaxyScene extends Stage {
 	Fleet test = new Fleet(null,null);
 	Fleet test2 = new Fleet(null,null);
 	private Group sectors, sectorNames;
+	private SectorLines sectorLines;
+	List<SectorLabel> sectorNameArray;
 
 	public static final int PARALLAX = 10;
 
@@ -50,14 +57,15 @@ public class GalaxyScene extends Stage {
 
 		sectors = new Group();
 		sectorNames = new Group();
-
+		sectorLines = new SectorLines();
+		sectorNameArray = new ArrayList<SectorLabel>();
 		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
 			if (myGame.m_Galaxy.sectors[i] == null)
 				break;
 			sectors.addActor(myGame.m_Galaxy.sectors[i]);
 			String secName = myGame.m_Galaxy.sectors[i].getName();
-
-			Label tmpLabel = new Label(secName, skin);
+			
+			SectorLabel tmpLabel = new SectorLabel(secName, skin);
 			sectorNames.addActor(tmpLabel);
 			tmpLabel.setX(myGame.m_Galaxy.sectors[i].getX()
 					+ myGame.m_Galaxy.sectors[i].getWidth() / 2
@@ -71,11 +79,16 @@ public class GalaxyScene extends Stage {
 				tmpLabel.setY(myGame.m_Galaxy.sectors[i].getY()
 						- tmpLabel.getHeight());
 			}
+			
+			tmpLabel.setOrig_posX(tmpLabel.getX());
+			tmpLabel.setOrig_posY(tmpLabel.getY());
+			sectorNameArray.add(tmpLabel);
 		}
 
 		this.addActor(sectors);
 		this.addActor(sectorNames);
-
+		this.addActor(sectorLines);
+		
 		this.addActor(test);
 		test.setColor(new Color(0, 0, 1, 1));
 		test.setLocation(myGame.m_Galaxy.sectors[0].bodyList[0]);
@@ -113,9 +126,23 @@ public class GalaxyScene extends Stage {
 				/ (this.getHeight() / 2);
 
 		background.setPosition(-movex * PARALLAX - 3*PARALLAX, -movey * PARALLAX- 2*PARALLAX);
-		// gridOverlay.setPosition(movex * PARALLAX/4,movey * PARALLAX/4);
-		// sectors.setPosition(-movex * PARALLAX/8, -movey * PARALLAX/8);
-		sectorNames.setPosition(movex * PARALLAX / 8, movey * PARALLAX / 8);
-
+		gridOverlay.setPosition(-movex * PARALLAX / 2, -movey * PARALLAX / 2);
+		//sectors.setPosition(-movex * PARALLAX / 2, -movey * PARALLAX / 2);
+		//sectorNames.setPosition(movex * PARALLAX / 2, movey * PARALLAX / 2);
+		
+		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
+			
+			if (myGame.m_Galaxy.sectors[i] != null) {
+				Sector sector = myGame.m_Galaxy.sectors[i];
+				SectorLabel sectorName = sectorNameArray.get(i);
+				//sector.setX(sector.orig_posX + (-movex * PARALLAX / 2));
+				//sector.setY(sector.orig_posY + (-movey * PARALLAX / 2));
+				sectorName.setX(sectorName.getOrig_posX() + (movex * PARALLAX));
+				sectorName.setY(sectorName.getOrig_posY() + (movey * PARALLAX));
+			}
+		}
+		
+		sectorLines.updateGroups(sectors, sectorNames); 
 	}
+	
 }
