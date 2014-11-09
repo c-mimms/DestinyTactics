@@ -1,5 +1,7 @@
 package se300.destinytactics.game.mapgen;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import java.awt.Point;
 
 import com.badlogic.gdx.Gdx;
@@ -8,8 +10,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -35,8 +39,7 @@ public class Sector extends Actor {
 	private int numBodies;
 	private String name;
 	public OrbitalBody bodyList[];
-	private int posX;
-	private int posY;
+	private int posX, posY;
 
 	public Button m_Button;
 
@@ -61,11 +64,10 @@ public class Sector extends Actor {
 	public float sunRotation;
 	public int padding = 50;
 	public boolean hovering = false;
-	
-	//ToolTip
+	public int orig_posX, orig_posY;
+
+	// ToolTip
 	public ToolTip toolTip;
-
-
 
 	public Sector(Galaxy gal) {
 
@@ -95,6 +97,8 @@ public class Sector extends Actor {
 		setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
 		setX(posX);
 		setY(posY);
+		orig_posX = posX;
+		orig_posY = posY;
 
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
@@ -111,13 +115,19 @@ public class Sector extends Actor {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
+				hoverOff();
 				switchView();
 				return true;
 			}
 
 			public void enter(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
-				hoverOn();
+				System.out.println(fromActor);
+				System.out.println("x   " + x + "   y   " + y);
+				if (fromActor != null && fromActor.getClass() == Image.class) {
+					hoverOn();
+					event.stop();
+				}
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer,
@@ -126,16 +136,13 @@ public class Sector extends Actor {
 			}
 
 		});
-		
-		
-		//ToolTip
+
+		// ToolTip
 
 	}
 
 	public void switchView() {
 		controlState = 1;
-		toolTip.remove();
-		hoverOff();
 		galaxy.thisgame.switchView(this);
 
 	}
@@ -144,17 +151,29 @@ public class Sector extends Actor {
 		super.finalize();
 	}
 
-	public void hoverOn() {		
-		toolTip = new ToolTip(name, this);
+	public void hoverOn() {
+		System.out.println("Hovering on " + name);
+		if (toolTip == null) {
+			toolTip = new ToolTip(name, this);
+		}
+
+		this.getStage().addActor(toolTip);
+		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),
+				Actions.fadeIn(0.4f, Interpolation.fade)));
+
 		hovering = true;
-		myCircle.setX(getX() + this.getOriginX() - (myCircle.getWidth() / 2));
-		myCircle.setY(getY() + this.getOriginY() - (myCircle.getHeight() / 2));
+		// myCircle.setX(getX() + this.getOriginX() - (myCircle.getWidth() /
+		// 2));
+		// myCircle.setY(getY() + this.getOriginY() - (myCircle.getHeight() /
+		// 2));
 	}
 
 	public void hoverOff() {
-		toolTip.remove();
+		System.out.println("Hovering off " + name);
+		if(toolTip != null)
+			toolTip.remove();
 		hovering = false;
-		this.getStage().mouseMoved(0, 1);
+		this.getStage().mouseMoved(0, 200);
 
 	}
 
@@ -176,6 +195,14 @@ public class Sector extends Actor {
 	public int getYPos() {
 		return posY;
 	}
+	
+	public int getOrigXPos() {
+		return orig_posX;
+	}
+
+	public int getOrigYPos() {
+		return orig_posY;
+	}
 
 	public int getNumBodies() {
 		return numBodies;
@@ -192,25 +219,18 @@ public class Sector extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.setColor(this.getColor());
-		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
+		batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE, SPRITE_SIZE);
 		batch.setColor(Color.WHITE);
-		
-		if (hovering) {
-			myCircle.draw(batch, parentAlpha);
-			toolTip.draw(batch, parentAlpha);
-		
-		} else {
-			
-		}
 
 		if (controlState == 1) {
-			batch.draw(circles[1], getXPos() + 7 - 25, getYPos() + 7 - 25, 25,
+			batch.draw(circles[1], getX() + 7 - 25, getY() + 7 - 25, 25,
 					25, 50, 50, 1, 1, myCircle.getRotation(), 0, 0,
 					circles[1].getWidth(), circles[1].getHeight(), false, false);
 		}
 	}
 
 	public void act(float time) {
+		super.act(time);
 		myCircle.rotateBy(time * 3);
 	}
 }// end Sector

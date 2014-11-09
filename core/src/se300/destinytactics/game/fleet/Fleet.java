@@ -39,9 +39,13 @@ public class Fleet extends Actor {
 
 	private int SPRITE_SIZE = 10;
 
-	public Fleet() {
+	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
+		location = loc;
+		//sectorLocation = location.sector;
+		this.ships = ship;
 		this.setSize(10, 10);
+		System.out.println("New fleet created at " + location);
 	}
 
 	public void finalize() throws Throwable {
@@ -161,7 +165,7 @@ public class Fleet extends Actor {
 
 		batch.setColor(this.getColor());
 		if (destination != null) {
-			batch.draw(sprite1, getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE, SPRITE_SIZE);
 		}
 		batch.end();
 
