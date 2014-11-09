@@ -35,7 +35,7 @@ public class Fleet extends Actor {
 	private static ShapeRenderer renderer = new ShapeRenderer();
 
 	// TODO Replace with read fleet sprite
-	private static Texture sprite1 = new Texture(
+	private Texture sprite1 = new Texture(
 			Gdx.files.internal("realorbitalbody/SectorIcon.png"));
 
 	private int SPRITE_SIZE = 10;
@@ -119,8 +119,8 @@ public class Fleet extends Actor {
 		if (this.sectorDestination != null) {
 			this.distanceToDestination -= this.fleetGalacticTravelSpeed;
 			if (distanceToDestination <= 0) {
-				System.out.println("Loc: " + location.getName()
-						+ "\n Destination: " + destination.getName());
+//				System.out.println("Loc: " + location.getName()
+//						+ "\n Destination: " + destination.getName());
 				this.location = destination;
 				sectorLocation = sectorDestination;
 				distanceToDestination = 0;
@@ -182,6 +182,8 @@ public class Fleet extends Actor {
 
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(this.getColor());
+		
+		
 		if (destination != null) {
 			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE,
 					SPRITE_SIZE);

@@ -257,7 +257,6 @@ public class GameScene implements Screen {
 	public void endTurn() {
 		galaxyStage.endTurn();
 		localPlayer.endTurn();
-
 		goGalaxy();
 	}
 }

@@ -27,10 +27,11 @@ public class GalaxyScene extends Stage {
 	public Texture bgimg_galaxy;
 	public GameScene myGame;
 	public Skin skin;
-	Fleet test, test2;
+	Fleet test, test2, test3;
 	private Group sectors, sectorNames;
 	private SectorLines sectorLines;
 	List<SectorLabel> sectorNameArray;
+
 
 	public static final int PARALLAX = 10;
 
@@ -90,17 +91,25 @@ public class GalaxyScene extends Stage {
 
 		sectorLines.updateGroups(sectors, sectorNames); 
 		
-		Fleet test = new Fleet(myGame.m_Galaxy.sectors[0].bodyList[0],null);
-		Fleet test2 = new Fleet(myGame.m_Galaxy.sectors[1].bodyList[0],null);
+		test = new Fleet(myGame.m_Galaxy.sectors[0].bodyList[0],null);
+		test2 = new Fleet(myGame.m_Galaxy.sectors[1].bodyList[0],null);
+		test3 = new Fleet(myGame.m_Galaxy.sectors[2].bodyList[0],null);
+		
 		this.addActor(test);
-		test.setColor(new Color(0, 0, 1, 1));
+		test.setColor(new Color(1, 0, 0, 1));
 		test.setDestination(myGame.m_Galaxy.sectors[6].bodyList[0]);
+
 		this.addActor(test2);
-		test2.setColor(new Color(1, 0, 0, 1));
+		test2.setColor(new Color(0, 0, 1, 1));
 		test2.setDestination(myGame.m_Galaxy.sectors[7].bodyList[0]);
+
+		this.addActor(test3);
+		test3.setColor(new Color(0, 1, 0, 1));
+		test3.setDestination(myGame.m_Galaxy.sectors[7].bodyList[0]);
 		
 		test.moveFleet();
 		test2.moveFleet();
+		test3.moveFleet();
 
 	}
 
@@ -113,6 +122,11 @@ public class GalaxyScene extends Stage {
 		test2.moveFleet();
 		if (test2.getDestination() == null) {
 			test2.setDestination(myGame.m_Galaxy.sectors[Utility.random
+					.nextInt(20)].bodyList[0]);
+		}
+		test3.moveFleet();
+		if (test3.getDestination() == null) {
+			test3.setDestination(myGame.m_Galaxy.sectors[Utility.random
 					.nextInt(20)].bodyList[0]);
 		}
 	}
@@ -131,7 +145,6 @@ public class GalaxyScene extends Stage {
 		//sectorNames.setPosition(movex * PARALLAX / 2, movey * PARALLAX / 2);
 		
 		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
-			
 			if (myGame.m_Galaxy.sectors[i] != null) {
 				Sector sector = myGame.m_Galaxy.sectors[i];
 				SectorLabel sectorName = sectorNameArray.get(i);

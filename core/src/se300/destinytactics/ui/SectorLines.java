@@ -21,23 +21,25 @@ public class SectorLines extends Actor{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		batch.end();
 		renderer.setProjectionMatrix(batch.getProjectionMatrix());
 		renderer.setTransformMatrix(batch.getTransformMatrix());
 		
 		Actor[] sectorArray = sectors.getChildren().items;
 		Actor[] sectorNameArray = sectorNames.getChildren().items;
-		
+
+		renderer.begin(ShapeType.Line);
 		for (int i = 0; i < sectorArray.length; i++) {
 			if (sectorArray[i] != null) {
-				renderer.begin(ShapeType.Line);
 				//renderer.setColor(Color.valueOf("506c8d"));
 				renderer.setColor(Color.CYAN);
 				renderer.line(sectorArray[i].getX() + (sectorArray[i].getWidth() / 2),
 							  sectorArray[i].getY() + (sectorArray[i].getHeight() / 2),
 							  sectorNameArray[i].getX() + (sectorNameArray[i].getWidth() / 2),
 							  sectorNameArray[i].getY() + (sectorNameArray[i].getHeight() / 2));
-				renderer.end();
 			}
 		}
+		renderer.end();
+		batch.begin();
 	}
 }
