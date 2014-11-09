@@ -88,6 +88,8 @@ public class GalaxyScene extends Stage {
 		this.addActor(sectors);
 		this.addActor(sectorNames);
 		this.addActor(sectorLines);
+
+		sectorLines.updateGroups(sectors, sectorNames); 
 		
 		this.addActor(test);
 		test.setColor(new Color(0, 0, 1, 1));
@@ -125,8 +127,8 @@ public class GalaxyScene extends Stage {
 		float movey = -(mousey - (this.getHeight() / 2))
 				/ (this.getHeight() / 2);
 
-		background.setPosition(-movex * PARALLAX - 3*PARALLAX, -movey * PARALLAX- 2*PARALLAX);
-		gridOverlay.setPosition(-movex * PARALLAX / 2, -movey * PARALLAX / 2);
+		background.setPosition(-movex * PARALLAX/4, -movey * PARALLAX/6);
+		gridOverlay.setPosition(-movex * PARALLAX / 3, -movey * PARALLAX / 3);
 		//sectors.setPosition(-movex * PARALLAX / 2, -movey * PARALLAX / 2);
 		//sectorNames.setPosition(movex * PARALLAX / 2, movey * PARALLAX / 2);
 		
@@ -135,14 +137,13 @@ public class GalaxyScene extends Stage {
 			if (myGame.m_Galaxy.sectors[i] != null) {
 				Sector sector = myGame.m_Galaxy.sectors[i];
 				SectorLabel sectorName = sectorNameArray.get(i);
-				//sector.setX(sector.orig_posX + (-movex * PARALLAX / 2));
-				//sector.setY(sector.orig_posY + (-movey * PARALLAX / 2));
-				sectorName.setX(sectorName.getOrig_posX() + (movex * PARALLAX));
-				sectorName.setY(sectorName.getOrig_posY() + (movey * PARALLAX));
+				sector.setX(sector.orig_posX + (-movex * PARALLAX / 3));
+				sector.setY(sector.orig_posY + (-movey * PARALLAX / 3));
+				sectorName.setX(sectorName.getOrig_posX() + (-movex * PARALLAX));
+				sectorName.setY(sectorName.getOrig_posY() + (-movey * PARALLAX));
 			}
 		}
 		
-		sectorLines.updateGroups(sectors, sectorNames); 
 	}
 	
 }

@@ -165,7 +165,7 @@ public class Fleet extends Actor {
 
 		batch.setColor(this.getColor());
 		if (destination != null) {
-			batch.draw(sprite1, getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
+			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE, SPRITE_SIZE);
 		}
 		batch.end();
 

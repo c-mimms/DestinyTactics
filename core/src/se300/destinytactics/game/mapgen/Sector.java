@@ -218,11 +218,11 @@ public class Sector extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 
 		batch.setColor(this.getColor());
-		batch.draw(sprite1, getXPos(), getYPos(), SPRITE_SIZE, SPRITE_SIZE);
+		batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE, SPRITE_SIZE);
 		batch.setColor(Color.WHITE);
 
 		if (controlState == 1) {
-			batch.draw(circles[1], getXPos() + 7 - 25, getYPos() + 7 - 25, 25,
+			batch.draw(circles[1], getX() + 7 - 25, getY() + 7 - 25, 25,
 					25, 50, 50, 1, 1, myCircle.getRotation(), 0, 0,
 					circles[1].getWidth(), circles[1].getHeight(), false, false);
 		}
