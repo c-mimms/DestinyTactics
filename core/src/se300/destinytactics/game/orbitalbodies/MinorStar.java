@@ -35,4 +35,10 @@ public class MinorStar extends OrbitalBody {
 		return null;
 	}
 
+	@Override
+	public void endTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }//end Minor Star

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+import se300.destinytactics.game.scenes.GalaxyScene;
 
 /**
  * @author simonsr1
@@ -41,11 +42,11 @@ public class Fleet extends Actor {
 
 	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
-		location = loc;
+		setLocation(loc);
 		// sectorLocation = location.sector;
 		this.ships = ship;
 		this.setSize(10, 10);
-		System.out.println("New fleet created at " + location);
+		System.out.println("New fleet created at " + location.getName());
 	}
 
 	public void finalize() throws Throwable {
@@ -180,7 +181,6 @@ public class Fleet extends Actor {
 
 
 	public void draw(Batch batch, float parentAlpha) {
-
 		batch.setColor(this.getColor());
 		if (destination != null) {
 			batch.draw(sprite1, this.getX(), this.getY(), SPRITE_SIZE,

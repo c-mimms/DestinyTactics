@@ -27,8 +27,7 @@ public class GalaxyScene extends Stage {
 	public Texture bgimg_galaxy;
 	public GameScene myGame;
 	public Skin skin;
-	Fleet test = new Fleet(null,null);
-	Fleet test2 = new Fleet(null,null);
+	Fleet test, test2;
 	private Group sectors, sectorNames;
 	private SectorLines sectorLines;
 	List<SectorLabel> sectorNameArray;
@@ -91,17 +90,16 @@ public class GalaxyScene extends Stage {
 
 		sectorLines.updateGroups(sectors, sectorNames); 
 		
+		Fleet test = new Fleet(myGame.m_Galaxy.sectors[0].bodyList[0],null);
+		Fleet test2 = new Fleet(myGame.m_Galaxy.sectors[1].bodyList[0],null);
 		this.addActor(test);
 		test.setColor(new Color(0, 0, 1, 1));
-		test.setLocation(myGame.m_Galaxy.sectors[0].bodyList[0]);
 		test.setDestination(myGame.m_Galaxy.sectors[6].bodyList[0]);
-
 		this.addActor(test2);
 		test2.setColor(new Color(1, 0, 0, 1));
-		test2.setLocation(myGame.m_Galaxy.sectors[1].bodyList[0]);
 		test2.setDestination(myGame.m_Galaxy.sectors[7].bodyList[0]);
+		
 		test.moveFleet();
-
 		test2.moveFleet();
 
 	}

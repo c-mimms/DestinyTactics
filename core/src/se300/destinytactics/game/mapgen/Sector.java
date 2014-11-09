@@ -101,6 +101,8 @@ public class Sector extends Actor {
 		orig_posX = posX;
 		orig_posY = posY;
 
+		name = Names.newName();
+		
 		double stationChance = 0.2;
 		for (int i = 0; i < numBodies; i++) {
 			if (stationChance > Math.random()) {
@@ -111,7 +113,7 @@ public class Sector extends Actor {
 			}
 		}
 
-		name = Names.newName();
+		
 		this.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

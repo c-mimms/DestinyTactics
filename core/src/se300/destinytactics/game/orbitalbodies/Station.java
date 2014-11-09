@@ -68,6 +68,12 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 		return 0;
 	}
 
+	@Override
+	public void endTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	
 

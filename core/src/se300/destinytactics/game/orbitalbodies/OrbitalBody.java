@@ -77,7 +77,26 @@ public abstract class OrbitalBody extends Actor {
 			planets[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 		}
 		orbitRadius = radius;
-		name = Names.newName();
+		//name = Names.newName();
+		String radius_RN = "";
+		switch (radius) {
+			case 0: radius_RN = "I"; break;
+			case 1: radius_RN = "II"; break;
+			case 2: radius_RN = "III"; break;
+			case 3: radius_RN = "IV"; break;
+			case 4: radius_RN = "V"; break;
+			case 5: radius_RN = "VI"; break;
+			case 6: radius_RN = "VII"; break;
+			case 7: radius_RN = "VIII"; break;
+			case 8: radius_RN = "IX"; break;
+			case 9: radius_RN = "X"; break;
+			case 10: radius_RN = "XI"; break;
+			case 11: radius_RN = "XII"; break;
+			case 12: radius_RN = "XIII"; break;
+			case 13: radius_RN = "XIV"; break;
+			case 14: radius_RN = "XV"; break;
+		}
+		name = sect.getName() + " " + radius_RN;
 		sector = sect;
 		controlState = 0;
 		//galaxy = sector.galaxy;
@@ -86,8 +105,6 @@ public abstract class OrbitalBody extends Actor {
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
 		myCircle.setPosition(getX()+30, getY()+30);
-		
-		
 
 		setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
 		setX(XEDGEEXCLUSION-150*orbitRadius);
@@ -115,11 +132,7 @@ public abstract class OrbitalBody extends Actor {
 				hoverOff();
 			}
 			
-		});
-		
-		
-		
-		
+		});		
 	}
 	
 	/**
@@ -145,7 +158,6 @@ public abstract class OrbitalBody extends Actor {
 //		this.getStage().mouseMoved(0, 1);
 //		}
 	}
-	
 	
 	public void switchToPlanetView(){
 		owner = sector.galaxy.thisgame.localPlayer;

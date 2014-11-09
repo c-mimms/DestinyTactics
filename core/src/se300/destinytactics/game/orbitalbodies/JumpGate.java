@@ -51,5 +51,11 @@ public class JumpGate extends OrbitalBody {
 		return null;
 	}
 
+	@Override
+	public void endTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }//end JumpGate
