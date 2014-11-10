@@ -1,5 +1,7 @@
 package se300.destinytactics;
 
+import se300.destinytactics.game.scenes.GalaxyScene;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.InputMultiplexer;
@@ -35,8 +37,12 @@ public class MenuScene implements Screen{
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 		
-		bgimg = new Texture("MenuBackground.jpg");
+		//bgimg = new Texture("MenuBackground.jpg");
+		bgimg = new Texture("blue_galaxy_by_traemore-d4w8l1h.jpg");
+		
 		background = new Image(bgimg);
+		//background.setSize(DestinyTactics.SCREEN_WIDTH + 4 * GalaxyScene.PARALLAX, DestinyTactics.SCREEN_HEIGHT + 4 * GalaxyScene.PARALLAX);
+		
 		menuStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 		
 		multiplexer = new InputMultiplexer();
