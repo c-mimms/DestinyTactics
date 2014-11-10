@@ -31,8 +31,8 @@ public class SectorLines extends Actor{
 		renderer.begin(ShapeType.Line);
 		for (int i = 0; i < sectorArray.length; i++) {
 			if (sectorArray[i] != null) {
-				//renderer.setColor(Color.valueOf("506c8d"));
-				renderer.setColor(Color.CYAN);
+				renderer.setColor(Color.valueOf("8fc2fd"));
+				//renderer.setColor(Color.CYAN);
 				renderer.line(sectorArray[i].getX() + (sectorArray[i].getWidth() / 2),
 							  sectorArray[i].getY() + (sectorArray[i].getHeight() / 2),
 							  sectorNameArray[i].getX() + (sectorNameArray[i].getWidth() / 2),
