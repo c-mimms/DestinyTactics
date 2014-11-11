@@ -42,7 +42,10 @@ public class GalaxyScene extends Stage {
 		this.myGame = myGame;
 		this.skin = skin;
 
-		bgimg_galaxy = new Texture("GalaxyBackground.jpg");
+		bgimg_galaxy = new Texture("images/galaxies/1494661.jpg");
+		//bgimg_galaxy = new Texture("images/galaxies/andromeda-galaxy-15763.jpg");
+		//bgimg_galaxy = new Texture("images/galaxies/Chandra-Views-Dwarf-Galaxy-Colliding-with-NGC-1232.jpg");
+		
 		gridOverlay = new Image(new Texture("images/gridOverlay-ps.png"));
 		background = new Image(bgimg_galaxy);
 
