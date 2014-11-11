@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Assets;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
@@ -239,7 +240,7 @@ public abstract class OrbitalBody extends Actor {
 		super.act(time);
 	}
 	
-	//I guess abstract?
+	//I guess abstract? For Mine
 	public abstract void mineLevelUp();
 	public abstract Integer getMineLevel();
 	public abstract Integer getMineCost();
@@ -250,6 +251,9 @@ public abstract class OrbitalBody extends Actor {
 	public abstract int getShipyardLevel();
 	public abstract int getShipyardSize();
 	public abstract int getShipyardCost();
+	public abstract void addToQueue(Ship ship);
+	public abstract void building();
+	public abstract void toFleet(Ship ship);
 	
 	public abstract void endTurn();
 	

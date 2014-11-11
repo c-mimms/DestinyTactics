@@ -17,7 +17,7 @@ public class Dreadnaught extends Ship implements hasHangar {
 	private String shipType = "Dreadnaught";
 
 	public Dreadnaught(){
-
+		buildTime = 7;
 	}
 
 	public void finalize() throws Throwable {
@@ -30,4 +30,10 @@ public class Dreadnaught extends Ship implements hasHangar {
 	public int getHangarSize(){
 		return 0;
 	}
+	
+	@Override
+	public String getShipType(){
+		return shipType;
+	}
+	
 }//end Dreadnaught

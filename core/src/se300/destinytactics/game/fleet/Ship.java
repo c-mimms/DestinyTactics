@@ -17,9 +17,13 @@ public class Ship {
 	private int sectorTravelSpeed;
 	private String shipType;
 	private String[][] supportBenefits;
+	
+	
+	//NEW 11/10/14
+	public int buildTime;
 
 	public Ship(){
-
+		buildTime = 1;
 	}
 
 	public void finalize() throws Throwable {
@@ -79,5 +83,20 @@ public class Ship {
 
 	public int setSectorTravelSpeed(){
 		return 0;
+	}
+	
+	/**
+	 * gets build time
+	 * @return buildTime
+	 */
+	public int getBuildTime() {
+		return buildTime;
+	}
+	
+	/**
+	 * decrements build time by 1
+	 */
+	public void decrementBuildTime() {
+		buildTime--;
 	}
 }//end Ship

@@ -1,5 +1,6 @@
 package se300.destinytactics.game.orbitalbodies;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +10,7 @@ import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
+import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 
@@ -38,6 +40,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	private int shipyardLevel;
 	private int shipyardSize;
 	private int shipyardCost;
+	private ArrayList<Ship> buildQueue = new ArrayList<Ship>();
 
 	public Planet(int radius, Sector sector){
 
@@ -80,6 +83,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
 			owner.addResource(resourcePerTurn); //Basically the get resource method
 			spentTurn = false;
+			building();
 		}
 	}
 
@@ -131,7 +135,9 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		return resourcePerTurn;
 	}
 
-	// Shipyard
+	/*
+	 * Shipyard stuff
+	 */
 	@Override
 	public int getShipyardLevel() {
 		return shipyardLevel;
@@ -157,6 +163,37 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 			System.out.println("Not enough resources to upgrade shipyard");
 		}
 	}
+	
+	/**
+	 * This method takes input from the
+	 * @param ship
+	 */
+	public void addToQueue(Ship ship) {
+		buildQueue.add(ship);
+	}
+	
+	/**
+	 * Keeps track of turns until completion, removes them when done
+	 */
+	public void building() {
+		for(int i = 0; i < buildQueue.size(); i++){
+			buildQueue.get(i).decrementBuildTime();
+			if(buildQueue.get(i).getBuildTime() <= 0) {
+				System.out.println(buildQueue.get(i).getShipType() + " Built");
+				toFleet(buildQueue.get(i));
+			}
+		}
+	}
+	
+	/**
+	 * Take ships out of the build queue, puts them in orbit and returns space to shipyard
+	 * @param ship
+	 */
+	public void toFleet(Ship ship) {
+		System.out.println("Ship to fleet");
+		buildQueue.remove(ship);
+	}
+
 
 
 }//end Planet

@@ -14,10 +14,16 @@ public class Scout extends Ship {
 	private String shipType = "Scout";
 
 	public Scout(){
-
+		buildTime = 1;
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
+	@Override
+	public String getShipType(){
+		return shipType;
+	}
+	
 }//end Scout
