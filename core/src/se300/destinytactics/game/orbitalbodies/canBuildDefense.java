@@ -10,8 +10,5 @@ public interface canBuildDefense {
 
 	public static int defenseLevel = 0;
 
-	public void getLevel();
-
-	public void incrementLevel();
 
 }

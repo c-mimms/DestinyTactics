@@ -33,15 +33,26 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	private float resourceMultiplier;
 	private int mineCost; 
 	private int resourcePerTurn;
+	
+	//Shipyard variable declaration
+	private int shipyardLevel;
+	private int shipyardSize;
+	private int shipyardCost;
 
 	public Planet(int radius, Sector sector){
 
 		super(radius,sector);
 		owner = super.owner;
+		
 		//Mining variable init
 		mineLevel = 0;
 		mineCost = 25;
 		resourcePerTurn = (int) (100 * resourceMultiplier);
+		
+		//shipyard variable init
+		shipyardLevel = 0;
+		shipyardSize = 1;
+		shipyardCost = 25;
 
 		
 		type = Utility.random.nextInt(8)+2; //Use only planet images
@@ -57,15 +68,6 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	public int getType(){
 		return type;
 	}
-
-
-	public void getLevel(){
-		
-	}
-
-	public void incrementLevel(){
-		
-	}
 	
 	//Act method
 	public void act(float time){
@@ -77,6 +79,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		if(controlState == 1 && owner != null){
 			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
 			owner.addResource(resourcePerTurn); //Basically the get resource method
+			spentTurn = false;
 		}
 	}
 
@@ -90,13 +93,12 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	 * @param
 	 * @return
 	 */
-	
 	@Override
 	public void mineLevelUp() {
 		if (mineCost < owner.getResource()) {
 			++mineLevel;
 			owner.spendResource(mineCost); // Spend resources on mine
-			mineCost = (int)(mineCost + mineCost * (float) Math.pow(1.05, mineLevel - 1)); // increase// mine
+			mineCost = (int)(mineCost + mineCost * (float) Math.pow(1.05, mineLevel - 1)); // increase mine
 			resourceMultiplier = mineLevel * (float) Math.pow(1.1, mineLevel);
 			resourcePerTurn = (int)(resourceMultiplier * 100);
 			System.out.println("Mine Level " + mineLevel + " Mine Cost: " + mineCost + " Resource Multiplier: " + 
@@ -112,7 +114,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	 * @return mineLevel
 	 */
 	public Integer getMineLevel() {
-		return (Integer)mineLevel;
+		return mineLevel;
 	}
 
 	/**
@@ -130,23 +132,31 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	}
 
 	// Shipyard
-
 	@Override
 	public int getShipyardLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shipyardLevel;
 	}
-
+	
 	@Override
 	public int getShipyardSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shipyardSize;
+	}
+	
+	public int getShipyardCost() {
+		return shipyardCost;
 	}
 
 	@Override
-	public void getMiningEfficiency() {
-		// TODO Auto-generated method stub
-
+	public void shipyardLevelUp() {
+		if(shipyardCost < owner.getResource()) {
+			++shipyardLevel;
+			owner.spendResource(shipyardCost);
+			shipyardCost = (int)(shipyardCost + shipyardCost * (float) Math.pow(1.05, shipyardLevel - 1)); // increase cost
+			shipyardSize = shipyardLevel * shipyardLevel;
+		} else {
+			System.out.println("Not enough resources to upgrade shipyard");
+		}
 	}
+
 
 }//end Planet

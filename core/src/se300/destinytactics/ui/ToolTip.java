@@ -27,6 +27,7 @@ public class ToolTip extends Window {
 	String name;
 	java.awt.Point position;
 	int numBodies = 0;
+	public int mine;
 
 
 	public ToolTip(String name , Sector sector) {
@@ -70,7 +71,7 @@ public class ToolTip extends Window {
 		String sector = body.sector.getName();
 		controlState = body.getState();
 		String owner = body.owner.getName();
-		int mine = body.getMineLevel();
+		mine = body.getMineLevel();
 		float x = body.getX();
 		float y = body.getY();
 		

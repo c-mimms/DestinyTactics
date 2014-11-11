@@ -39,7 +39,14 @@ public class OrbitalBodyScene extends Stage {
 
 		//Set navBar name
 		myGame.navBar.setName(nextOrbitalBody.getName());
-
+		
+		//Update planetUI upon click
+		myGame.planetUI.inf.mineStuff.setText("Lv: " + myGame.curOrbitalBody.getMineLevel() 
+				+ ". Cost: " + myGame.curOrbitalBody.getMineCost()
+			    + ". RPT: " + myGame.curOrbitalBody.getRPT());
+		myGame.planetUI.inf.shipyardStuff.setText("Lv: " + myGame.curOrbitalBody.getShipyardLevel() 
+				+ ". Cost: " + myGame.curOrbitalBody.getShipyardCost()
+        		+ ". Size: " + myGame.curOrbitalBody.getShipyardSize());
 		
 		// Add image background and stretch to fit
 		this.addActor(background);
