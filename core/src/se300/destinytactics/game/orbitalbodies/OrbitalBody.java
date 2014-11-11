@@ -242,6 +242,8 @@ public abstract class OrbitalBody extends Actor {
 	//I guess abstract?
 	public abstract void mineLevelUp();
 	public abstract Integer getMineLevel();
+	public abstract Integer getMineCost();
+	public abstract Integer getRPT(); //Resources per turn
 	//The Methods below relate to the shipyard implemented
 	
 	public abstract void endTurn();

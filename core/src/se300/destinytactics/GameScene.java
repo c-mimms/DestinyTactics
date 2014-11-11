@@ -159,6 +159,7 @@ public class GameScene implements Screen {
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
 
 		selectSound.play();
+		
 		curOrbitalBody = nextOrbitalBody;
 		
 		planetStage.changePlanet(nextOrbitalBody);

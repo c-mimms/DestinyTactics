@@ -19,10 +19,15 @@ public class Infrastructure {
 	private Table container, overviewWrapper, buildFormWrapper, overview, buildForm;
 	public Skin skin;
 	
+	public Label mineStuff, gasStuff, shipyardStuff;
+	
 	// Public Methods
 	public Infrastructure(Skin skin, final GameScene myGame) {
 		this.skin = skin;
 		this.myGame = myGame;
+		mineStuff = new Label("Lv: 0. Cost: 25. Resources Per Turn: 100", skin); 
+		gasStuff = new Label("0", skin);
+		shipyardStuff = new Label("0", skin);
 		
 		// Build the overview and forms
 		createOverview();
@@ -68,20 +73,17 @@ public class Infrastructure {
 		
 		overview.row();
 		overview.add(new Label("Shipyard", skin)).width(GameScene.SCREEN_WIDTH/4);
-		overview.add("Lv. 7").width(GameScene.SCREEN_WIDTH/4);
+		overview.add(shipyardStuff).width(GameScene.SCREEN_WIDTH/4);
 		
 		overview.row();
 		overview.add(new Label("Gas Mining Facilities", skin)).width(GameScene.SCREEN_WIDTH/4);
-		if(myGame.curOrbitalBody != null){
-			overview.add(new Label("Lv. " + myGame.curOrbitalBody.getMineLevel(), skin)).width(GameScene.SCREEN_WIDTH/4);
-		} else {
-			overview.add(new Label("Lv. " + 0, skin)).width(GameScene.SCREEN_WIDTH/4);
+		overview.add(gasStuff).width(GameScene.SCREEN_WIDTH/4);
 
-		}
 		
 		overview.row();
-		overview.add(new Label("Refinery", skin)).expandX().fillX();
-		overview.add("Lv. 12").expandX().fillX();
+		overview.add(new Label("Refinery", skin)).width(GameScene.SCREEN_WIDTH/4);
+		overview.add(mineStuff).width(GameScene.SCREEN_WIDTH/4);
+	
 		
 		overviewWrapper.add("Infrastructure Overview").left().expandX();
 		overviewWrapper.row().top();                 
@@ -108,8 +110,6 @@ public class Infrastructure {
 		buildForm.row();
 		buildForm.add(new Label("Shipyard", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Shipyard = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
-		
-		
 		//BUTTON CLICKABLE
 		upgradeButton_Shipyard.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -118,11 +118,11 @@ public class Infrastructure {
 		}});
 		buildForm.add(upgradeButton_Shipyard).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
+		
+		
 		buildForm.row();
 		buildForm.add(new Label("Gas Mining Facilities", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_GasMining = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
-		
-		
 		//BUTTON CLICKABLE
 		upgradeButton_GasMining.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -131,16 +131,17 @@ public class Infrastructure {
 		}});
 		buildForm.add(upgradeButton_GasMining).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		
+		
+		
 		buildForm.row();
 		buildForm.add(new Label("Refinery", skin)).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();
 		TextButton upgradeButton_Refinery = new TextButton("Upgrade", skin.get("default", TextButtonStyle.class));
-		
-		
 		//BUTTON CLICKABLE
 		upgradeButton_Refinery.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		        System.out.println("Upgrade Mine");
 		        myGame.curOrbitalBody.mineLevelUp();
+		        mineStuff.setText("Lv: " + myGame.curOrbitalBody.getMineLevel() + ". Cost: " + myGame.curOrbitalBody.getMineCost()
+		        		+ ". RPT: " + myGame.curOrbitalBody.getRPT());
 		        return true;
 		}});
 		buildForm.add(upgradeButton_Refinery).width(GameScene.SCREEN_WIDTH/4).expandX().fillX();

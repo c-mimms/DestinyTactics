@@ -120,8 +120,13 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	 * 
 	 * @return mineCost
 	 */
-	public int getMineCost() {
+	public Integer getMineCost() {
 		return mineCost;
+	}
+	
+	@Override
+	public Integer getRPT() {
+		return resourcePerTurn;
 	}
 
 	// Shipyard
