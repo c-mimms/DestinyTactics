@@ -10,6 +10,7 @@ import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
+import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
@@ -191,8 +192,14 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	 */
 	public void toFleet(Ship ship) {
 		System.out.println("Ship to fleet");
+		if(this.m_Fleet == null){
+			m_Fleet = new Fleet(this, null);
+		}
+		m_Fleet.addShip(ship);
+
 		buildQueue.remove(ship);
 	}
+	
 
 
 

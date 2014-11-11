@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 
@@ -39,12 +40,6 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 	
 
 	@Override
-	public void getMiningEfficiency() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int getShipyardLevel() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -70,6 +65,48 @@ public class Station extends OrbitalBody implements canBuildFleets, canBuildDefe
 
 	@Override
 	public void endTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getMineCost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getRPT() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void shipyardLevelUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getShipyardCost() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void addToQueue(Ship ship) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void building() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void toFleet(Ship ship) {
 		// TODO Auto-generated method stub
 		
 	}

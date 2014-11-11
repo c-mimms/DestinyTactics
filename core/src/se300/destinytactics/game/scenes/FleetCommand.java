@@ -20,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class FleetCommand {
@@ -270,30 +272,36 @@ public class FleetCommand {
 		
 		buildForm.row();
 		buildForm.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		final TextField fighterCount = new TextField("", skin);
+		final TextField fighterCount = new TextField("0", skin);
 		//unitCountTextBox.DigitsOnlyFilter();
+		fighterCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(fighterCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		final TextField corvetteCount = new TextField("", skin);
+		final TextField corvetteCount = new TextField("0", skin);
+		corvetteCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(corvetteCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Bombers", skin)).expandX().fillX();
-		final TextField bomberCount = new TextField("", skin);
+		final TextField bomberCount = new TextField("0", skin);
+		bomberCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(bomberCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Carriers", skin)).expandX().fillX();
-		final TextField carrierCount = new TextField("", skin);
+		final TextField carrierCount = new TextField("0", skin);
+		carrierCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(carrierCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Scoutships", skin)).expandX().fillX();
-		final TextField scoutCount = new TextField("", skin);
+		final TextField scoutCount = new TextField("0", skin);
+		scoutCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(scoutCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Battleships", skin)).expandX().fillX();
-		final TextField battleshipCount = new TextField("", skin);
+		final TextField battleshipCount = new TextField("0", skin);
+		battleshipCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(battleshipCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
@@ -301,7 +309,8 @@ public class FleetCommand {
 		buildForm.add().expandX().fillX();
 		
 		buildForm.add(new Label("Dreadnaughts", skin)).expandX().fillX();
-		final TextField dreadCount = new TextField("", skin);
+		final TextField dreadCount = new TextField("0", skin);
+		dreadCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(dreadCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
@@ -311,7 +320,7 @@ public class FleetCommand {
 		submitButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				//buildUnits(Integer.parseInt(fighterCount.getText()));
-				
+				//buildForm.act(0.01f);
 				for(int i = 0; i < Integer.parseInt(fighterCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Fighter());
 					System.out.println("Fighter " + i + " added to queue.");
