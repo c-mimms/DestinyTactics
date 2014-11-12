@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Assets;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
@@ -67,7 +68,8 @@ public abstract class OrbitalBody extends Actor {
 	boolean hovering;
 	ToolTip toolTip;
 	
-	//Mining Variable Initialization
+	//Turn
+	public Boolean spentTurn = false;
 
 	
 	public OrbitalBody(int radius, Sector sect){		
@@ -116,7 +118,7 @@ public abstract class OrbitalBody extends Actor {
 		
 		addListener(new ClickListener(){
 		    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-			
+		    	
 		        switchToPlanetView();
 		        return true;
 		    }
@@ -124,6 +126,7 @@ public abstract class OrbitalBody extends Actor {
 		    public void enter(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
 				hoverOn();
+				System.out.println(getMineLevel());
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer,
@@ -140,7 +143,7 @@ public abstract class OrbitalBody extends Actor {
 	 */
 	public void hoverOn() {	
 		if(toolTip ==null){
-		toolTip = new ToolTip(name, this);
+			toolTip = new ToolTip(name, this);
 		}
 		this.getStage().addActor(toolTip);
 		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
@@ -246,12 +249,30 @@ public abstract class OrbitalBody extends Actor {
 		super.act(time);
 	}
 	
-	//I guess abstract?
+	//I guess abstract? For Mine
 	public abstract void mineLevelUp();
 	public abstract Integer getMineLevel();
+	public abstract Integer getMineCost();
+	public abstract Integer getRPT(); //Resources per turn
+	
 	//The Methods below relate to the shipyard implemented
+	public abstract void shipyardLevelUp();
+	public abstract int getShipyardLevel();
+	public abstract int getShipyardSize();
+	public abstract int getShipyardCost();
+	public abstract void addToQueue(Ship ship);
+	public abstract void building();
+	public abstract void toFleet(Ship ship);
 	
 	public abstract void endTurn();
 	
+	
+	/**
+	 * Spends OB's turn, disallowing any more infrastructure development until next turn
+	 * @return none
+	 */
+	public void spendTurn() {
+		spentTurn = true;
+	}
 	
 }// end OrbitalBody

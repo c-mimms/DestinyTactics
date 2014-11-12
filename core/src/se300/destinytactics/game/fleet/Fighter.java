@@ -16,7 +16,7 @@ public class Fighter extends Ship implements needsHangar {
 	private String shipType = "Fighter";
 
 	public Fighter(){
-
+		buildTime = 1;
 	}
 
 	public void finalize() throws Throwable {
@@ -37,4 +37,10 @@ public class Fighter extends Ship implements needsHangar {
 	public int getHangarCost(){
 		return 0;
 	}
+	
+	@Override
+	public String getShipType(){
+		return shipType;
+	}
+	
 }//end Fighter

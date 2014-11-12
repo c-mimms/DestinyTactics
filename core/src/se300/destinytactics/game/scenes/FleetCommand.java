@@ -1,7 +1,14 @@
 package se300.destinytactics.game.scenes;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Battleship;
+import se300.destinytactics.game.fleet.Bomber;
+import se300.destinytactics.game.fleet.Carrier;
+import se300.destinytactics.game.fleet.Corvette;
+import se300.destinytactics.game.fleet.Dreadnaught;
+import se300.destinytactics.game.fleet.Fighter;
 import se300.destinytactics.game.fleet.Fleet;
+import se300.destinytactics.game.fleet.Scout;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class FleetCommand {
@@ -263,39 +272,46 @@ public class FleetCommand {
 		
 		buildForm.row();
 		buildForm.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		final TextField unitCountTextBox = new TextField("", skin);
+		final TextField fighterCount = new TextField("0", skin);
 		//unitCountTextBox.DigitsOnlyFilter();
-		buildForm.add(unitCountTextBox).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		fighterCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(fighterCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		TextField unitCountTextBox5 = new TextField("", skin);
-		buildForm.add(unitCountTextBox5).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField corvetteCount = new TextField("0", skin);
+		corvetteCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(corvetteCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Bombers", skin)).expandX().fillX();
-		TextField unitCountTextBox2 = new TextField("", skin);
-		buildForm.add(unitCountTextBox2).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField bomberCount = new TextField("0", skin);
+		bomberCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(bomberCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Carriers", skin)).expandX().fillX();
-		TextField unitCountTextBox4 = new TextField("", skin);
-		buildForm.add(unitCountTextBox4).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField carrierCount = new TextField("0", skin);
+		carrierCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(carrierCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add(new Label("Scoutships", skin)).expandX().fillX();
-		TextField unitCountTextBox3 = new TextField("", skin);
-		buildForm.add(unitCountTextBox3).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField scoutCount = new TextField("0", skin);
+		scoutCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(scoutCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.add(new Label("Battleships", skin)).expandX().fillX();
-		TextField unitCountTextBox6 = new TextField("", skin);
-		buildForm.add(unitCountTextBox6).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField battleshipCount = new TextField("0", skin);
+		battleshipCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(battleshipCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		buildForm.row();
 		buildForm.add().expandX().fillX();
 		buildForm.add().expandX().fillX();
 		
 		buildForm.add(new Label("Dreadnaughts", skin)).expandX().fillX();
-		TextField unitCountTextBox7 = new TextField("", skin);
-		buildForm.add(unitCountTextBox7).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField dreadCount = new TextField("0", skin);
+		dreadCount.setTextFieldFilter(new DigitsOnlyFilter());
+		buildForm.add(dreadCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
@@ -303,7 +319,36 @@ public class FleetCommand {
 		
 		submitButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				buildUnits(Integer.parseInt(unitCountTextBox.getText()));
+				//buildUnits(Integer.parseInt(fighterCount.getText()));
+				//buildForm.act(0.01f);
+				for(int i = 0; i < Integer.parseInt(fighterCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Fighter());
+					System.out.println("Fighter " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(corvetteCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Corvette());
+					System.out.println("Corvette " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(bomberCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Bomber());
+					System.out.println("Bomber " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(carrierCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Carrier());
+					System.out.println("Carrier " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(scoutCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Scout());
+					System.out.println("Scoutship " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(battleshipCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Battleship());
+					System.out.println("Battleship " + i + " added to queue.");
+				}
+				for(int i = 0; i < Integer.parseInt(dreadCount.getText()); i++){
+					myGame.curOrbitalBody.addToQueue(new Dreadnaught());
+					System.out.println("Dreadnaught " + i + " added to queue.");
+				}
 				
 				return true;
 			}

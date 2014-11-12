@@ -1,5 +1,8 @@
 package se300.destinytactics.game.fleet;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,6 +45,7 @@ public class Fleet extends Actor {
 
 	private int SPRITE_SIZE = 10;
 	private float angle = 0;
+	private Map<Ship, Integer> shipMap;
 
 	
 	/**
@@ -53,6 +57,7 @@ public class Fleet extends Actor {
 		super();
 		setLocation(loc);
 		this.ships = ship;
+		shipMap = new HashMap<Ship, Integer>();
 		this.setSize(10, 10);
 		//System.out.println("New fleet created at " + location.getName());
 	}
@@ -105,12 +110,24 @@ public class Fleet extends Actor {
 	 * @param unitType
 	 */
 	public int getShipCount(Ship unitType) {
-		return 0;
+		return shipMap.get(unitType).intValue();
 	}
 
 	public void getShipCount(Ship unitType, int num) {
 
+	/**
+	 * Adds ship to the fleet
+	 * 
+	 * @param ship
+	 */
+	public void addShip(Ship ship) {
+		if (shipMap.containsKey(ship)) {
+			shipMap.put(ship, shipMap.get(ship) + 1);
+		} else {
+			shipMap.put(ship, 1);
+		}
 	}
+
 
 	/**
 	 * Moves fleet closer to destination. If it reaches destination, set new
@@ -213,9 +230,12 @@ public class Fleet extends Actor {
 
 			batch.begin();
 		} else {
-			
-			batch.draw(sprite1, this.getLocation().getX(Align.center)-5 + (float)(40*Math.sin(angle)), this
-					.getLocation().getY(Align.center)-5 + (float)(40*Math.cos(angle)), SPRITE_SIZE, SPRITE_SIZE);
+
+			batch.draw(sprite1, this.getLocation().getX(Align.center) - 5
+					+ (float) (40 * Math.sin(angle)),
+					this.getLocation().getY(Align.center) - 5
+							+ (float) (40 * Math.cos(angle)), SPRITE_SIZE,
+					SPRITE_SIZE);
 
 		}
 		batch.setColor(Color.WHITE);

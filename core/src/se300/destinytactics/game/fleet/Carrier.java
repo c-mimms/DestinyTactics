@@ -17,7 +17,7 @@ public class Carrier extends Ship implements hasHangar {
 	private String shipType = "Carrier";
 
 	public Carrier(){
-
+		buildTime = 5;
 	}
 
 	public void finalize() throws Throwable {
@@ -30,4 +30,10 @@ public class Carrier extends Ship implements hasHangar {
 	public int getHangarSize(){
 		return 0;
 	}
+	
+	@Override
+	public String getShipType(){
+		return shipType;
+	}
+	
 }//end Carrier

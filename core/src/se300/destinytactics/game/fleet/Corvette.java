@@ -14,10 +14,16 @@ public class Corvette extends Ship {
 	private String shipType = "Corvette";
 
 	public Corvette(){
-
+		buildTime = 1;
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
+	@Override
+	public String getShipType(){
+		return shipType;
+	}
+	
 }//end Corvette
