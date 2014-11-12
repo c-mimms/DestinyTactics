@@ -159,6 +159,10 @@ public abstract class OrbitalBody extends Actor {
 //		}
 	}
 	
+	/**
+	 * Returns true if planet has a fleet.
+	 * @return
+	 */
 	public boolean hasFleet(){
 		if(this.m_Fleet != null){
 			return true;
@@ -166,6 +170,9 @@ public abstract class OrbitalBody extends Actor {
 		return false;
 	}
 	
+	/**
+	 * Switch to the planet view.
+	 */
 	public void switchToPlanetView(){
 		owner = sector.galaxy.thisgame.localPlayer;
 		sector.galaxy.thisgame.localPlayer.addOrbitalBody(this);
@@ -198,6 +205,7 @@ public abstract class OrbitalBody extends Actor {
 
 	public abstract void getMiningEfficiency();
 
+
 	public Fleet getFleet() {
 		return m_Fleet;
 	}
@@ -217,7 +225,6 @@ public abstract class OrbitalBody extends Actor {
 	public int getType() {
 		return type;
 	}
-	
 	
 	
 	public int getSpriteSize() {
