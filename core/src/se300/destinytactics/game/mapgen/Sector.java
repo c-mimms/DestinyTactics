@@ -163,7 +163,7 @@ public class Sector extends Actor {
 	 * Run when mouse hovers off sector
 	 */
 	public void hoverOff() {
-		System.out.println("Hovering off " + name);
+		//System.out.println("Hovering off " + name);
 		if(toolTip != null)
 			toolTip.remove();
 		toolTip = new ToolTip(name, this); //to updated tooltip

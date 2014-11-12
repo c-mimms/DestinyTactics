@@ -26,6 +26,7 @@ public class Fleet extends Actor {
 
 	private OrbitalBody destination;
 	private int distanceToDestination;
+	private int distance;
 	private int fleetGalacticTravelSpeed = 50;
 	private int fleetSectorTravelSpeed;
 	private OrbitalBody location;
@@ -46,13 +47,19 @@ public class Fleet extends Actor {
 	private float angle = 0;
 	private Map<Ship, Integer> shipMap;
 
+	
+	/**
+	 * Create fleet with orbital body location, and array of ships
+	 * @param loc
+	 * @param ship
+	 */
 	public Fleet(OrbitalBody loc, int ship[]) {
 		super();
 		setLocation(loc);
 		this.ships = ship;
 		shipMap = new HashMap<Ship, Integer>();
 		this.setSize(10, 10);
-		System.out.println("New fleet created at " + location.getName());
+		//System.out.println("New fleet created at " + location.getName());
 	}
 
 	public void finalize() throws Throwable {
@@ -106,6 +113,7 @@ public class Fleet extends Actor {
 		return shipMap.get(unitType).intValue();
 	}
 
+
 	/**
 	 * Adds ship to the fleet
 	 * 
@@ -151,7 +159,7 @@ public class Fleet extends Actor {
 			// run constantly
 			else {
 				percentTravelled = (float) distanceToDestination
-						/ (float) location.getDistance(destination);
+						/ (float) distance;
 				float difx = sectorLocation.getX() - sectorDestination.getX();
 				float dify = sectorLocation.getY() - sectorDestination.getY();
 				// TODO make everything have a getCenterX() and setCenter() so
@@ -187,12 +195,13 @@ public class Fleet extends Actor {
 	public void setDestination(OrbitalBody dest) {
 		this.destination = dest;
 		sectorDestination = destination.getSector();
-		distanceToDestination = location.getDistance(destination);
+		distance = distanceToDestination = location.getDistance(destination);
+		location.m_Fleet = null;
+		this.location = null;
+		
 	}
 
-	/**
-	 * Draw the fleet
-	 */
+
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(this.getColor());
 
@@ -231,8 +240,7 @@ public class Fleet extends Actor {
 		batch.setColor(Color.WHITE);
 
 	}
-
-	public void act(float time) {
-		angle += time * 2;
+	public void act(float time){
+		angle += time/3;
 	}
 }

@@ -31,6 +31,7 @@ public class GalaxyScene extends Stage {
 	private Group sectors, sectorNames;
 	private SectorLines sectorLines;
 	List<SectorLabel> sectorNameArray;
+	Group fleets = new Group();
 
 
 	public static final int PARALLAX = 10;
@@ -113,6 +114,7 @@ public class GalaxyScene extends Stage {
 		test.moveFleet();
 		test2.moveFleet();
 		test3.moveFleet();
+		fleets.getChildren().addAll(test,test3,test2);
 
 	}
 
