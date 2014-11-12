@@ -248,6 +248,12 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		return ships[x];
 	}
 
+	@Override
+	public void getMiningEfficiency() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }//end Planet
