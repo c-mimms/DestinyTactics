@@ -21,9 +21,10 @@ public class Ship {
 	
 	//NEW 11/10/14
 	public int buildTime;
+	public int spaceToBuild;
 
 	public Ship(){
-		buildTime = 1;
+		
 	}
 
 	public void finalize() throws Throwable {
@@ -99,4 +100,13 @@ public class Ship {
 	public void decrementBuildTime() {
 		buildTime--;
 	}
+	
+	/**
+	 * Gets amount of space in shipyard that ship needs
+	 * @return spaceToBuild
+	 */
+	public int getSpaceToBuild() {
+		return spaceToBuild;
+	}
+	
 }//end Ship

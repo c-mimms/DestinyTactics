@@ -2,6 +2,7 @@ package se300.destinytactics.game.orbitalbodies;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -144,7 +145,7 @@ public abstract class OrbitalBody extends Actor {
 	public void hoverOn() {	
 		if(toolTip ==null){
 			toolTip = new ToolTip(name, this);
-		}
+		} 
 		this.getStage().addActor(toolTip);
 		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),Actions.fadeIn(0.4f, Interpolation.fade)));
 		
@@ -157,6 +158,7 @@ public abstract class OrbitalBody extends Actor {
 	public void hoverOff() {
 		hovering = false;
 		toolTip.remove();
+		toolTip = new ToolTip(name, this);
 //		if(this.getStage()!=null){
 //		this.getStage().mouseMoved(0, 1);
 //		}
@@ -254,6 +256,8 @@ public abstract class OrbitalBody extends Actor {
 	public abstract void addToQueue(Ship ship);
 	public abstract void building();
 	public abstract void toFleet(Ship ship);
+	public abstract int getBuildQueueSize();
+	public abstract int getShips(int x);
 	
 	public abstract void endTurn();
 	

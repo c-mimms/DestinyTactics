@@ -41,7 +41,9 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	private int shipyardLevel;
 	private int shipyardSize;
 	private int shipyardCost;
-	private ArrayList<Ship> buildQueue = new ArrayList<Ship>();
+	public ArrayList<Ship> buildQueue = new ArrayList<Ship>();
+	
+	public int ships[] = new int[7];
 
 	public Planet(int radius, Sector sector){
 
@@ -55,7 +57,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 		//shipyard variable init
 		shipyardLevel = 0;
-		shipyardSize = 1;
+		shipyardSize = 4000;
 		shipyardCost = 25;
 
 		
@@ -166,11 +168,17 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	}
 	
 	/**
-	 * This method takes input from the
+	 * Adds ship to build queue if shipyard has enough space
 	 * @param ship
 	 */
 	public void addToQueue(Ship ship) {
-		buildQueue.add(ship);
+		if(ship.getSpaceToBuild() < shipyardSize) {
+			buildQueue.add(ship);
+			addShipOrdered(ship);
+			shipyardSize -= ship.getSpaceToBuild();
+		} else {
+			System.out.println("Shipyard Full");
+		}
 	}
 	
 	/**
@@ -196,10 +204,49 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 			m_Fleet = new Fleet(this, null);
 		}
 		m_Fleet.addShip(ship);
-
+		
+		System.out.println("Shipyard Size before removal: " + shipyardSize);
+		shipyardSize += ship.getSpaceToBuild();
+		System.out.println("Shipyard size after removal: " + shipyardSize);
 		buildQueue.remove(ship);
 	}
 	
+	/**
+	 * gets size of build queue
+	 * @return buildQueue.size();
+	 */
+	@Override
+	public int getBuildQueueSize() {
+		return buildQueue.size();
+	}
+	
+	/**
+	 * records number of each type of ship in queue
+	 */
+	public void addShipOrdered(Ship ship) {
+		if(ship.getShipType() == "Fighter") {
+			ships[0] = ships[0] + 1;
+		} else if (ship.getShipType() == "Corvette") {
+			ships[1] += 1;
+		} else if (ship.getShipType() == "Bomber") {
+			ships[2] += 1;
+		} else if (ship.getShipType() == "Carrier") {
+			ships[3] += 1;
+		} else if (ship.getShipType() == "Scout") {
+			ships[4] += 1;
+		} else if (ship.getShipType() == "Battleship") {
+			ships[5] += 1;
+		} else if (ship.getShipType() == "Dreadnaught") {
+			ships[6] += 1;
+		}
+	}
+	
+	/**
+	 * Gets ships[x]
+	 */
+	public int getShips(int x) {
+		return ships[x];
+	}
 
 
 

@@ -18,6 +18,7 @@ public class Carrier extends Ship implements hasHangar {
 
 	public Carrier(){
 		buildTime = 5;
+		spaceToBuild = 100;
 	}
 
 	public void finalize() throws Throwable {

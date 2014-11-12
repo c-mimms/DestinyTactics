@@ -17,6 +17,7 @@ public class Fighter extends Ship implements needsHangar {
 
 	public Fighter(){
 		buildTime = 1;
+		spaceToBuild = 2;
 	}
 
 	public void finalize() throws Throwable {

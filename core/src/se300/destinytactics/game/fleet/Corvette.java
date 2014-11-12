@@ -15,6 +15,7 @@ public class Corvette extends Ship {
 
 	public Corvette(){
 		buildTime = 1;
+		spaceToBuild = 36;
 	}
 
 	public void finalize() throws Throwable {

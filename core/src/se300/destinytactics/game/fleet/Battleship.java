@@ -6,6 +6,7 @@ public class Battleship extends Ship implements hasHangar {
 	
 	public Battleship() {
 		buildTime = 4;
+		spaceToBuild = 64;
 	}
 	
 	@Override

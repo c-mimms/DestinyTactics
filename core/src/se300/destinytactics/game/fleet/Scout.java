@@ -15,6 +15,7 @@ public class Scout extends Ship {
 
 	public Scout(){
 		buildTime = 1;
+		spaceToBuild = 4;
 	}
 
 	public void finalize() throws Throwable {

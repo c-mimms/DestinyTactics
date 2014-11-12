@@ -6,6 +6,7 @@ public class Bomber extends Ship {
 	
 	public Bomber() {
 		buildTime = 3;
+		spaceToBuild = 36;
 	}
 	
 	@Override

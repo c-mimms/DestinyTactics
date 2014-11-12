@@ -68,23 +68,40 @@ public class ToolTip extends Window {
 	public ToolTip(String name, OrbitalBody body) {
 		super(name, skin);
 		//body.sector.galaxy.thisgame.sectorStage.addActor(this); //LOLOL
-		String sector = body.sector.getName();
+		
+		/*
+		 * Will display:
+		 * Owner
+		 * Resources per turn
+		 * Mine level
+		 * Shipyard level
+		 * Shipyard number of ships in queue
+		 * Shipyard space available
+		 */
 		controlState = body.getState();
 		String owner = body.owner.getName();
+		int RPT = body.getRPT();
 		mine = body.getMineLevel();
+		int shipyardLv = body.getShipyardLevel();
+		int shipyardQueue = body.getBuildQueueSize();
+		int spaceAv = body.getShipyardSize();
 		float x = body.getX();
 		float y = body.getY();
 		
-		add("Sector: " + sector).left();
+		add("Owner: " + owner).left();
 		row();
-		add("Control State: " + controlState).left();
+		add("RPT: " + RPT).left();
 		row();
-		add("Mine Level: " + mine).left();
+		add("Mine Lv: " + mine).left();
+		row();
+		add("Shipyard Lv: " + shipyardLv).left();
+		row();
+		add("Ships Queued: " + shipyardQueue).left();
+		row();
+		add("Available : " + spaceAv).left();
 		
 		pack();
 		setPosition(x+body.SPRITE_SIZE+10, y-this.getHeight()/2 + body.SPRITE_SIZE/2);
-
-		
 	}
 	
 }

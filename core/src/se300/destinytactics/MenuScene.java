@@ -38,10 +38,12 @@ public class MenuScene implements Screen{
 				.internal("sounds/select2.wav"));
 		
 		//bgimg = new Texture("MenuBackground.jpg");
-		bgimg = new Texture("blue_galaxy_by_traemore-d4w8l1h.jpg");
+		//bgimg = new Texture("blue_galaxy_by_traemore-d4w8l1h.jpg");
+		bgimg = new Texture("Ships_Title.jpg");
 		
 		background = new Image(bgimg);
 		//background.setSize(DestinyTactics.SCREEN_WIDTH + 4 * GalaxyScene.PARALLAX, DestinyTactics.SCREEN_HEIGHT + 4 * GalaxyScene.PARALLAX);
+		background.setSize(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT);
 		
 		menuStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));
 		

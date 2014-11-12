@@ -40,7 +40,7 @@ public class OrbitalBodyScene extends Stage {
 		//Set navBar name
 		myGame.navBar.setName(nextOrbitalBody.getName());
 		
-		//Update planetUI upon click
+		//Update planetUI infrastructure upon click
 		myGame.planetUI.inf.mineStuff.setText("Lv: " + myGame.curOrbitalBody.getMineLevel() 
 				+ ". Cost: " + myGame.curOrbitalBody.getMineCost()
 			    + ". RPT: " + myGame.curOrbitalBody.getRPT());

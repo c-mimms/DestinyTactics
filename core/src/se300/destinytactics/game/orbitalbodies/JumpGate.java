@@ -108,5 +108,11 @@ public class JumpGate extends OrbitalBody {
 		
 	}
 
+	@Override
+	public int getBuildQueueSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }//end JumpGate

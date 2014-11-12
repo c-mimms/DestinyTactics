@@ -1,5 +1,7 @@
 package se300.destinytactics.game.orbitalbodies;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -8,110 +10,117 @@ import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 
-
 /**
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:18 PM
  */
-public class Station extends OrbitalBody implements canBuildFleets, canBuildDefense {
+public class Station extends OrbitalBody implements canBuildFleets,
+		canBuildDefense {
 
 	private Structure structure[];
 	public Structure m_Structure;
 
-	public Station(int radius, Sector sector){
-		super(radius,sector);
-		
-		type = Utility.random.nextInt(2)+10;
-		this.setY((GameScene.SCREEN_HEIGHT/5) + (int)(Utility.random.nextInt(YEDGEEXCLUSION-GameScene.SCREEN_HEIGHT/5) +1));
-		this.setX(XEDGEEXCLUSION-150*orbitRadius);
+	// Mining Variable declaration
+	private int mineLevel;
+	private float resourceMultiplier;
+	private int mineCost;
+	private int resourcePerTurn = 0;
+
+	// Shipyard variable declaration
+	private int shipyardLevel;
+	private int shipyardSize;
+	private int shipyardCost;
+	public ArrayList<Ship> buildQueue = new ArrayList<Ship>();
+
+	public Station(int radius, Sector sector) {
+		super(radius, sector);
+
+		// Mining variable init
+		mineLevel = 0;
+		mineCost = 25;
+		resourcePerTurn = (int) (100 * resourceMultiplier);
+
+		// shipyard variable init
+		shipyardLevel = 0;
+		shipyardSize = 1;
+		shipyardCost = 25;
+
+		type = Utility.random.nextInt(2) + 10;
+		this.setY((GameScene.SCREEN_HEIGHT / 5)
+				+ (int) (Utility.random.nextInt(YEDGEEXCLUSION
+						- GameScene.SCREEN_HEIGHT / 5) + 1));
+		this.setX(XEDGEEXCLUSION - 150 * orbitRadius);
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public void getLevel(){
-
-	}
-
-	public void incrementLevel(){
-
-	}
-	
 
 	@Override
 	public int getShipyardLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shipyardLevel;
 	}
 
 	@Override
 	public int getShipyardSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shipyardSize;
 	}
 
 	@Override
 	public void mineLevelUp() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Integer getMineLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mineLevel;
 	}
 
 	@Override
 	public void endTurn() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Integer getMineCost() {
-		// TODO Auto-generated method stub
-		return null;
+		return mineCost;
 	}
 
 	@Override
 	public Integer getRPT() {
-		// TODO Auto-generated method stub
-		return null;
+		return resourcePerTurn;
 	}
 
 	@Override
 	public void shipyardLevelUp() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public int getShipyardCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shipyardCost;
 	}
 
 	@Override
 	public void addToQueue(Ship ship) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void building() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void toFleet(Ship ship) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	@Override
+	public int getBuildQueueSize() {
+		return buildQueue.size();
+	}
 
-	
-
-}//end Station
+}// end Station

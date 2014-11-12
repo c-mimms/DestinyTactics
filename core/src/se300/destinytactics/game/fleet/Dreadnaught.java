@@ -18,6 +18,7 @@ public class Dreadnaught extends Ship implements hasHangar {
 
 	public Dreadnaught(){
 		buildTime = 7;
+		spaceToBuild = 144;
 	}
 
 	public void finalize() throws Throwable {

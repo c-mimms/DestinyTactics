@@ -30,6 +30,11 @@ public class FleetCommand {
 	public Skin skin;
 	public GameScene myGame;
 	
+	//Labels for number of ships
+	public Label fighterNum, corvetteNum, bomberNum, carrierNum, scoutNum, battleNum, dreadNum;
+	
+	
+	
 	// Public Methods
 	public FleetCommand(Skin skin,  GameScene myGame) {
 		this.skin = skin;
@@ -137,6 +142,7 @@ public class FleetCommand {
 		return cell;
 	}
 	
+	
 	private void createOverview() {
 		overviewWrapper = new Table(skin);
 		overview = new Table(skin);
@@ -153,30 +159,37 @@ public class FleetCommand {
 		
 		overview.row();
 		overview.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8);
-		overview.add("1000").width(GameScene.SCREEN_WIDTH/8);
+		Label fighterNum = new Label("0" + "( )", skin);
+		overview.add(fighterNum).width(GameScene.SCREEN_WIDTH/8);
 		
 		overview.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8);
-		overview.add("40").width(GameScene.SCREEN_WIDTH/8);
+		Label corvetteNum = new Label("0" + "( )", skin);
+		overview.add(corvetteNum).width(GameScene.SCREEN_WIDTH/8);
 		
 		overview.row();
 		overview.add(new Label("Bombers", skin)).expandX().fillX();
-		overview.add("300").expandX().fillX();
+		Label bomberNum = new Label("0" + "( )", skin);
+		overview.add(bomberNum).expandX().fillX();
 		
 		overview.add(new Label("Carriers", skin)).expandX().fillX();
-		overview.add("12").expandX().fillX();
+		Label carrierNum = new Label("0" + "( )", skin);
+		overview.add(carrierNum).expandX().fillX();
 		
 		overview.row();
 		overview.add(new Label("Scoutships", skin)).expandX().fillX();
-		overview.add("3").expandX().fillX();
+		Label scoutNum = new Label("0" + "( )", skin);
+		overview.add(scoutNum).expandX().fillX();
 		
 		overview.add(new Label("Battleships", skin)).expandX().fillX();
-		overview.add("7").expandX().fillX();
+		Label battleNum = new Label("0" + "( )", skin);
+		overview.add(battleNum).expandX().fillX();
 		
 		overview.row();
 		overview.add().expandX().fillX();
 		overview.add().expandX().fillX();
 		overview.add(new Label("Dreadnaughts", skin)).expandX().fillX();
-		overview.add("1").expandX().fillX();
+		Label dreadNum = new Label("0" + "( )", skin);
+		overview.add(dreadNum).expandX().fillX();
 		
 		overviewWrapper.add("Fleet Overview").colspan(3).left().expandX();
 		overviewWrapper.row().top();                 
@@ -323,33 +336,40 @@ public class FleetCommand {
 				//buildForm.act(0.01f);
 				for(int i = 0; i < Integer.parseInt(fighterCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Fighter());
-					System.out.println("Fighter " + i + " added to queue.");
 				}
 				for(int i = 0; i < Integer.parseInt(corvetteCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Corvette());
-					System.out.println("Corvette " + i + " added to queue.");
 				}
 				for(int i = 0; i < Integer.parseInt(bomberCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Bomber());
-					System.out.println("Bomber " + i + " added to queue.");
 				}
 				for(int i = 0; i < Integer.parseInt(carrierCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Carrier());
-					System.out.println("Carrier " + i + " added to queue.");
+					
 				}
 				for(int i = 0; i < Integer.parseInt(scoutCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Scout());
-					System.out.println("Scoutship " + i + " added to queue.");
+					
 				}
 				for(int i = 0; i < Integer.parseInt(battleshipCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Battleship());
-					System.out.println("Battleship " + i + " added to queue.");
+			
 				}
 				for(int i = 0; i < Integer.parseInt(dreadCount.getText()); i++){
 					myGame.curOrbitalBody.addToQueue(new Dreadnaught());
-					System.out.println("Dreadnaught " + i + " added to queue.");
+					
 				}
 				
+				fighterCount.setText("0");
+				corvetteCount.setText("0");
+				bomberCount.setText("0");
+				carrierCount.setText("0");
+				scoutCount.setText("0");
+				battleshipCount.setText("0");
+				dreadCount.setText("0");
+				for(int i = 0; i < 7; i++){
+					//System.out.print(myGame.curOrbitalBody.getShips[i]);
+				}
 				return true;
 			}
 

@@ -146,7 +146,7 @@ public class Sector extends Actor {
 //		System.out.println("Hovering on " + name);
 		if (toolTip == null) {
 			toolTip = new ToolTip(name, this);
-		}
+		} 
 
 		this.getStage().addActor(toolTip);
 		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),
@@ -166,6 +166,7 @@ public class Sector extends Actor {
 		System.out.println("Hovering off " + name);
 		if(toolTip != null)
 			toolTip.remove();
+		toolTip = new ToolTip(name, this); //to updated tooltip
 		hovering = false;
 		//this.getStage().mouseMoved(0, 200);
 
