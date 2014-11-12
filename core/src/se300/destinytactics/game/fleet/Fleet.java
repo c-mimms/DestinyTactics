@@ -113,7 +113,6 @@ public class Fleet extends Actor {
 		return shipMap.get(unitType).intValue();
 	}
 
-	public void getShipCount(Ship unitType, int num) {
 
 	/**
 	 * Adds ship to the fleet
