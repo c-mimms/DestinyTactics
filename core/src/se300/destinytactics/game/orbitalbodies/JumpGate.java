@@ -10,9 +10,16 @@ import se300.destinytactics.game.mapgen.Utility;
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:06 PM
+ * 
+ * JumpGate extends OrbitalBody. Currently not used.
  */
 public class JumpGate extends OrbitalBody {
 
+	/**
+	 * Constructor uses parent radius and sector
+	 * @param radius
+	 * @param sector
+	 */
 	public JumpGate(int radius, Sector sector){
 		super(radius,sector);
 		type = Utility.random.nextInt(2);
@@ -110,6 +117,12 @@ public class JumpGate extends OrbitalBody {
 
 	@Override
 	public int getBuildQueueSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getShips(int x) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

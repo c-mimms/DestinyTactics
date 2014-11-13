@@ -14,6 +14,9 @@ import se300.destinytactics.game.mapgen.Utility;
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:18 PM
+ * 
+ * Station extends OrbitalBody implements canBuildFleets, canBuildDefense
+ * Station cannot harvest resources.
  */
 public class Station extends OrbitalBody implements canBuildFleets,
 		canBuildDefense {
@@ -33,6 +36,11 @@ public class Station extends OrbitalBody implements canBuildFleets,
 	private int shipyardCost;
 	public ArrayList<Ship> buildQueue = new ArrayList<Ship>();
 
+	/**
+	 * Constructor uses parent radius and sector
+	 * @param radius
+	 * @param sector
+	 */
 	public Station(int radius, Sector sector) {
 		super(radius, sector);
 
@@ -121,6 +129,11 @@ public class Station extends OrbitalBody implements canBuildFleets,
 	@Override
 	public int getBuildQueueSize() {
 		return buildQueue.size();
+	}
+
+	@Override
+	public int getShips(int x) {
+		return 0;
 	}
 
 }// end Station

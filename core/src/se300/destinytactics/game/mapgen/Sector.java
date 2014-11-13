@@ -23,7 +23,6 @@ import se300.destinytactics.GameScene;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.orbitalbodies.Station;
-import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.ToolTip;
 
 /**
@@ -42,7 +41,6 @@ public class Sector extends Actor {
 	public OrbitalBody bodyList[];
 	private int posX, posY;
 
-	public Button m_Button;
 
 	// TODO Remove after player color array is created
 	private static Texture sprite1 = new Texture(

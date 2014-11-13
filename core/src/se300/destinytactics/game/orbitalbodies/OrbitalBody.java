@@ -28,27 +28,28 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
-import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.ToolTip;
 
 /**
- * @author John
- * @version 1.0
+ * @author Team Gaurdian 
+ * @version 2.5
  * @created 10-Oct-2014 5:49:10 PM
+ * 
+ * OrbitalBody extends Actor.
+ * Player can control orbital bodies. They have a unique name based on
+ * which sector they exist in. They can contain a fleet. Clicking on
+ * and OrbitalBody takes the player to OrbitalBody view. Hovering over an 
+ * OrbitalBody sprite will display a tooltip.
  */
 public abstract class OrbitalBody extends Actor {
 
-	public static Galaxy galaxy;
 	protected int controlState;
 	public Player owner;
-	public Fleet fleet;
 	public String name;
 	protected int orbitRadius;
 	public Sector sector;
-	//public 
+	
 	public Fleet m_Fleet;
-	public Button m_Button;
-	public Random rand;
 	public static int test ; 
 	public int type;
 	public static Texture[] planets;
@@ -72,7 +73,11 @@ public abstract class OrbitalBody extends Actor {
 	//Turn
 	public Boolean spentTurn = false;
 
-	
+	/**
+	 * Constructor takes orbit radius and sector as an argument.
+	 * @param radius
+	 * @param sect
+	 */
 	public OrbitalBody(int radius, Sector sect){		
 
 		planets = Assets.getPlanetTypes();
@@ -80,7 +85,6 @@ public abstract class OrbitalBody extends Actor {
 			planets[i].setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 		}
 		orbitRadius = radius;
-		//name = Names.newName();
 		String radius_RN = "";
 		switch (radius) {
 			case 0: radius_RN = "I"; break;
@@ -140,7 +144,8 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	/**
-	 * Run when mouse hovers on planet
+	 * Called when mouse hovers over planet sprite. Creates new ToolTip,
+	 * adds it to the stage, and sets hovering to true.
 	 */
 	public void hoverOn() {	
 		if(toolTip ==null){
@@ -153,20 +158,18 @@ public abstract class OrbitalBody extends Actor {
 	}
 
 	/**
-	 * Run when mouse hovers off of planet
+	 * Called when mouse hovers off planet sprite. Sets hovering to false,
+	 * removes the current tooltip, and creates the next tooltip to be displayed.
 	 */
 	public void hoverOff() {
 		hovering = false;
 		toolTip.remove();
 		toolTip = new ToolTip(name, this);
-//		if(this.getStage()!=null){
-//		this.getStage().mouseMoved(0, 1);
-//		}
 	}
 	
 	/**
-	 * Returns true if planet has a fleet.
-	 * @return
+	 * Returns true or false depending on whether or not a planet has a fleet.
+	 * @return true or false
 	 */
 	public boolean hasFleet(){
 		if(this.m_Fleet != null){
@@ -176,7 +179,8 @@ public abstract class OrbitalBody extends Actor {
 	}
 	
 	/**
-	 * Switch to the planet view.
+	 * Currently assigns owner to whoever clicks it.
+	 * Calls GameScene's switchToPlanetView method.
 	 */
 	public void switchToPlanetView(){
 		owner = sector.galaxy.thisgame.localPlayer;
@@ -193,6 +197,7 @@ public abstract class OrbitalBody extends Actor {
 	/**
 	 * Finds distance between any two orbital bodies.
 	 * @param body
+	 * @return bodyPos + otherBodyPos + sectorDist
 	 */
 	public int getDistance(OrbitalBody body) {
 		int bodyPos = sector.getNumBodies() - orbitRadius;
@@ -202,72 +207,146 @@ public abstract class OrbitalBody extends Actor {
 	}
 
 	/**
-	 * Returns name of body
+	 * Gets name
+	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
 
-	public abstract void getMiningEfficiency();
-
-
+	/**
+	 * Gets fleet
+	 * @return m_Fleet
+	 */
 	public Fleet getFleet() {
 		return m_Fleet;
 	}
 
+	/**
+	 * Gets sector
+	 * @return sector
+	 */
 	public Sector getSector() {
 		return sector;
 	}
 
+	/**
+	 * Gets distance from sun
+	 * @return orbitRadius
+	 */
 	public int getPos() {
 		return orbitRadius;
 	}
 	
+	/**
+	 * Gets control state
+	 * @return controlState
+	 */
 	public int getState() {
 		return controlState;
 	}
 
+	/**
+	 * Gets planet type
+	 * @return type
+	 */
 	public int getType() {
 		return type;
 	}
 	
-	
+	/**
+	 * Gets sprite size
+	 * @return SPRITE_SIZE
+	 */
 	public int getSpriteSize() {
 		return SPRITE_SIZE;
 	}
-
-	@Override
-	public void draw(Batch batch, float parentAlpha){
-		
-		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);
-		
-//		if(m_Fleet != null){
-//			myCircle.draw(batch, parentAlpha);
-//		}
-		
-	}
-	
-	public void act(float time){
-		super.act(time);
-	}
 	
 	//I guess abstract? For Mine
+	/**
+	 * Levels up mining facility, affects cost and RPT
+	 */
 	public abstract void mineLevelUp();
+	
+	/**
+	 * Gets mine level
+	 * @return mineLevel
+	 */
 	public abstract Integer getMineLevel();
+	
+	/**
+	 * Gets mine cost
+	 * @return mineCost
+	 */
 	public abstract Integer getMineCost();
+	
+	/**
+	 * Gets resources per turn
+	 * @return RPT
+	 */
 	public abstract Integer getRPT(); //Resources per turn
 	
+	
 	//The Methods below relate to the shipyard implemented
+	/**
+	 * Increments shipyard level by 1, affects cost and size
+	 */
 	public abstract void shipyardLevelUp();
+	
+	/**
+	 * Gets shipyard level
+	 * @return shipyardLevel
+	 */
 	public abstract int getShipyardLevel();
+	
+	/**
+	 * Gets shipyard size
+	 * @return shipyardSize
+	 */
 	public abstract int getShipyardSize();
+	
+	/**
+	 * Gets shipyard cost
+	 * @return shipyardCost
+	 */
 	public abstract int getShipyardCost();
+	
+	/**
+	 * Adds ship to the building queue
+	 * @param ship
+	 */
 	public abstract void addToQueue(Ship ship);
+	
+	/**
+	 * Iterates through the building queue, keeps track of building 
+	 * progress, calls toFleet(ship)
+	 */
 	public abstract void building();
+	
+	/**
+	 * Takes ship out of the queue and puts it in orbit
+	 * @param ship
+	 */
 	public abstract void toFleet(Ship ship);
+	
+	/**
+	 * Gets the size of the build queue
+	 * @return buildQueue.size()
+	 */
 	public abstract int getBuildQueueSize();
+	
+	/**
+	 * Gets number of specified ships:
+	 * Fighter, Corvette, Bomber, Carrier, Scout, Battle, and Dreadnaught
+	 * ships[0 - 6] respectively
+	 * @param x
+	 * @return
+	 */
 	public abstract int getShips(int x);
 	
+	/**
+	 * Sets spentTurn = false. Calls build method. Adds resources.
+	 */
 	public abstract void endTurn();
 	
 	
@@ -277,6 +356,16 @@ public abstract class OrbitalBody extends Actor {
 	 */
 	public void spendTurn() {
 		spentTurn = true;
+	}
+	
+
+	@Override
+	public void draw(Batch batch, float parentAlpha){
+		batch.draw(planets[type], getX(), getY(), SPRITE_SIZE, SPRITE_SIZE);		
+	}
+	
+	public void act(float time){
+		super.act(time);
 	}
 	
 }// end OrbitalBody
