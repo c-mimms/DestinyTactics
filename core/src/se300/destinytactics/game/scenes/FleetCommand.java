@@ -509,9 +509,7 @@ public class FleetCommand {
 
 	
 	private void buildUnits(int x) {
-		// TODO Auto-generated method stub
-		int tmp[] = {x};
-		Fleet fl = new Fleet(myGame.curOrbitalBody,tmp);
+		Fleet fl = new Fleet(myGame.curOrbitalBody);
 		myGame.curOrbitalBody.m_Fleet = fl;
 		myGame.localPlayer.addFleet(fl);
 		myGame.curOrbitalBody.getStage().addActor(fl);

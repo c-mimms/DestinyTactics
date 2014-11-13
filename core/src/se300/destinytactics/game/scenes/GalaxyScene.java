@@ -105,9 +105,9 @@ public class GalaxyScene extends Stage {
 
 		sectorLines.updateGroups(sectors, sectorNames); 
 		
-		test = new Fleet(myGame.m_Galaxy.sectors[0].bodyList[0],null);
-		test2 = new Fleet(myGame.m_Galaxy.sectors[1].bodyList[0],null);
-		test3 = new Fleet(myGame.m_Galaxy.sectors[2].bodyList[0],null);
+		test = new Fleet(myGame.m_Galaxy.sectors[0].bodyList[0]);
+		test2 = new Fleet(myGame.m_Galaxy.sectors[1].bodyList[0]);
+		test3 = new Fleet(myGame.m_Galaxy.sectors[2].bodyList[0]);
 		
 		this.addActor(test);
 		test.setColor(new Color(1, 0, 0, 1));

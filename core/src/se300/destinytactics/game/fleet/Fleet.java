@@ -18,10 +18,15 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.scenes.GalaxyScene;
 
 /**
- * @author simonsr1
- * @version 1.0
- * @created 10-Oct-2014 5:49:01 PM
- */
+* <h1>Fleet</h1>
+* 
+* Fleet in the current game.
+*
+* @author  Chris Mimms
+* @version 1.0
+* @since   2014-11-12
+* 
+*/
 public class Fleet extends Actor {
 
 	private OrbitalBody destination;
@@ -30,9 +35,7 @@ public class Fleet extends Actor {
 	private int fleetGalacticTravelSpeed = 50;
 	private int fleetSectorTravelSpeed;
 	private OrbitalBody location;
-	private String name;
 	private Player playerAssignment;
-	private int ships[];
 	public Ship m_Ship;
 	public float percentTravelled = 0f;
 	private Sector sectorDestination;
@@ -49,14 +52,12 @@ public class Fleet extends Actor {
 
 	
 	/**
-	 * Create fleet with orbital body location, and array of ships
+	 * Create fleet with orbital body location.
 	 * @param loc
-	 * @param ship
 	 */
-	public Fleet(OrbitalBody loc, int ship[]) {
+	public Fleet(OrbitalBody loc) {
 		super();
 		setLocation(loc);
-		this.ships = ship;
 		shipMap = new HashMap<Ship, Integer>();
 		this.setSize(10, 10);
 		//System.out.println("New fleet created at " + location.getName());
@@ -71,20 +72,17 @@ public class Fleet extends Actor {
 	}
 
 	public int getFleetGalacticTravelSpeed() {
-		return 0;
+		return fleetGalacticTravelSpeed;
 	}
 
 	public int getFleetSectorTravelSpeed() {
-		return 0;
+		return fleetSectorTravelSpeed;
 	}
 
 	public OrbitalBody getLocation() {
 		return location;
 	}
 
-	public String getName() {
-		return "";
-	}
 
 	/**
 	 * Return player that owns fleet
@@ -154,9 +152,7 @@ public class Fleet extends Actor {
 						+ (sectorLocation.getHeight() / 2) - (getHeight() / 2));
 
 			}
-			// TODO add a totalDistance variable so this calculation doesn't
-			// have to
-			// run constantly
+			
 			else {
 				percentTravelled = (float) distanceToDestination
 						/ (float) distance;
@@ -164,12 +160,10 @@ public class Fleet extends Actor {
 				float dify = sectorLocation.getY() - sectorDestination.getY();
 				// TODO make everything have a getCenterX() and setCenter() so
 				// we don't have to do this...
-				this.setX(sectorDestination.getX()
-						+ (sectorDestination.getWidth() / 2) - (getWidth() / 2)
+				this.setX(sectorDestination.getX(Align.center) - (getWidth() / 2)
 						+ (difx * percentTravelled));
-				this.setY(sectorDestination.getY()
-						+ (sectorDestination.getHeight() / 2)
-						- (getHeight() / 2) + (dify * percentTravelled));
+				this.setY(sectorDestination.getY(Align.center)- (getHeight() / 2) 
+						+ (dify * percentTravelled));
 			}
 		}
 
@@ -240,6 +234,7 @@ public class Fleet extends Actor {
 		batch.setColor(Color.WHITE);
 
 	}
+	
 	public void act(float time){
 		angle += time/3;
 	}
