@@ -1,30 +1,36 @@
 package se300.destinytactics.game.mapgen;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 import se300.destinytactics.GameScene;
-import se300.destinytactics.ui.Drawable;
 import se300.destinytactics.game.mapgen.Sector;
 
 /**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:49:02 PM
+ * 
+* <h1>Galaxy Object</h1>
+* Creating a galaxy object generates a world for the game to use.
+* 
+ * @author Chris
+* @version 1.0
+* @since   2014-11-12
+ *
  */
 public class Galaxy {
 
-	private Quadtree map;
 	private String name;
 	public Sector sectors[];
 	private int sizeY;
 	private int sizeX;
 	private int numSystems;
 	public Sector m_Sector;
-	public Quadtree m_Quadtree;
 	public GameScene thisgame;
 	public int minSpacing = 75;
 
+	/**
+	 * Generate a new galaxy.
+	 * @param x
+	 * @param y
+	 * @param n
+	 * @param thisgame
+	 */
 	public Galaxy(int x, int y, int n, GameScene thisgame) {
 
 		this.thisgame = thisgame;
@@ -34,7 +40,6 @@ public class Galaxy {
 
 		sectors = new Sector[numSystems];
 		name = Names.newName();
-		// Sector.setGalaxy(this);
 
 		for (int i = 0; i < numSystems; i++) {
 			boolean placeFree = false;
@@ -44,6 +49,7 @@ public class Galaxy {
 				temp = new Sector(this);
 
 				placeFree = true;
+				//Generate all sectors and place them in an array.
 				for (int j = 0; j < sectors.length; j++) {
 					if (sectors[j] == null)
 						break;
@@ -58,6 +64,7 @@ public class Galaxy {
 		}
 	}
 
+	
 	public int getGalaxyWidth() {
 
 		return sizeX;
@@ -78,11 +85,4 @@ public class Galaxy {
 
 	}
 
-	/**
-	 * 
-	 * @param screenRect
-	 */
-	public ArrayList<Drawable> getSectorsOnScreen(Rectangle screenRect) {
-		return null;
-	}
-}// end Galaxy
+}

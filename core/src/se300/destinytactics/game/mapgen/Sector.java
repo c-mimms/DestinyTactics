@@ -23,26 +23,22 @@ import se300.destinytactics.GameScene;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.orbitalbodies.Station;
-import se300.destinytactics.ui.Button;
 import se300.destinytactics.ui.ToolTip;
 
+
 /**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:49:15 PM
- */
+* <h1>Sector</h1>
+* Object to instantiate sectors with random planets, and interact with the sector objects.
+* <p>
+*
+* @author  Chris Mimms
+* @version 1.0
+* @since   2014-11-12
+*/
 public class Sector extends Actor {
 
-	// Old variables, clean these
-	public static int test;
-	public Galaxy galaxy;
-	private int controlState;
-	private int numBodies;
-	private String name;
-	public OrbitalBody bodyList[];
-	private int posX, posY;
-
-	public Button m_Button;
+	public static final double EDGE_EXCLUSION = 60;
+	public static final int SPRITE_SIZE = 14;
 
 	// TODO Remove after player color array is created
 	private static Texture sprite1 = new Texture(
@@ -59,13 +55,16 @@ public class Sector extends Actor {
 	public static Texture sunTypes[];
 
 	// New variables
-	public static final double EDGE_EXCLUSION = 60;
-	public static final int SPRITE_SIZE = 14;
+	private String name;
+	public OrbitalBody bodyList[];
+	private int posX, posY;
 	public int sunType;
 	public float sunRotation;
 	public int padding = 50;
 	public boolean hovering = false;
-	public int orig_posX, orig_posY;
+	public Galaxy galaxy;
+	private int controlState;
+	private int numBodies;
 
 	// ToolTip
 	public ToolTip toolTip;
@@ -83,9 +82,9 @@ public class Sector extends Actor {
 		this.sunType = Utility.random.nextInt(6);
 		this.sunRotation = Utility.random.nextFloat() * 360;
 		controlState = 0;
-		numBodies = (int) (Math.random() * 15) + 1;
+		numBodies = (int) (Utility.random.nextDouble() * 15) + 1;
 		bodyList = new OrbitalBody[numBodies];
-		posX = (int) (EDGE_EXCLUSION + (Math.random() * (galaxy
+		posX = (int) (EDGE_EXCLUSION + (Utility.random.nextDouble() * (galaxy
 				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
 		posY = (int) (GameScene.SCREEN_HEIGHT / 5 + padding + (Utility.random
 				.nextInt((GameScene.SCREEN_HEIGHT - GameScene.SCREEN_HEIGHT
@@ -98,14 +97,13 @@ public class Sector extends Actor {
 		setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
 		setX(posX);
 		setY(posY);
-		orig_posX = posX;
-		orig_posY = posY;
 
 		name = Names.newName();
 		
 		double stationChance = 0.2;
+		//Generate planets
 		for (int i = 0; i < numBodies; i++) {
-			if (stationChance > Math.random()) {
+			if (stationChance > Utility.random.nextDouble()) {
 				bodyList[i] = new Station(i, this);
 				stationChance /= 10;
 			} else {
@@ -135,8 +133,6 @@ public class Sector extends Actor {
 
 		});
 
-		// ToolTip
-
 	}
 
 	/**
@@ -153,25 +149,21 @@ public class Sector extends Actor {
 				Actions.fadeIn(0.4f, Interpolation.fade)));
 
 		hovering = true;
-		// myCircle.setX(getX() + this.getOriginX() - (myCircle.getWidth() /
-		// 2));
-		// myCircle.setY(getY() + this.getOriginY() - (myCircle.getHeight() /
-		// 2));
 	}
 
 	/**
 	 * Run when mouse hovers off sector
 	 */
 	public void hoverOff() {
-		//System.out.println("Hovering off " + name);
 		if(toolTip != null)
 			toolTip.remove();
-		toolTip = new ToolTip(name, this); //to updated tooltip
 		hovering = false;
-		//this.getStage().mouseMoved(0, 200);
 
 	}
 
+	/**
+	 * Switch view to selected sector.
+	 */
 	public void switchView() {
 		controlState = 1;
 		this.getStage().touchDown(20, 20, 0, Input.Buttons.LEFT);
@@ -188,9 +180,10 @@ public class Sector extends Actor {
 		return name;
 	}
 
-	public void act() {
-	}
-
+	/**
+	 * Get position as a Point object.
+	 * @return Point object representing position.
+	 */
 	public Point getPos() {
 		return new Point(posX, posY);
 	}
@@ -203,22 +196,27 @@ public class Sector extends Actor {
 		return posY;
 	}
 	
-	public int getOrigXPos() {
-		return orig_posX;
-	}
-
-	public int getOrigYPos() {
-		return orig_posY;
-	}
-
+	/**
+	 * Get number of orbital bodies in the sector.
+	 * @return
+	 */
 	public int getNumBodies() {
 		return numBodies;
 	}
 
+	/**
+	 * Get distance between this sector and another sector, relative to galaxy size.
+	 * @param sector 
+	 * @return Distance between sectors.
+	 */
 	public int getDistance(Sector sector) {
 		return (int) sector.getPos().distance(getPos());
 	}
 
+	/**
+	 * Returns 1 if sector is owned by a player.
+	 * @return
+	 */
 	public int getState() {
 		return controlState;
 	}
@@ -238,8 +236,6 @@ public class Sector extends Actor {
 
 	public void act(float time) {
 		super.act(time);
-		//this.getStage().mouseMoved(0, 1);
-		//this.getStage().touchUp(5, 5, 1, 1);
 		myCircle.rotateBy(time * 3);
 	}
 }// end Sector

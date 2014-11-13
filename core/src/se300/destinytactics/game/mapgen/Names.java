@@ -4,10 +4,14 @@ import java.io.File;
 
 
 /**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:49:09 PM
- */
+* <h1>Names</h1>
+* Class to assign names to any object that needs a name.
+* <p>
+*
+* @author  Chris Mimms
+* @version 1.0
+* @since   2014-11-12
+*/
 public class Names {
 
 	public static String[] names = {"Randomeous Nameous", "Steveous Jobeous", "Totz Notz Randomz", "Cornify", "Lil' Spoon", "Sauce Boas",
@@ -15,32 +19,19 @@ public class Names {
 			"The Pwnzershriek", "East Germany", "The Snack that Smiles Back", "Strong Steps", "Rolling Stoned"
 	};
 
-	public Names(){
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-	public void close(){
-
-	}
-
-	public String generateName(){
-		return "";
-	}
-
-	public String getName(){
-		return "";
-	}
 
 	/**
-	 * 
+	 * Load names from a file (unused)
 	 * @param f
 	 */
 	public void loadFile(File f){
 
 	}
 
+	/**
+	 * Returns a name from the list of names.
+	 * @return
+	 */
 	public static String newName() {
 		String pick = names[Utility.random.nextInt(names.length)];
 		return pick;
