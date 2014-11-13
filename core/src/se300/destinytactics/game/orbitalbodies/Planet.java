@@ -20,6 +20,10 @@ import se300.destinytactics.game.mapgen.Utility;
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:11 PM
+ * 
+ * Planet extends OrbitalBody  implements canBuildFleets, canBuildDefense
+ * 
+ * Planets have mines and shipyards.
  */
 public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefense {
 
@@ -45,6 +49,11 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	
 	public int ships[] = new int[7];
 
+	/**
+	 * Constructor uses parent radius and sector
+	 * @param radius
+	 * @param sector
+	 */
 	public Planet(int radius, Sector sector){
 
 		super(radius,sector);
@@ -57,7 +66,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 		//shipyard variable init
 		shipyardLevel = 0;
-		shipyardSize = 4000;
+		shipyardSize = 0;
 		shipyardCost = 25;
 
 		
@@ -67,10 +76,13 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		setX(XEDGEEXCLUSION-150*orbitRadius);
 	}
 
+	
+	@Override
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 	
+	@Override
 	public int getType(){
 		return type;
 	}
@@ -81,6 +93,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 	}
 	
+	@Override
 	public void endTurn(){
 		if(controlState == 1 && owner != null){
 			//System.out.println("Resources: " + resource + "  Efficiency  : " + miningEfficiency);
@@ -93,13 +106,6 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 
 	
 	//Methods below relate to mining and resource acquisition
-	/**
-	 * Mining level increased by 1. Resources used. Mine cost increases.
-	 * Resource multiplier increases.
-	 * 
-	 * @param
-	 * @return
-	 */
 	@Override
 	public void mineLevelUp() {
 		if (mineCost < owner.getResource()) {
@@ -115,20 +121,12 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 	}
 
-	/**
-	 * Gets mine level
-	 * 
-	 * @return mineLevel
-	 */
+	@Override
 	public Integer getMineLevel() {
 		return mineLevel;
 	}
 
-	/**
-	 * Gets mine cost
-	 * 
-	 * @return mineCost
-	 */
+	@Override
 	public Integer getMineCost() {
 		return mineCost;
 	}
@@ -151,6 +149,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		return shipyardSize;
 	}
 	
+	@Override
 	public int getShipyardCost() {
 		return shipyardCost;
 	}
@@ -167,10 +166,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 	}
 	
-	/**
-	 * Adds ship to build queue if shipyard has enough space
-	 * @param ship
-	 */
+	@Override
 	public void addToQueue(Ship ship) {
 		if(ship.getSpaceToBuild() < shipyardSize) {
 			buildQueue.add(ship);
@@ -181,9 +177,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 	}
 	
-	/**
-	 * Keeps track of turns until completion, removes them when done
-	 */
+	@Override
 	public void building() {
 		for(int i = 0; i < buildQueue.size(); i++){
 			buildQueue.get(i).decrementBuildTime();
@@ -194,10 +188,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 	}
 	
-	/**
-	 * Take ships out of the build queue, puts them in orbit and returns space to shipyard
-	 * @param ship
-	 */
+	@Override
 	public void toFleet(Ship ship) {
 		System.out.println("Ship to fleet");
 		if(this.m_Fleet == null){
@@ -205,23 +196,18 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 		m_Fleet.addShip(ship);
 		
-		System.out.println("Shipyard Size before removal: " + shipyardSize);
 		shipyardSize += ship.getSpaceToBuild();
-		System.out.println("Shipyard size after removal: " + shipyardSize);
 		buildQueue.remove(ship);
 	}
 	
-	/**
-	 * gets size of build queue
-	 * @return buildQueue.size();
-	 */
+	
 	@Override
 	public int getBuildQueueSize() {
 		return buildQueue.size();
 	}
 	
 	/**
-	 * records number of each type of ship in queue
+	 * Records number of each type of ship in queue
 	 */
 	public void addShipOrdered(Ship ship) {
 		if(ship.getShipType() == "Fighter") {
@@ -241,19 +227,9 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		}
 	}
 	
-	/**
-	 * Gets ships[x]
-	 */
+	@Override
 	public int getShips(int x) {
 		return ships[x];
 	}
-
-	@Override
-	public void getMiningEfficiency() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 }//end Planet

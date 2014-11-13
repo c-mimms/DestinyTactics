@@ -7,9 +7,16 @@ import se300.destinytactics.game.mapgen.Sector;
  * @author John
  * @version 1.0
  * @created 10-Oct-2014 5:49:08 PM
+ * 
+ * MinorStar extends OrbitalBody. Currently not used.
  */
 public class MinorStar extends OrbitalBody {
 
+	/**
+	 * Constructor uses parent radius and sector
+	 * @param radius
+	 * @param sector
+	 */
 	public MinorStar(int radius, Sector sector){
 		super(radius,sector);
 	}
@@ -89,6 +96,18 @@ public class MinorStar extends OrbitalBody {
 	public void toFleet(Ship ship) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getBuildQueueSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getShips(int x) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }//end Minor Star
