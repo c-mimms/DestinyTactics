@@ -2,16 +2,13 @@ package se300.destinytactics.game.scenes;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.ui.SectorLabel;
 import se300.destinytactics.ui.SectorLines;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -20,10 +17,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+* <h1>Galaxy Map</h1>
+* Modal window with a map of the galaxy that can be pulled up at any time.
+* 
+* <p>
+* Not currently used.
+*
+* @author  Chris Mimms
+* @version 0.1
+* @since   2014-11-12
+* @deprecated
+*/
 public class GalaxyMap extends Window {
 
+	public static final int PARALLAX = 10;
+	
+	
 	public Image gridOverlay;
 	public GameScene myGame;
 	public Skin skin;
@@ -33,8 +44,7 @@ public class GalaxyMap extends Window {
 	private static Texture sprite1 = new Texture(
 			Gdx.files.internal("realorbitalbody/SectorIcon.png"), true);
 
-	public static final int PARALLAX = 10;
-
+	//Nearly exact copy of GalaxyScene, for now.
 	public GalaxyMap(Skin skin, GameScene myGame) {
 
 		super("Galaxy", skin);
@@ -96,6 +106,10 @@ public class GalaxyMap extends Window {
 
 	}
 
+	/**
+	 * Change map to show selected sector.
+	 * @param copy
+	 */
 	protected void switchSector(Sector copy) {
 		// TODO Auto-generated method stub
 
@@ -118,8 +132,8 @@ public class GalaxyMap extends Window {
 			if (myGame.m_Galaxy.sectors[i] != null) {
 				Sector sector = myGame.m_Galaxy.sectors[i];
 				SectorLabel sectorName = sectorNameArray.get(i);
-				sector.setX(sector.orig_posX + (-movex * PARALLAX / 3));
-				sector.setY(sector.orig_posY + (-movey * PARALLAX / 3));
+				sector.setX(sector.getXPos() + (-movex * PARALLAX / 3));
+				sector.setY(sector.getYPos() + (-movey * PARALLAX / 3));
 				sectorName
 						.setX(sectorName.getOrig_posX() + (-movex * PARALLAX));
 				sectorName
