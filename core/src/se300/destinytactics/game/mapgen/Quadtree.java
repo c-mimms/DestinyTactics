@@ -6,10 +6,16 @@ import java.util.ArrayList;
 
 
 /**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:49:13 PM
- */
+* <h1>Quadtree</h1>
+* Tree data structure to store the galaxy efficiently.
+* <p>
+* This class is currently unused.
+*
+* @author  Chris Mimms
+* @version 1.0
+* @since   2014-11-12
+* @deprecated
+*/
 public class Quadtree {
 
 	private int MAX_OBJECTS = 4;

@@ -1,11 +1,20 @@
 package se300.destinytactics.game.mapgen;
 
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
+
+/**
+* <h1>Asset Loader</h1>
+* Class to preload all the assets required by the game.
+* <p>
+*
+* @author  Chris Mimms
+* @version 1.0
+* @since   2014-11-12
+*/
 public class Assets {
 	public static AssetManager manager = new AssetManager();
 
@@ -14,6 +23,7 @@ public class Assets {
 	 */
 	public static void queueLoading() {
 
+		//Create parameter to use mipmaps when loading images
 		TextureLoader.TextureParameter mipmaps = new TextureLoader.TextureParameter();
 		mipmaps.minFilter = TextureFilter.Linear;
 		mipmaps.genMipMaps = true;
@@ -46,9 +56,9 @@ public class Assets {
 	}
 
 	/**
-	 * Return array of planet types
+	 * Returns array of planet images
 	 * 
-	 * @return
+	 * @return All loaded planet images.
 	 */
 	public static Texture[] getPlanetTypes() {
 		String spriteLib = "realorbitalbody";
@@ -72,7 +82,7 @@ public class Assets {
 	/**
 	 * Return sun texture array
 	 * 
-	 * @return
+	 * @return All loaded sun images.
 	 */
 	public static Texture[] getSunTypes() {
 		String imagePath = "images/orbitalbodies/suns";
@@ -89,11 +99,16 @@ public class Assets {
 	/**
 	 * Loads assets, returns true when assets are loaded
 	 * 
-	 * @return
+	 * @return True if all assets have finished loading.
 	 */
+	
 	public static boolean update() {
 		return manager.update();
 	}
+	
+	/**
+	 * Blocks program execution until all assets are loaded.
+	 */
 	public static void finish() {
 		 manager.finishLoading();
 	}

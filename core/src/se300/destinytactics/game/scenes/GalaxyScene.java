@@ -166,8 +166,8 @@ public class GalaxyScene extends Stage {
 			if (myGame.m_Galaxy.sectors[i] != null) {
 				Sector sector = myGame.m_Galaxy.sectors[i];
 				SectorLabel sectorName = sectorNameArray.get(i);
-				sector.setX(sector.orig_posX + (-movex * PARALLAX / 3));
-				sector.setY(sector.orig_posY + (-movey * PARALLAX / 3));
+				sector.setX(sector.getXPos() + (-movex * PARALLAX / 3));
+				sector.setY(sector.getYPos() + (-movey * PARALLAX / 3));
 				sectorName.setX(sectorName.getOrig_posX() + (-movex * PARALLAX));
 				sectorName.setY(sectorName.getOrig_posY() + (-movey * PARALLAX));
 			}
