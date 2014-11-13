@@ -11,6 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * 
+ * @author Mike
+ * 
+ * SectorScene extends Stage
+ * This class builds the intermediate view between galaxy and planet.
+ */
 public class SectorScene extends Stage {
 
 	public GameScene myGame;
@@ -23,6 +30,12 @@ public class SectorScene extends Stage {
 	static Texture bgimg = new Texture("StarfieldBackground.jpg");
 	static Image background = new Image(bgimg);
 
+	/**
+	 * @param vp
+	 * @param padding
+	 * @param skin
+	 * @param myGame
+	 */
 	public SectorScene(Viewport vp, int padding, Skin skin,
 			final GameScene myGame) {
 
@@ -33,6 +46,11 @@ public class SectorScene extends Stage {
 
 	}
 
+	/**
+	 * Change sector takes sector as a parameter.
+	 * Builds the stage based off sector input.
+	 * @param nextSector
+	 */
 	public void changeSector(Sector nextSector) {
 
 		curSector = nextSector;

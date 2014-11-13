@@ -18,6 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * @author Mike
+ *
+ * InfoBar extends Stage
+ * Creates area on bottom edge of screen for high level info.
+ */
 public class InfoBar extends Stage{
 
 	public GameScene myGame;
@@ -30,7 +36,12 @@ public class InfoBar extends Stage{
 	int buttonPadding = 5;
 	
 	
-	
+	/**
+	 * @param vp
+	 * @param padding
+	 * @param skin
+	 * @param myGame
+	 */
 	public InfoBar(Viewport vp, int padding, Skin skin, final GameScene myGame){
 		super(vp);
 		this.myGame = myGame;
@@ -131,20 +142,23 @@ public class InfoBar extends Stage{
 		
 	}
 	
+	/**
+	 * Sets name for the sector label
+	 * @param name
+	 */
 	public void setSector(String name){
 		sectorLabel.setText(name);
 	}
+	
+	
 	public void act(){
 		if(myGame.sectorView){
 			setSector(myGame.curSector.getName());
 		}
 		playerResources.setText("" + myGame.localPlayer.getResource());
 	}
-	
-		
-		
-		
-	}
+			
+}
 		
 
 

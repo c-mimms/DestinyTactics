@@ -84,5 +84,4 @@ public class Galaxy {
 	public void finalize() throws Throwable {
 
 	}
-
-}
+}// end Galaxy

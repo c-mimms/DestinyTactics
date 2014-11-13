@@ -14,6 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * 
+ * @author Shannon
+ * OrbitalBodyUI extends Stage
+ * Combines all elements of management UI into one.
+ */
 public class OrbitalBodyUI extends Stage {
 
 	public GameScene myGame;
@@ -26,8 +32,13 @@ public class OrbitalBodyUI extends Stage {
 	int buttonPadding = 5;
 	public GalaxyMap map;
 
+	/**
+	 * @param vp
+	 * @param padding
+	 * @param skin
+	 * @param myGame
+	 */
 	public OrbitalBodyUI(Viewport vp, int padding, Skin skin, final GameScene myGame) {
-
 		super(vp);
 		this.myGame = myGame;
 		edgePadding = padding;
@@ -93,6 +104,10 @@ public class OrbitalBodyUI extends Stage {
 
 	}
 
+	/**
+	 * Switches between interfaces as requested.
+	 * @param formType
+	 */
 	public void setManagementInterface(String formType) {
 		Cell cell = getFormCell();
 
@@ -110,6 +125,10 @@ public class OrbitalBodyUI extends Stage {
 	}
 
 	// Private Methods
+	/**
+	 * Gets current interface form
+	 * @return cell
+	 */
 	private Cell getFormCell() {
 		Cell cell;
 

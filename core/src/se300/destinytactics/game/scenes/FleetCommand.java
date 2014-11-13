@@ -24,6 +24,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * 
+ * @author Shannon
+ * 
+ * FleetCommand creates a UI for all things fleet.
+ *
+ */
 public class FleetCommand {
 	private Table container, overviewWrapper, moveFormWrapper, buildFormWrapper, attackFormWrapper, overview, moveForm, buildForm, attackForm;
 	private TextButton buildButton, moveButton, attackButton;
@@ -36,6 +43,13 @@ public class FleetCommand {
 	
 	
 	// Public Methods
+	/**
+	 * Constructor takes skin and mygame as parameters. 
+	 * Combines Overview, Build, Move, and Attack forms. 
+	 * Buttons switch between all.
+	 * @param skin
+	 * @param myGame
+	 */
 	public FleetCommand(Skin skin,  GameScene myGame) {
 		this.skin = skin;
 		this.myGame = myGame;
@@ -88,26 +102,50 @@ public class FleetCommand {
 		buildButton.toggle();
 	}
 	
+	/**
+	 * Gets fleet command container
+	 * @return container
+	 */
 	public Table getFleetCommand() {
 		return container;
 	}
 	
+	/**
+	 * Gets overviewWrapper
+	 * @return overviewWrapper
+	 */
 	public Table getOverview() {
 		return overviewWrapper;
 	}
 	
+	/**
+	 * Gets moveFormWrapper
+	 * @return moveFormWrapper
+	 */
 	public Table getMoveForm() {
 		return moveFormWrapper;
 	}
 	
+	/**
+	 * Gets buildFormWrapper
+	 * @return buildFormWrapper
+	 */
 	public Table getBuildForm() {
 		return buildFormWrapper;
 	}
 	
+	/**
+	 * Gets attackFormWrapper
+	 * @return attackFormWrapper
+	 */
 	public Table getAttackForm() {
 		return attackFormWrapper;
 	}
 	
+	/**
+	 * Switches out Move, Build, and Attack forms
+	 * @param formType
+	 */
 	public void setForm(String formType) {
 		Cell cell = getFormCell();
 		
@@ -127,6 +165,10 @@ public class FleetCommand {
 	}
 	
 	// Private Methods
+	/**
+	 * Gets current form
+	 * @return cell
+	 */
 	private Cell getFormCell() {
 		Cell cell;
 		Table fc = getFleetCommand();
@@ -142,7 +184,10 @@ public class FleetCommand {
 		return cell;
 	}
 	
-	
+	/**
+	 * Creates overview of fleet command. 
+	 * Displays number of fleets in orbit and in the build queue
+	 */
 	private void createOverview() {
 		overviewWrapper = new Table(skin);
 		overview = new Table(skin);
@@ -203,6 +248,9 @@ public class FleetCommand {
 		overviewWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
 	
+	/**
+	 * Creates move form. Takes strings as input.
+	 */
 	private void createMoveForm() {
 		moveFormWrapper = new Table(skin);
 		moveForm = new Table(skin);
@@ -269,6 +317,9 @@ public class FleetCommand {
 		moveFormWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
 	
+	/**
+	 * Creates build form. Takes strings as input.
+	 */
 	private void createBuildForm() {
 		buildFormWrapper = new Table(skin);
 		buildForm = new Table(skin);
@@ -387,6 +438,9 @@ public class FleetCommand {
 		buildFormWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
 	
+	/**
+	 * Creates attack form. Takes strings as input.
+	 */
 	private void createAttackForm() {
 		attackFormWrapper = new Table(skin);
 		attackForm = new Table(skin);

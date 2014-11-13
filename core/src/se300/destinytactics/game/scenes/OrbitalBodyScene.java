@@ -11,6 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * 
+ * @author Mike
+ * 
+ * OrbitalBodyScene extends Stage
+ * This class builds the planet view.
+ */
 public class OrbitalBodyScene extends Stage {
 
 	public GameScene myGame;
@@ -22,6 +29,12 @@ public class OrbitalBodyScene extends Stage {
 	static Texture bgimg = new Texture("StarfieldBackground.jpg");
 	static Image background = new Image(bgimg);
 
+	/**
+	 * @param vp
+	 * @param padding
+	 * @param skin
+	 * @param myGame
+	 */
 	public OrbitalBodyScene(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
 		super(vp);
@@ -31,6 +44,11 @@ public class OrbitalBodyScene extends Stage {
 		
 	}
 	
+	/**
+	 * Takes orbitalBody as a parameter. 
+	 * Updates UI based on OB.
+	 * @param nextOrbitalBody
+	 */
 	public void changePlanet(OrbitalBody nextOrbitalBody) {
 
 		// System.out.println("Go to MyGame Method");

@@ -14,12 +14,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * @author Shannon
+ * Defense creates a UI to build defenses
+ */
 public class Defense {
 	private Table container, overviewWrapper, moveFormWrapper, buildFormWrapper, attackFormWrapper, overview, moveForm, buildForm, attackForm;
 	private TextButton buildButton, moveButton, attackButton;
 	public Skin skin;
 	
 	// Public Methods
+	/**
+	 * Constructor takes skin as a parameter. Combines defense overview and build form.
+	 * @param skin
+	 */
 	public Defense(Skin skin) {
 		this.skin = skin;
 		
@@ -39,18 +47,33 @@ public class Defense {
 		container.setFillParent(true);
 	}
 	
+	/**
+	 * Gets defense container
+	 * @return container
+	 */
 	public Table getDefense() {
 		return container;
 	}
 	
+	/**
+	 * Gets overviewWrapper
+	 * @return overviewWrapper
+	 */
 	public Table getOverview() {
 		return overviewWrapper;
 	}
 	
+	/**
+	 * Gets buildFormWrapper
+	 * @return buildFormWrapper
+	 */
 	public Table getBuildForm() {
 		return buildFormWrapper;
 	}
 	
+	/**
+	 * Creates the overview of defense UI. Displays current defenses
+	 */
 	private void createOverview() {
 		overviewWrapper = new Table(skin);
 		overview = new Table(skin);
@@ -95,6 +118,9 @@ public class Defense {
 		overviewWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
 	
+	/**
+	 * Creates the build defense form. Accepts string inputs.
+	 */
 	private void createBuildForm() {
 		buildFormWrapper = new Table(skin);
 		buildForm = new Table(skin);

@@ -14,6 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * 
+ * @author Shannon
+ *
+ * Infrastructure creates UI for planet buildings.
+ */
 public class Infrastructure {
 	public GameScene myGame;
 	private Table container, overviewWrapper, buildFormWrapper, overview,
@@ -23,6 +29,10 @@ public class Infrastructure {
 	public Label mineStuff, gasStuff, shipyardStuff;
 
 	// Public Methods
+	/**
+	 * Constructor takes skin and myGame as parameters. 
+	 * Combines overview and buildform
+	 */
 	public Infrastructure(Skin skin, final GameScene myGame) {
 		this.skin = skin;
 		this.myGame = myGame;
@@ -49,18 +59,33 @@ public class Infrastructure {
 
 	}
 
+	/**
+	 * Gets infrastructure UI.
+	 * @return container
+	 */
 	public Table getInfrastructure() {
 		return container;
 	}
 
+	/**
+	 * Gets overviewWrapper
+	 * @return overviewWrapper
+	 */
 	public Table getOverview() {
 		return overviewWrapper;
 	}
-
+	
+	/**
+	 * Gets buildFormWrapper
+	 * @return buildFormWrapper
+	 */
 	public Table getBuildForm() {
 		return buildFormWrapper;
 	}
 
+	/**
+	 * Creates infrastructure overview. Displays Level, Cost, and other stuff
+	 */
 	private void createOverview() {
 		overviewWrapper = new Table(skin);
 		overview = new Table(skin);
@@ -99,6 +124,9 @@ public class Infrastructure {
 		overviewWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3 / 10);
 	}
 
+	/**
+	 * Creates build form. Takes strings as input.
+	 */
 	private void createBuildForm() {
 		buildFormWrapper = new Table(skin);
 		buildForm = new Table(skin);

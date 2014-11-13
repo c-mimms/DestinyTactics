@@ -3,6 +3,9 @@ package se300.destinytactics.ui;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * 
+ */
 public class SectorLabel extends Label{
 	
 	private float orig_posX, orig_posY;

@@ -14,6 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * 
+ * @author Mike
+ *
+ * Adds UI along the top edge of the screen. 
+ */
 public class NavBar extends Stage {
 
 	public GameScene myGame;
@@ -25,6 +31,12 @@ public class NavBar extends Stage {
 	int buttonPadding = 5;
 	TextButton backButton_Sector,backButton_Galaxy;
 
+	/**
+	 * @param vp
+	 * @param padding
+	 * @param skin
+	 * @param myGame
+	 */
 	public NavBar(Viewport vp, int padding, Skin skin, final GameScene myGame) {
 
 		// Call super constructor
@@ -113,6 +125,9 @@ public class NavBar extends Stage {
 		this.addActor(backButton_Galaxy);
 	}
 
+	/**
+	 * Sets "name" of label in center top.
+	 */
 	public void setName(String name) {
 		nameLabel.setText(name);
 	}
