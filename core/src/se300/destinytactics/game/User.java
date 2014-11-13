@@ -3,10 +3,17 @@ package se300.destinytactics.game;
 
 
 /**
- * @author John
- * @version 1.0
- * @created 10-Oct-2014 5:49:20 PM
- */
+* <h1>User</h1>
+* 
+* User in the current game.
+* 
+* Unused
+*
+* @author  Team Gaurdian
+* @version 0.01
+* @since   2014-11-12
+* @deprecated
+*/
 public class User {
 
 	public Player m_Player;
