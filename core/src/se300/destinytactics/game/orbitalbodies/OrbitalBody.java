@@ -2,12 +2,8 @@ package se300.destinytactics.game.orbitalbodies;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
-import java.util.ArrayList;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -24,8 +20,6 @@ import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.mapgen.Assets;
-import se300.destinytactics.game.mapgen.Galaxy;
-import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.ui.ToolTip;

@@ -25,7 +25,7 @@ public class Utility {
 	 * Set the random seed.
 	 * @param seed
 	 */
-	public void setSeed(long seed){
+	public static void setSeed(long seed){
 		Utility.seed = seed;
 		random.setSeed(seed);
 	}
@@ -34,7 +34,7 @@ public class Utility {
 	 * Get random seed.
 	 * @return Seed used by random generator.
 	 */
-	public long getSeed(){
+	public static long getSeed(){
 		return seed;
 	}
 	 

@@ -3,6 +3,7 @@ package se300.destinytactics;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.GalaxyScene;
@@ -82,8 +83,10 @@ public class GameScene implements Screen {
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		// Generate the galaxy model. Moved this to DestinyTactics so it is
-		// preloaded
+		//Testing seed
+		Utility.setSeed(1);
+		
+		//Generate the Galaxy
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
 
 		// Create galaxy stage and constants UIs
