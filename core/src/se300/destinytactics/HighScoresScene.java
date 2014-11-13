@@ -16,6 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * 
+ * @author Chris Shannon
+ * Implements Screen in the LibGDX framework. 
+ * Displays the list of highscores and a back button that goes to the main menu.
+ */
 public class HighScoresScene implements Screen{
 	
 	public Stage highscoreStage;
@@ -30,6 +36,11 @@ public class HighScoresScene implements Screen{
 	public Image logo, background;
 	public TextButton menuButton;
 	
+	/**
+	 * HighScoresScene constructor. Builds the highscores table and button.
+	 * @param game  Parent game class that contains this screen.
+	 * @param skin  Skin to use for the screen.
+	 */
 	public HighScoresScene(DestinyTactics game, Skin skin){
 		this.game = game;
 		
@@ -78,16 +89,23 @@ public class HighScoresScene implements Screen{
 		scoreStage.addActor(background);
 		scoreStage.addActor(menu);
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Renders the actors loaded in the viewed stage and 
+	 * calls the act methods (bubbles down from the stages to the actors). 
+	 */
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		scoreStage.act();
 		scoreStage.draw();
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Called every tick. Resizes the dimensions of the stage to the current app window size.
+	 */
 	public void resize(int width, int height) {
 		scoreStage.getViewport().update(width, height, false);	
 	}
@@ -113,7 +131,10 @@ public class HighScoresScene implements Screen{
 	public void dispose() {
 		scoreStage.dispose();
 	}
-
+	
+	/**
+	 * Calls the goMenu method in DestinyTactics object to switch screens.
+	 */
 	public void goMenu() {
 		game.goMenu();
 	}

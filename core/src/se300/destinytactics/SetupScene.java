@@ -5,10 +5,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * 
+ * @author Team Guardian
+ * Implements Screen from the LibGDX framework. 
+ * Displays the UI for creating a new game. 
+ */
 public class SetupScene implements Screen{
 	
 	public Stage setupStage;
 
+	/**
+	 * SetupScene constructor. 
+	 * @param game
+	 * @param skin
+	 */
 	public SetupScene(DestinyTactics game, Skin skin){
 
 		setupStage = new Stage(new FitViewport(DestinyTactics.SCREEN_WIDTH, DestinyTactics.SCREEN_HEIGHT));

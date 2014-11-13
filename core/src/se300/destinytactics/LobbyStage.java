@@ -22,6 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * 
+ * @author Team Guardian
+ * Extends Stage in the LibGDX framework.
+ * Displays the UI for selecting and joining games. 
+ */
 public class LobbyStage extends Stage {
 
 	public MultiplayerScreen myGame;
@@ -40,7 +46,15 @@ public class LobbyStage extends Stage {
 	MessageDigest messageDigest;
 	String name, passwordHash;
 	Label status;
-
+	
+	/**
+	 * LobbyStage constructor. Builds the Lobby menu actors.
+	 * @param vp
+	 * @param padding
+	 * @param skin  Skin to use for the screen.
+	 * @param myGame  Parent game class that contains this screen.
+	 * 
+	 */
 	public LobbyStage(Viewport vp, int padding, Skin skin,
 			final MultiplayerScreen myGame) {
 
@@ -86,10 +100,17 @@ public class LobbyStage extends Stage {
 		this.addActor(background);
 		this.addActor(menu);
 	}
-
+	
+	/**
+	 * Calls the goMenu method in DestinyTactics object to switch screens.
+	 */
 	public void goMenu() {
 		myGame.goMenu();
 	}
+	
+	/**
+	 * Starts the loaded game.
+	 */
 	public void createGame() {
 		myGame.game.startGame();
 	}

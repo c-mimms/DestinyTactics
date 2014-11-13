@@ -23,6 +23,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * 
+ * @author Team Guardian
+ * Implements Screen from the LibGDX framework. 
+ * Defines game rules, generates the gameboard, and creates the three major stages and relevant sub-stages for the game.
+ * stages : [galaxyStage : First game view. Displays the galaxy map with clickable/hoverable sectors.
+ * 		     sectorStage : Second game view. Shown after clicking on a sector in the galaxyStage. Displays clickable/hoverable orbital bodies.
+ * 		     planetStage : Third game view. Shown after clicking an orbital body in the sectorStage.]
+ * sub-stages : [navBar : Displayed at the top of the view of every main stage. 
+ * 					Contains navigation and the name of the current view (i.e.: the sector name).
+ * 				 infoBar : Displayed at the bottom of the view of every main stage. 
+ * 					Contains game-wide and player-specific data (i.e. current amount of resources, score, fleet size, etc..)
+ * 				 planetUI : Shown within the planetStage. Displays fleet, defense, and infrastructure management interfaces.
+ */
 public class GameScene implements Screen {
 
 	// Constants
@@ -68,7 +82,12 @@ public class GameScene implements Screen {
 	//
 	// m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
 	// }
-
+	
+	/**
+	 * GameScene constructor. Instantiates the stages.
+	 * @param game  Parent game class that contains this screen.
+	 * @param skin  Skin to use for the screen.
+	 */
 	public GameScene(DestinyTactics game, Skin skin) {
 
 		// Keep track of the game object so we can return to main menu
@@ -124,7 +143,10 @@ public class GameScene implements Screen {
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
-
+	
+	/**
+	 * LibGDX override. Called every tick. Resizes the dimensions of the stages to the current app window size.
+	 */
 	public void resize(int width, int height) {
 		// Resize stages to fill window.
 		galaxyStage.getViewport().update(width, height, false);
@@ -133,17 +155,24 @@ public class GameScene implements Screen {
 		planetUI.getViewport().update(width, height, false);
 		navBar.getViewport().update(width, height, false);
 	}
-
+	
 	public void finalize() throws Throwable {
 
 	}
-
+	
+	/**
+	 * LibGDX override. Clears the stages from memory
+	 */
 	public void dispose() {
 		galaxyStage.dispose();
 		sectorStage.dispose();
 		planetStage.dispose();
 	}
-
+	
+	/**
+	 * Switches to the sectorStage view and loads a sector. This is called from both the galaxyStage (clicking on sector) and planetStage (navBar).
+	 * @param nextSector
+	 */
 	public void switchView(Sector nextSector) {
 
 		selectSound.play();
@@ -158,7 +187,11 @@ public class GameScene implements Screen {
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(galaxyStage);
 	}
-
+	
+	/**
+	 * Switches to the planetStage view and loads an orbital body.
+	 * @param nextOrbitalBody
+	 */
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
 
 		selectSound.play();
@@ -174,7 +207,10 @@ public class GameScene implements Screen {
 		multiplexer.addProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
 	}
-
+	
+	/**
+	 * Switches to the galaxyStage view.
+	 */
 	public void goGalaxy() {
 		planetView = false;
 		sectorView = false;
@@ -187,7 +223,10 @@ public class GameScene implements Screen {
 		multiplexer.removeProcessor(planetUI);
 		multiplexer.removeProcessor(sectorStage);
 	}
-
+	
+	/**
+	 * Switches to the sectorStage view.
+	 */
 	public void goSystem() {
 		planetView = false;
 		sectorView = true;
@@ -227,8 +266,12 @@ public class GameScene implements Screen {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Renders the actors loaded in the viewed stage and 
+	 * calls the act methods (bubbles down from the stages to the actors). 
+	 */
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 
@@ -252,11 +295,17 @@ public class GameScene implements Screen {
 		infoBar.act();
 		infoBar.draw();
 	}
-
+	
+	/**
+	 * Calls the goMenu method in DestinyTactics object to switch screens. Switches to menuScene.
+	 */
 	public void goMenu() {
 		game.goMenu();
 	}
-
+	
+	/**
+	 * Ends the player's turn.
+	 */
 	public void endTurn() {
 		galaxyStage.endTurn();
 		localPlayer.endTurn();

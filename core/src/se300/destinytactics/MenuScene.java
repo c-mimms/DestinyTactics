@@ -18,7 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-
+/**
+ * 
+ * @author Chris Shannon
+ * Implements Screen from the LibGDX framework. 
+ * Displays the main navigation menu.
+ *
+ */
 public class MenuScene implements Screen{
 	
 	public DestinyTactics game;
@@ -31,6 +37,11 @@ public class MenuScene implements Screen{
 	public Image logo, background;
 	public TextButton newGameButton, highscoreButton, quitButton, multiplayerGameButton;
 	
+	/**
+	 * MenuScene constructor. Creates the menu actors and the button click handlers.
+	 * @param game  Parent game class that contains this screen.
+	 * @param skin  Skin to use for the screen
+	 */
 	public MenuScene(DestinyTactics game, Skin skin){
 		this.game = game;
 		
@@ -108,16 +119,23 @@ public class MenuScene implements Screen{
 		menuStage.addActor(background);
 		menuStage.addActor(menu);
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Renders the actors loaded in the viewed stage and 
+	 * calls the act methods (bubbles down from the stages to the actors). 
+	 */
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		menuStage.act();
 		menuStage.draw();
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Called every tick. Resizes the dimensions of the stage to the current app window size.
+	 */
 	public void resize(int width, int height) {
 		menuStage.getViewport().update(width, height, false);	
 	}
@@ -139,19 +157,32 @@ public class MenuScene implements Screen{
 	@Override
 	public void resume() {
 	}
-
+	
 	@Override
+	/**
+	 * LibGDX override. Clears the stage from memory
+	 */
 	public void dispose() {
 		menuStage.dispose();
 	}
-
+	
+	/**
+	 * Starts the loaded game.
+	 */
 	public void startGame() {
 		game.startGame();
 	}
 	
+	/**
+	 * Calls the goMenu method in DestinyTactics object to switch screens. Switches the screen to the scoreScene.
+	 */
 	public void showScores() {
 		game.showScores();
 	}
+
+	/**
+	 * Calls the goMenu method in DestinyTactics object to switch screens. Switches the screen to the multiplayerScene.
+	 */
 	public void multiplayerSetup() {
 		game.multiplayerSetup();
 	}

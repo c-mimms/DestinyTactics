@@ -12,6 +12,20 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * 
+ * @author Chris Shannon
+ * Extends Game in the LibGDX framework.
+ * This is the main controller interface for the game. It creates screen objects for every different 
+ * view and toggles between active and inactive screen.
+ * screens : [ gameScreen : Houses the actual game UI and sub objects, 
+ * 			  menuScreen : Displays the main menu (default upon app init), 
+ * 			  scoreScreen : Displays the highscore list, 
+ * 			  setupScreen : Houses the game setup form. Creates a new game and redirects to the gameScreen, 
+ * 			  multiplayerScreen : Displays the multiplayer lobby and 
+ * 				registration/login form (will show form if not logged in)
+ * ]
+ */
 public class DestinyTactics extends Game {
 
 	public static final int SCREEN_WIDTH = 1024;
@@ -29,6 +43,9 @@ public class DestinyTactics extends Game {
 	public float masterVolume = 0.5f;
 	
 	@Override
+	/**
+	 * Instantiates the DestinyTactics object, sets up non-game background and music, and sets the screen to the menuScreen.
+	 */
 	public void create() {
 		Assets.queueLoading();
 		
@@ -55,6 +72,9 @@ public class DestinyTactics extends Game {
 		}
 	}
 	
+	/**
+	 * Switches view to menuScreen
+	 */
 	public void goMenu(){
 		if (menuScreen == null) {
 			menuScreen = new MenuScene(this, skin);
@@ -68,6 +88,9 @@ public class DestinyTactics extends Game {
 		setScreen(menuScreen);
 	}
 	
+	/**
+	 * Switches view to gameScreen (and stops non-game music)
+	 */
 	public void startGame(){
 		Assets.finish();
 		if (gameScreen == null) {
@@ -80,6 +103,9 @@ public class DestinyTactics extends Game {
 		setScreen(gameScreen);
 	}
 	
+	/**
+	 * Switches view to scoreScreen
+	 */
 	public void showScores(){
 		if (scoreScreen == null) {
 			scoreScreen = new HighScoresScene(this, skin);
@@ -93,6 +119,9 @@ public class DestinyTactics extends Game {
 		setScreen(scoreScreen);
 	}
 	
+	/**
+	 * Destroys the currently loaded screen. Normally called when switching screens, but is disabled at this time.
+	 */
 	public void destroyCurrentScreen() {
 		Screen currentScreen = getScreen();
 		if (currentScreen != null) {
@@ -100,6 +129,9 @@ public class DestinyTactics extends Game {
 		}
 	}
 	
+	/**
+	 * Switches to multiplayerScreen
+	 */
 	public void multiplayerSetup(){
 		if (multiplayerScreen == null) {
 			multiplayerScreen = new MultiplayerScreen(this, skin);
