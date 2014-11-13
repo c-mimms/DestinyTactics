@@ -18,7 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 
-
+/**
+ * 
+ * @author Mike
+ * 
+ * ToolTip extends Window
+ * ToolTip displays relevant information about it's calling object.  *
+ */
 public class ToolTip extends Window {
 
 	static Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -29,7 +35,14 @@ public class ToolTip extends Window {
 	int numBodies = 0;
 	public int mine;
 
-
+	/**
+	 * Constructor takes a name and sector as parameters.
+	 * Gets number of bodies in a sector.
+	 * Gets owner.
+	 * Gets position of sector for display purposes. 
+	 * @param name
+	 * @param sector
+	 */
 	public ToolTip(String name , Sector sector) {
 		//Init
 		super(name, skin);
@@ -44,12 +57,6 @@ public class ToolTip extends Window {
 		Label ownerL = new Label("Owner: " + GameScene.localPlayer.getName(), skin);
 		Label positionL = new Label("Coords: (" + position.x + "," + position.y + ")", skin);
 		
-		//Scaling Labels
-		//nameL.setFontScale(0.5f);
-		//numBodiesL.setFontScale(0.5f);
-		//ownerL.setFontScale(0.5f);
-		//positionL.setFontScale(0.5f);		
-
 		add(numBodiesL).left();
 		row();
 		left();
@@ -65,6 +72,11 @@ public class ToolTip extends Window {
 		
 	}
 	
+	/**
+	 * Constructor takes name and orbital body as arguments.
+	 * @param name
+	 * @param body
+	 */
 	public ToolTip(String name, OrbitalBody body) {
 		super(name, skin);
 		//body.sector.galaxy.thisgame.sectorStage.addActor(this); //LOLOL

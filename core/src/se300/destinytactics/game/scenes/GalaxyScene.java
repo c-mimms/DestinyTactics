@@ -21,6 +21,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * @author Mimms
+ * GalaxyScene extends Stage
+ * This class builds the galaxy view that displays sectors and fleets in motion
+ */
 public class GalaxyScene extends Stage {
 
 	public Image background, gridOverlay;
@@ -36,6 +41,11 @@ public class GalaxyScene extends Stage {
 
 	public static final int PARALLAX = 10;
 
+	/**
+	 * @param vp
+	 * @param skin
+	 * @param myGame
+	 */
 	public GalaxyScene(FitViewport vp, Skin skin, GameScene myGame) {
 
 		super(vp);
@@ -118,6 +128,9 @@ public class GalaxyScene extends Stage {
 
 	}
 
+	/**
+	 * endTurn in GalaxyScene updates fleets.
+	 */
 	public void endTurn() {
 		test.moveFleet();
 		if (test.getDestination() == null) {

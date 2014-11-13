@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import se300.destinytactics.GameScene;
-import se300.destinytactics.ui.Drawable;
 import se300.destinytactics.game.mapgen.Sector;
 
 /**
@@ -78,11 +77,4 @@ public class Galaxy {
 
 	}
 
-	/**
-	 * 
-	 * @param screenRect
-	 */
-	public ArrayList<Drawable> getSectorsOnScreen(Rectangle screenRect) {
-		return null;
-	}
 }// end Galaxy
