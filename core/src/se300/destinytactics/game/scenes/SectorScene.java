@@ -75,10 +75,10 @@ public class SectorScene extends Stage {
 
 		// Add all planet objects
 		for (int i = 0; i < nextSector.getNumBodies(); i++) {
-			this.addActor(nextSector.bodyList[i]);
 			if (nextSector.bodyList[i].hasFleet()) {
 				this.addActor(nextSector.bodyList[i].getFleet());
 			}
+			this.addActor(nextSector.bodyList[i]);
 		}
 	}
 
