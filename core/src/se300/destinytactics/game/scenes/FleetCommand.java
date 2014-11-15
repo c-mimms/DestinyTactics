@@ -413,6 +413,7 @@ public class FleetCommand {
 					
 				}
 				
+				//Set each to 0
 				fighterCount.setText("0");
 				corvetteCount.setText("0");
 				bomberCount.setText("0");
@@ -420,9 +421,68 @@ public class FleetCommand {
 				scoutCount.setText("0");
 				battleshipCount.setText("0");
 				dreadCount.setText("0");
-				for(int i = 0; i < 7; i++){
-					//System.out.print(myGame.curOrbitalBody.getShips[i]);
+				
+				//Instant update
+				if(myGame.curOrbitalBody.hasFleet() == true){
+				fighterNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Fighter")
+						+"("
+						+myGame.curOrbitalBody.getShips(0)
+						+")");
+				corvetteNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Corvette")
+						+"("
+						+myGame.curOrbitalBody.getShips(1)
+						+")");
+				bomberNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Bomber")
+						+"("
+						+myGame.curOrbitalBody.getShips(2)
+						+")");
+				carrierNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Carrier")
+						+"("
+						+myGame.curOrbitalBody.getShips(3)
+						+")");
+				scoutNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Scout")
+						+"("
+						+myGame.curOrbitalBody.getShips(4)
+						+")");
+				battleNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Battleship")
+						+"("
+						+myGame.curOrbitalBody.getShips(5)
+						+")");
+				dreadNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Dreadnaught")
+						+"("
+						+myGame.curOrbitalBody.getShips(6)
+						+")");
+				} else {
+					fighterNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(0)
+							+")");
+					corvetteNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(1)
+							+")");
+					bomberNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(2)
+							+")");
+					carrierNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(3)
+							+")");
+					scoutNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(4)
+							+")");
+					battleNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(5)
+							+")");
+					dreadNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(6)
+							+")");
 				}
+				
 				return true;
 			}
 

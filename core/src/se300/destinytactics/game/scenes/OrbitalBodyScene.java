@@ -77,27 +77,33 @@ public class OrbitalBodyScene extends Stage {
 				+myGame.curOrbitalBody.getShips(1)
 				+")");
 			myGame.planetUI.fc.bomberNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Bomber")
-					+"("
-					+myGame.curOrbitalBody.getShips(2)
-					+")");
+				+"("
+				+myGame.curOrbitalBody.getShips(2)
+				+")");
 			myGame.planetUI.fc.carrierNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Carrier")
-					+"("
-					+myGame.curOrbitalBody.getShips(3)
-					+")");
+				+"("
+				+myGame.curOrbitalBody.getShips(3)
+				+")");
 			myGame.planetUI.fc.scoutNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Scout")
-					+"("
-					+myGame.curOrbitalBody.getShips(4)
-					+")");
+				+"("
+				+myGame.curOrbitalBody.getShips(4)
+				+")");
 			myGame.planetUI.fc.battleNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Battleship")
-					+"("
-					+myGame.curOrbitalBody.getShips(5)
-					+")");
+				+"("
+				+myGame.curOrbitalBody.getShips(5)
+				+")");
 			myGame.planetUI.fc.dreadNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Dreadnaught")
-					+"("
-					+myGame.curOrbitalBody.getShips(6)
-					+")");
+				+"("
+				+myGame.curOrbitalBody.getShips(6)
+				+")");
 		} else {
-			System.out.println("AHHHHH");
+			myGame.planetUI.fc.fighterNum.setText("0( )");
+			myGame.planetUI.fc.corvetteNum.setText("0( )");
+			myGame.planetUI.fc.bomberNum.setText("0( )");
+			myGame.planetUI.fc.carrierNum.setText("0( )");
+			myGame.planetUI.fc.scoutNum.setText("0( )");
+			myGame.planetUI.fc.battleNum.setText("0( )");
+			myGame.planetUI.fc.dreadNum.setText("0( )");
 		}
 		
 		// Add image background and stretch to fit
