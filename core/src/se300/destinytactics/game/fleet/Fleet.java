@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Sector;
@@ -48,7 +50,7 @@ public class Fleet extends Actor {
 
 	private int SPRITE_SIZE = 10;
 	private float angle = 0;
-	private Map<Ship, Integer> shipMap;
+	private Map<String, Integer> shipMap;
 
 	
 	/**
@@ -58,9 +60,30 @@ public class Fleet extends Actor {
 	public Fleet(OrbitalBody loc) {
 		super();
 		setLocation(loc);
-		shipMap = new HashMap<Ship, Integer>();
+		shipMap = new HashMap<String, Integer>();
 		this.setSize(10, 10);
 		//System.out.println("New fleet created at " + location.getName());
+		
+
+		this.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				System.out.println("Clicked!");
+				return true;
+			}
+
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				//System.out.println("Exit at " + x + ", " + y);
+			}
+
+		});
+		
 	}
 
 	public void finalize() throws Throwable {
@@ -107,7 +130,7 @@ public class Fleet extends Actor {
 	 * 
 	 * @param unitType
 	 */
-	public int getShipCount(Ship unitType) {
+	public int getShipCount(String unitType) {
 		return shipMap.get(unitType).intValue();
 	}
 
@@ -118,10 +141,10 @@ public class Fleet extends Actor {
 	 * @param ship
 	 */
 	public void addShip(Ship ship) {
-		if (shipMap.containsKey(ship)) {
-			shipMap.put(ship, shipMap.get(ship) + 1);
+		if (shipMap.containsKey(ship.getShipType())) {
+			shipMap.put(ship.getShipType(), shipMap.get(ship.getShipType()) + 1);
 		} else {
-			shipMap.put(ship, 1);
+			shipMap.put(ship.getShipType(), 1);
 		}
 	}
 
