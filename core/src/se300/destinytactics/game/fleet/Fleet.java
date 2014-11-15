@@ -20,16 +20,18 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.scenes.GalaxyScene;
 
 /**
-* <h1>Fleet</h1>
-* 
-* Fleet in the current game.
-*
-* @author  Chris Mimms
-* @version 1.0
-* @since   2014-11-12
-* 
-*/
+ * <h1>Fleet</h1>
+ * 
+ * Fleet in the current game.
+ *
+ * @author Chris Mimms
+ * @version 1.0
+ * @since 2014-11-12
+ * 
+ */
 public class Fleet extends Actor {
+
+	private final int ORBITRAD = 20;
 
 	private OrbitalBody destination;
 	private int distanceToDestination;
@@ -52,9 +54,9 @@ public class Fleet extends Actor {
 	private float angle = 0;
 	private Map<String, Integer> shipMap;
 
-	
 	/**
 	 * Create fleet with orbital body location.
+	 * 
 	 * @param loc
 	 */
 	public Fleet(OrbitalBody loc) {
@@ -62,8 +64,10 @@ public class Fleet extends Actor {
 		setLocation(loc);
 		shipMap = new HashMap<String, Integer>();
 		this.setSize(10, 10);
-		//System.out.println("New fleet created at " + location.getName());
-		
+
+		this.setBounds(0, 0, loc.getWidth() + 2 * ORBITRAD, loc.getHeight() + 2
+				* ORBITRAD);
+		// System.out.println("New fleet created at " + location.getName());
 
 		this.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -79,11 +83,11 @@ public class Fleet extends Actor {
 
 			public void exit(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
-				//System.out.println("Exit at " + x + ", " + y);
+				// System.out.println("Exit at " + x + ", " + y);
 			}
 
 		});
-		
+
 	}
 
 	public void finalize() throws Throwable {
@@ -105,7 +109,6 @@ public class Fleet extends Actor {
 	public OrbitalBody getLocation() {
 		return location;
 	}
-
 
 	/**
 	 * Return player that owns fleet
@@ -131,9 +134,12 @@ public class Fleet extends Actor {
 	 * @param unitType
 	 */
 	public int getShipCount(String unitType) {
-		return shipMap.get(unitType).intValue();
-	}
+		if (shipMap.containsKey(unitType)) {
+			return shipMap.get(unitType).intValue();
+		}
+		return 0;
 
+	}
 
 	/**
 	 * Adds ship to the fleet
@@ -147,7 +153,6 @@ public class Fleet extends Actor {
 			shipMap.put(ship.getShipType(), 1);
 		}
 	}
-
 
 	/**
 	 * Moves fleet closer to destination. If it reaches destination, set new
@@ -175,7 +180,7 @@ public class Fleet extends Actor {
 						+ (sectorLocation.getHeight() / 2) - (getHeight() / 2));
 
 			}
-			
+
 			else {
 				percentTravelled = (float) distanceToDestination
 						/ (float) distance;
@@ -183,10 +188,10 @@ public class Fleet extends Actor {
 				float dify = sectorLocation.getY() - sectorDestination.getY();
 				// TODO make everything have a getCenterX() and setCenter() so
 				// we don't have to do this...
-				this.setX(sectorDestination.getX(Align.center) - (getWidth() / 2)
-						+ (difx * percentTravelled));
-				this.setY(sectorDestination.getY(Align.center)- (getHeight() / 2) 
-						+ (dify * percentTravelled));
+				this.setX(sectorDestination.getX(Align.center)
+						- (getWidth() / 2) + (difx * percentTravelled));
+				this.setY(sectorDestination.getY(Align.center)
+						- (getHeight() / 2) + (dify * percentTravelled));
 			}
 		}
 
@@ -215,9 +220,8 @@ public class Fleet extends Actor {
 		distance = distanceToDestination = location.getDistance(destination);
 		location.m_Fleet = null;
 		this.location = null;
-		
-	}
 
+	}
 
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(this.getColor());
@@ -246,19 +250,22 @@ public class Fleet extends Actor {
 
 			batch.begin();
 		} else {
-
-			batch.draw(sprite1, this.getLocation().getX(Align.center) - 5
-					+ (float) (40 * Math.sin(angle)),
+			this.setX(this.getLocation().getX() - ORBITRAD);
+			this.setY(this.getLocation().getY() - ORBITRAD);
+			batch.draw(
+					sprite1,
+					this.getLocation().getX(Align.center) - 5
+							+ (float) (this.getWidth() / 2 * Math.sin(angle)),
 					this.getLocation().getY(Align.center) - 5
-							+ (float) (40 * Math.cos(angle)), SPRITE_SIZE,
-					SPRITE_SIZE);
+							+ (float) (this.getWidth() / 2 * Math.cos(angle)),
+					SPRITE_SIZE, SPRITE_SIZE);
 
 		}
 		batch.setColor(Color.WHITE);
 
 	}
-	
-	public void act(float time){
-		angle += time/3;
+
+	public void act(float time) {
+		angle += time / 3;
 	}
 }
