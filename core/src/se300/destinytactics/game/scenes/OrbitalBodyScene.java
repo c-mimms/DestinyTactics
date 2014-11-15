@@ -66,6 +66,16 @@ public class OrbitalBodyScene extends Stage {
 				+ ". Cost: " + myGame.curOrbitalBody.getShipyardCost()
         		+ ". Size: " + myGame.curOrbitalBody.getShipyardSize());
 		
+		//Update planetUI fleet command upon click
+		myGame.planetUI.fc.fighterNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Fighter")
+				+"("
+				+myGame.curOrbitalBody.getShips(0)
+				+")");
+		myGame.planetUI.fc.corvetteNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Corvette")
+				+"("
+				+myGame.curOrbitalBody.getShips(1)
+				+")");
+		
 		// Add image background and stretch to fit
 		this.addActor(background);
 		background.setFillParent(true);

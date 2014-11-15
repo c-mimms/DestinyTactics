@@ -192,7 +192,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 	public void toFleet(Ship ship) {
 		System.out.println("Ship to fleet");
 		if(this.m_Fleet == null){
-			m_Fleet = new Fleet(this, null);
+			m_Fleet = new Fleet(this);
 		}
 		m_Fleet.addShip(ship);
 		
