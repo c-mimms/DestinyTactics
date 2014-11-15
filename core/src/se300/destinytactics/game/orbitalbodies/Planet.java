@@ -66,7 +66,7 @@ public class Planet extends OrbitalBody implements canBuildFleets, canBuildDefen
 		
 		//shipyard variable init
 		shipyardLevel = 0;
-		shipyardSize = 0;
+		shipyardSize = 4000;
 		shipyardCost = 25;
 
 		
