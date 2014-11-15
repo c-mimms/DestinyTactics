@@ -158,6 +158,7 @@ public class Sector extends Actor {
 		if(toolTip != null)
 			toolTip.remove();
 		hovering = false;
+		toolTip = new ToolTip(name, this);
 
 	}
 

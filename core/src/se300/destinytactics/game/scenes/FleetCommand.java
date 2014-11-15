@@ -488,6 +488,34 @@ public class FleetCommand {
 
 		});
 		
+		cancelButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//Set each to 0
+				fighterCount.setText("0");
+				corvetteCount.setText("0");
+				bomberCount.setText("0");
+				carrierCount.setText("0");
+				scoutCount.setText("0");
+				battleshipCount.setText("0");
+				dreadCount.setText("0");
+				return true;
+			}
+		});
+		
+		clearButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//Set each to 0
+				fighterCount.setText("0");
+				corvetteCount.setText("0");
+				bomberCount.setText("0");
+				carrierCount.setText("0");
+				scoutCount.setText("0");
+				battleshipCount.setText("0");
+				dreadCount.setText("0");
+				return true;
+			}
+		});
+		
 		buildFormWrapper.add("Build Units").colspan(3).left().expandX();
 		buildFormWrapper.row().top();                 
 		buildFormWrapper.add(formScroll).expand().colspan(3).fill().top();

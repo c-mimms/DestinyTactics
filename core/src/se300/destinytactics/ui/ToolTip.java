@@ -34,6 +34,7 @@ public class ToolTip extends Window {
 	java.awt.Point position;
 	int numBodies = 0;
 	public int mine;
+	public int totalRPT;
 
 	/**
 	 * Constructor takes a name and sector as parameters.
@@ -50,17 +51,23 @@ public class ToolTip extends Window {
 		numBodies = sector.getNumBodies();
 		controlState = sector.getState();
 		position = sector.getPos();
+		for(OrbitalBody body : sector.bodyList) {
+			totalRPT += body.getRPT();
+		}
 		
 		//Creating labels for scale-able text
 		Label nameL = new Label(name, skin);
 		Label numBodiesL = new Label("Orbital Bodies: " +  numBodies, skin);
-		Label ownerL = new Label("Owner: " + GameScene.localPlayer.getName(), skin);
+		Label ownerL = new Label("Owner: " + GameScene.localPlayer.getName() + ": ", skin);
+		Label tRPTL = new Label("RPT: " + totalRPT, skin);
 		Label positionL = new Label("Coords: (" + position.x + "," + position.y + ")", skin);
 		
 		add(numBodiesL).left();
 		row();
 		left();
 		add(ownerL).left();
+		row();
+		add(tRPTL).left();
 		row();
 		add(positionL).left();
 		
