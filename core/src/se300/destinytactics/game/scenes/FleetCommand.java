@@ -59,6 +59,15 @@ public class FleetCommand {
 		moveButton = new TextButton("Move Fleet", skin.get("default", TextButtonStyle.class));
 		attackButton = new TextButton("Attack", skin.get("default", TextButtonStyle.class));
 		
+		//Initialize Nums
+		fighterNum = new Label("0" + "( )", skin);
+		corvetteNum = new Label("0" + "( )", skin);
+		bomberNum = new Label("0" + "( )", skin);
+		carrierNum = new Label("0" + "( )", skin);
+		scoutNum = new Label("0" + "( )", skin);
+		battleNum = new Label("0" + "( )", skin);
+		dreadNum = new Label("0" + "( )", skin);
+		
 		// Add Click listeners. Changes the loaded form and the toggled button.
 		buildButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -204,36 +213,29 @@ public class FleetCommand {
 		
 		overview.row();
 		overview.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8);
-		Label fighterNum = new Label("0" + "( )", skin);
 		overview.add(fighterNum).width(GameScene.SCREEN_WIDTH/8);
 		
 		overview.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8);
-		Label corvetteNum = new Label("0" + "( )", skin);
 		overview.add(corvetteNum).width(GameScene.SCREEN_WIDTH/8);
 		
 		overview.row();
 		overview.add(new Label("Bombers", skin)).expandX().fillX();
-		Label bomberNum = new Label("0" + "( )", skin);
 		overview.add(bomberNum).expandX().fillX();
 		
 		overview.add(new Label("Carriers", skin)).expandX().fillX();
-		Label carrierNum = new Label("0" + "( )", skin);
 		overview.add(carrierNum).expandX().fillX();
 		
 		overview.row();
 		overview.add(new Label("Scoutships", skin)).expandX().fillX();
-		Label scoutNum = new Label("0" + "( )", skin);
 		overview.add(scoutNum).expandX().fillX();
 		
 		overview.add(new Label("Battleships", skin)).expandX().fillX();
-		Label battleNum = new Label("0" + "( )", skin);
 		overview.add(battleNum).expandX().fillX();
 		
 		overview.row();
 		overview.add().expandX().fillX();
 		overview.add().expandX().fillX();
 		overview.add(new Label("Dreadnaughts", skin)).expandX().fillX();
-		Label dreadNum = new Label("0" + "( )", skin);
 		overview.add(dreadNum).expandX().fillX();
 		
 		overviewWrapper.add("Fleet Overview").colspan(3).left().expandX();
@@ -418,6 +420,7 @@ public class FleetCommand {
 					
 				}
 				
+				//Set each to 0
 				fighterCount.setText("0");
 				corvetteCount.setText("0");
 				bomberCount.setText("0");
@@ -425,12 +428,99 @@ public class FleetCommand {
 				scoutCount.setText("0");
 				battleshipCount.setText("0");
 				dreadCount.setText("0");
-				for(int i = 0; i < 7; i++){
-					//System.out.print(myGame.curOrbitalBody.getShips[i]);
+				
+				//Instant update
+				if(myGame.curOrbitalBody.hasFleet() == true){
+				fighterNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Fighter")
+						+"("
+						+myGame.curOrbitalBody.getShips(0)
+						+")");
+				corvetteNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Corvette")
+						+"("
+						+myGame.curOrbitalBody.getShips(1)
+						+")");
+				bomberNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Bomber")
+						+"("
+						+myGame.curOrbitalBody.getShips(2)
+						+")");
+				carrierNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Carrier")
+						+"("
+						+myGame.curOrbitalBody.getShips(3)
+						+")");
+				scoutNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Scout")
+						+"("
+						+myGame.curOrbitalBody.getShips(4)
+						+")");
+				battleNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Battleship")
+						+"("
+						+myGame.curOrbitalBody.getShips(5)
+						+")");
+				dreadNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Dreadnaught")
+						+"("
+						+myGame.curOrbitalBody.getShips(6)
+						+")");
+				} else {
+					fighterNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(0)
+							+")");
+					corvetteNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(1)
+							+")");
+					bomberNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(2)
+							+")");
+					carrierNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(3)
+							+")");
+					scoutNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(4)
+							+")");
+					battleNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(5)
+							+")");
+					dreadNum.setText("0"
+							+"("
+							+myGame.curOrbitalBody.getShips(6)
+							+")");
 				}
+				
 				return true;
 			}
 
+		});
+		
+		cancelButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//Set each to 0
+				fighterCount.setText("0");
+				corvetteCount.setText("0");
+				bomberCount.setText("0");
+				carrierCount.setText("0");
+				scoutCount.setText("0");
+				battleshipCount.setText("0");
+				dreadCount.setText("0");
+				return true;
+			}
+		});
+		
+		clearButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				//Set each to 0
+				fighterCount.setText("0");
+				corvetteCount.setText("0");
+				bomberCount.setText("0");
+				carrierCount.setText("0");
+				scoutCount.setText("0");
+				battleshipCount.setText("0");
+				dreadCount.setText("0");
+				return true;
+			}
 		});
 		
 		buildFormWrapper.add("Build Units").colspan(3).left().expandX();
