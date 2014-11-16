@@ -169,6 +169,7 @@ public class Fleet extends Actor {
 				// System.out.println("Loc: " + location.getName()
 				// + "\n Destination: " + destination.getName());
 				this.location = destination;
+				location.m_Fleet = this;
 				sectorLocation = sectorDestination;
 				distanceToDestination = 0;
 				this.destination = null;

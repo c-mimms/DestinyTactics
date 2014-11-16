@@ -3,6 +3,7 @@ package se300.destinytactics.game.scenes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.Button;
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.fleet.Fleet;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -82,6 +84,18 @@ public class GalaxyMap extends Window {
 		this.clearChildren();
 		planet = new Group();
 
+		TextButton back = new TextButton("Back", skin);
+		back.setX(0);
+		back.setY(this.getHeight()-back.getHeight() - 30);
+		back.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				setGalaxy();
+				return true;
+			}
+		});
+		this.addActor(back);
+
 		System.out.println(copy.getName());
 		for (OrbitalBody body : copy.bodyList) {
 			final OrbitalBody copyBody = body;
@@ -112,7 +126,9 @@ public class GalaxyMap extends Window {
 		tmp.setDestination(copyBody);
 		myGame.galaxyStage.addActor(tmp);
 		myGame.galaxyStage.fleets.add(tmp);
+
 		this.remove();
+		setGalaxy();
 
 	}
 
