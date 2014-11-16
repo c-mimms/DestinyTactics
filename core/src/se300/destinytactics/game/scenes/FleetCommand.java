@@ -304,6 +304,13 @@ public class FleetCommand {
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
 		TextButton submitButton = new TextButton("Move Fleet", skin.get("default", TextButtonStyle.class));
+
+		submitButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				moveFleet();
+				return true;
+			}
+		});
 		
 		moveFormWrapper.add("Move Fleet").colspan(3).left().expandX();
 		moveFormWrapper.row().top();                 
@@ -446,6 +453,7 @@ public class FleetCommand {
 		attackForm = new Table(skin);
 		
 		final ScrollPane formScroll = new ScrollPane(attackForm, skin);
+		
 		InputListener formStopTouchDown = new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				event.stop();
@@ -507,19 +515,14 @@ public class FleetCommand {
 		attackFormWrapper.setHeight(GameScene.SCREEN_HEIGHT * 3/10);
 	}
 
-	
-	private void buildUnits(int x) {
-		Fleet fl = new Fleet(myGame.curOrbitalBody);
-		myGame.curOrbitalBody.m_Fleet = fl;
-		myGame.localPlayer.addFleet(fl);
-		myGame.curOrbitalBody.getStage().addActor(fl);
-		
-	
-	}
+
 	
 	private void moveFleet(){
+		
 		if(myGame.curOrbitalBody.m_Fleet !=null){
+			
 			myGame.planetUI.getDestination();
 		}
+		
 	}
 }

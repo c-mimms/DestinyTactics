@@ -36,7 +36,7 @@ public class GalaxyScene extends Stage {
 	private Group sectors, sectorNames;
 	private SectorLines sectorLines;
 	List<SectorLabel> sectorNameArray;
-	Group fleets = new Group();
+	ArrayList<Fleet> fleets = new ArrayList<Fleet>();
 
 
 	public static final int PARALLAX = 10;
@@ -124,7 +124,9 @@ public class GalaxyScene extends Stage {
 		test.moveFleet();
 		test2.moveFleet();
 		test3.moveFleet();
-		fleets.getChildren().addAll(test,test3,test2);
+		fleets.add(test);
+		fleets.add(test2);
+		fleets.add(test3);
 
 	}
 
@@ -132,7 +134,6 @@ public class GalaxyScene extends Stage {
 	 * endTurn in GalaxyScene updates fleets.
 	 */
 	public void endTurn() {
-		test.moveFleet();
 		if (test.getDestination() == null) {
 			test.setDestination(myGame.m_Galaxy.sectors[Utility.random
 					.nextInt(20)].bodyList[0]);
@@ -146,6 +147,18 @@ public class GalaxyScene extends Stage {
 		if (test3.getDestination() == null) {
 			test3.setDestination(myGame.m_Galaxy.sectors[Utility.random
 					.nextInt(20)].bodyList[0]);
+		}
+		ArrayList<Fleet> remove = new ArrayList<Fleet>();
+
+		for(Fleet fleet : fleets){
+			fleet.moveFleet();
+			if(fleet.getDestination() == null){
+				remove.add(fleet);
+			}
+		}
+		for(Fleet fleet : remove){
+			fleets.remove(fleet);
+			fleet.remove();
 		}
 	}
 

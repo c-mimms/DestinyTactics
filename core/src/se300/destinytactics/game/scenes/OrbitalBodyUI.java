@@ -43,7 +43,7 @@ public class OrbitalBodyUI extends Stage {
 		this.myGame = myGame;
 		edgePadding = padding;
 		this.skin = skin;
-		map = new GalaxyMap(skin,myGame);
+		map = new GalaxyMap(skin,myGame, this);
 		fc = new FleetCommand(skin,myGame);
 		inf = new Infrastructure(skin, myGame);
 		def = new Defense(skin);
@@ -147,8 +147,9 @@ public class OrbitalBodyUI extends Stage {
 		super.act(time);
 	}
 	
-	public OrbitalBody getDestination(){
+	public void getDestination(){
+
 		this.addActor(map);
-		return null;
+		
 	}
 }

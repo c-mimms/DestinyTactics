@@ -220,6 +220,9 @@ public class Fleet extends Actor {
 		distance = distanceToDestination = location.getDistance(destination);
 		location.m_Fleet = null;
 		this.location = null;
+		this.setX(this.sectorLocation.getX(Align.center));
+		this.setY(this.sectorLocation.getY(Align.center));
+		System.out.println("Destination!" + dest.getName() +distance);
 
 	}
 
