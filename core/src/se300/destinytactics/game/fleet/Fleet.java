@@ -138,7 +138,6 @@ public class Fleet extends Actor {
 			return shipMap.get(unitType).intValue();
 		}
 		return 0;
-
 	}
 
 	/**
@@ -271,5 +270,48 @@ public class Fleet extends Actor {
 
 	public void act(float time) {
 		angle += time / 3;
+	}
+	
+	/**
+	 * Takes enemy fleet as a parameter. Does battle mechanics.
+	 * @param enemy
+	 */
+	public void attack(Fleet enemy) {
+		while(enemy.getShipCount("Fighter") > 0 & this.getShipCount("Fighter") > 0) {
+			enemy.shipMap.put("Fighter", enemy.getShipCount("Fighter") - 1);
+			this.shipMap.put("Fighter", this.getShipCount("Fighter") - 1);
+		}
+		while(enemy.getShipCount("Corvette") > 0 & this.getShipCount("Corvette") > 0) {
+			enemy.shipMap.put("Corvette", enemy.getShipCount("Corvette") - 1);
+			this.shipMap.put("Corvette", this.getShipCount("Corvette") - 1);
+		}
+		while(enemy.getShipCount("Bomber") > 0 & this.getShipCount("Bomber") > 0) {
+			enemy.shipMap.put("Bomber", enemy.getShipCount("Bomber") - 1);
+			this.shipMap.put("Bomber", this.getShipCount("Bomber") - 1);
+		}
+		while(enemy.getShipCount("Carrier") > 0 & this.getShipCount("Carrier") > 0) {
+			enemy.shipMap.put("Carrier", enemy.getShipCount("Carrier") - 1);
+			this.shipMap.put("Carrier", this.getShipCount("Carrier") - 1);
+		}
+		while(enemy.getShipCount("Scout") > 0 & this.getShipCount("Scout") > 0) {
+			enemy.shipMap.put("Scout", enemy.getShipCount("Scout") - 1);
+			this.shipMap.put("Scout", this.getShipCount("Scout") - 1);
+		}
+		while(enemy.getShipCount("Battleship") > 0 & this.getShipCount("Battleship") > 0) {
+			enemy.shipMap.put("Battleship", enemy.getShipCount("Battleship") - 1);
+			this.shipMap.put("Battleship", this.getShipCount("Battleship") - 1);
+		}
+		while(enemy.getShipCount("Dreadnaught") > 0 & this.getShipCount("Dreadnaught") > 0) {
+			enemy.shipMap.put("Dreadnaught", enemy.getShipCount("Dreadnaught") - 1);
+			this.shipMap.put("Dreadnaught", this.getShipCount("Dreadnaught") - 1);
+		}
+		
+	}
+	
+	/**
+	 * Destroys integer number of ships
+	 */
+	public void destroyShips(int x) {
+		//shipMap.put()
 	}
 }
