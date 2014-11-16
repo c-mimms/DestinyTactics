@@ -5,7 +5,6 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
-import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.InfoBar;
 import se300.destinytactics.game.scenes.NavBar;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -203,9 +201,11 @@ public class GameScene implements Screen {
 		galaxyView = false;
 		sectorView = false;
 
+		multiplexer.clear();
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
-		multiplexer.removeProcessor(sectorStage);
 	}
 	
 	/**
@@ -218,10 +218,10 @@ public class GameScene implements Screen {
 
 		navBar.setName(m_Galaxy.getName());
 
+		multiplexer.clear();
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 		multiplexer.addProcessor(galaxyStage);
-		multiplexer.removeProcessor(planetStage);
-		multiplexer.removeProcessor(planetUI);
-		multiplexer.removeProcessor(sectorStage);
 	}
 	
 	/**
@@ -233,10 +233,10 @@ public class GameScene implements Screen {
 		galaxyView = false;
 
 		navBar.setName(curSector.getName());
-
+		multiplexer.clear();
 		multiplexer.addProcessor(sectorStage);
-		multiplexer.removeProcessor(planetStage);
-		multiplexer.removeProcessor(planetUI);
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 	}
 
 	@Override

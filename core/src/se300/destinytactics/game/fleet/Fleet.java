@@ -163,6 +163,7 @@ public class Fleet extends Actor {
 	public void moveFleet() {
 		// If it has a destination
 		if (this.sectorDestination != null) {
+			this.setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
 			this.distanceToDestination -= this.fleetGalacticTravelSpeed;
 			if (distanceToDestination <= 0) {
 				// System.out.println("Loc: " + location.getName()
@@ -179,6 +180,8 @@ public class Fleet extends Actor {
 				this.setY(sectorLocation.getY()
 						+ (sectorLocation.getHeight() / 2) - (getHeight() / 2));
 
+				this.setBounds(0, 0, location.getWidth() + 2 * ORBITRAD, location.getHeight() + 2
+						* ORBITRAD);
 			}
 
 			else {
@@ -222,7 +225,7 @@ public class Fleet extends Actor {
 		this.location = null;
 		this.setX(this.sectorLocation.getX(Align.center));
 		this.setY(this.sectorLocation.getY(Align.center));
-		System.out.println("Destination!" + dest.getName() +distance);
+		//System.out.println("Destination!" + dest.getName() +distance);
 
 	}
 

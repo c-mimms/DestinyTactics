@@ -125,7 +125,6 @@ public abstract class OrbitalBody extends Actor {
 		    public void enter(InputEvent event, float x, float y, int pointer,
 					Actor fromActor) {
 				hoverOn();
-				System.out.println(getMineLevel());
 			}
 
 			public void exit(InputEvent event, float x, float y, int pointer,

@@ -1,14 +1,6 @@
 package se300.destinytactics.game.orbitalbodies;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
-
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Fleet;
@@ -31,7 +23,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 
 	// private int miningEfficiency2;
 	// private int miningEfficiency1;
-	private Structure structure[];
+	//private Structure structure[];
 	public Structure m_Structure;
 
 	// Owner
