@@ -11,7 +11,6 @@ import se300.destinytactics.ui.SectorLabel;
 import se300.destinytactics.ui.SectorLines;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
