@@ -56,7 +56,7 @@ public class GalaxyMap extends Window {
 
 	// Nearly exact copy of GalaxyScene, for now.
 	public GalaxyMap(Skin skin, GameScene myGame, Stage stage) {
-
+		
 		super("Galaxy", skin);
 		calledFrom = stage;
 		this.myGame = myGame;
@@ -96,7 +96,21 @@ public class GalaxyMap extends Window {
 		});
 		this.addActor(back);
 
-		System.out.println(copy.getName());
+
+		TextButton cancel = new TextButton("Cancel", skin);
+		cancel.setX(back.getWidth());
+		cancel.setY(this.getHeight()-back.getHeight() - 30);
+		cancel.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				remove();
+				setGalaxy();
+				return true;
+			}
+		});
+		this.addActor(cancel);
+		
+		//System.out.println(copy.getName());
 		for (OrbitalBody body : copy.bodyList) {
 			final OrbitalBody copyBody = body;
 
@@ -120,7 +134,7 @@ public class GalaxyMap extends Window {
 
 	protected void chooseBody(OrbitalBody copyBody) {
 		// TODO Auto-generated method stub
-		System.out.println(copyBody.getName());
+		//System.out.println(copyBody.getName());
 		Fleet tmp = myGame.curOrbitalBody.getFleet();
 		tmp.remove();
 		tmp.setDestination(copyBody);
@@ -136,6 +150,20 @@ public class GalaxyMap extends Window {
 
 		this.clearChildren();
 
+		TextButton cancel = new TextButton("Cancel", skin);
+		cancel.setX(0);
+		cancel.setY(this.getHeight()-cancel.getHeight() - 30);
+		cancel.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				remove();
+				setGalaxy();
+				return true;
+			}
+		});
+		this.addActor(cancel);
+		
+		
 		sectors = new Group();
 		sectorNames = new Group();
 		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {

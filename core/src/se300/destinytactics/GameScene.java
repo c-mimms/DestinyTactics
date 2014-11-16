@@ -203,9 +203,11 @@ public class GameScene implements Screen {
 		galaxyView = false;
 		sectorView = false;
 
+		multiplexer.clear();
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
-		multiplexer.removeProcessor(sectorStage);
 	}
 	
 	/**
@@ -218,10 +220,10 @@ public class GameScene implements Screen {
 
 		navBar.setName(m_Galaxy.getName());
 
+		multiplexer.clear();
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 		multiplexer.addProcessor(galaxyStage);
-		multiplexer.removeProcessor(planetStage);
-		multiplexer.removeProcessor(planetUI);
-		multiplexer.removeProcessor(sectorStage);
 	}
 	
 	/**
@@ -233,10 +235,10 @@ public class GameScene implements Screen {
 		galaxyView = false;
 
 		navBar.setName(curSector.getName());
-
+		multiplexer.clear();
 		multiplexer.addProcessor(sectorStage);
-		multiplexer.removeProcessor(planetStage);
-		multiplexer.removeProcessor(planetUI);
+		multiplexer.addProcessor(navBar);
+		multiplexer.addProcessor(infoBar);
 	}
 
 	@Override
