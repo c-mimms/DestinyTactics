@@ -1,13 +1,20 @@
 package se300.destinytactics;
 
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 
+import se300.destinytactics.game.WebRequest;
 import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.mapgen.Utility;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Net.HttpMethods;
+import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -19,6 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -28,7 +37,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Extends Stage in the LibGDX framework.
  * Displays the UI for selecting and joining games. 
  */
-public class LobbyStage extends Stage {
+public class LobbyStage extends Stage implements MakesRequests{
 
 	public MultiplayerScreen myGame;
 	public Skin skin;
@@ -87,7 +96,7 @@ public class LobbyStage extends Stage {
 		createGameButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				goMenu();
+				createGame();
 				return true;
 			}
 		});
@@ -112,7 +121,35 @@ public class LobbyStage extends Stage {
 	 * Starts the loaded game.
 	 */
 	public void createGame() {
+
+		//{"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
+		//"createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
+		
+		GameJson game = new GameJson(Utility.getSeed());
+		Json json = new Json();
+		System.out.println(json.toJson(game));
+		
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "createGame");
+		parameters.put("gameObj", json.toJson(game));
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest createReq = new WebRequest(this, httpGet);
+		createReq.start();
+
 		myGame.game.startGame();
+	}
+
+	@Override
+	public void http(OrderedMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println(map);
 	}
 
 }

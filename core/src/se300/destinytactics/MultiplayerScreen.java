@@ -49,7 +49,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	public Stage menuStage;
 	public Table menu;
 	public float masterVolume = 0.5f;
-	private int userID;
+	public int userID;
 	public Texture bgimg;
 	public Image logo, background;
 	public TextButton loginButton, registerButton, menuButton;
@@ -316,7 +316,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	 * Called on successful login. Changes stage to games lobby.
 	 */
 	private void goToLobby() {
-		lobby = new LobbyStage(menuStage.getViewport(), game.PADDING, skin,
+		lobby = new LobbyStage(menuStage.getViewport(), DestinyTactics.PADDING, skin,
 				this);
 		multiplexer.clear();
 		multiplexer.addProcessor(lobby);
