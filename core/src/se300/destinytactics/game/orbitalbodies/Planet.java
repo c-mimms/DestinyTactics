@@ -182,6 +182,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 		ArrayList<Ship> removeQueue = new ArrayList<Ship>();
 		for (Ship ship : buildQueue) {
 			ship.decrementBuildTime();
+			//System.out.println(ship.getBuildTime());
 			if (ship.getBuildTime() <= 0) {
 				System.out.println(ship.getShipType() + " Built");
 				toFleet(ship);
