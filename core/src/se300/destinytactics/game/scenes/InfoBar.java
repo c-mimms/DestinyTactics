@@ -1,6 +1,10 @@
 package se300.destinytactics.game.scenes;
 
-import se300.destinytactics.DestinyTactics;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComboBox;
+
+import se300.destinytactics.DestinyTactics; 
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.mapgen.Sector;
 
@@ -18,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+
 /**
  * @author Mike
  *
@@ -28,12 +33,14 @@ public class InfoBar extends Stage{
 
 	public GameScene myGame;
 	private Table infobar;
-	private Label label1, txt1, txt2, txt3, txt4,txt5, txt6,sectorLabel,playerResources;
+	private Label label1, txt1, txt2, txt3, txt4,txt5, txt6,sectorLabel,playerResources, SelectedFleet, Location;
 	public Skin skin;
 	TextButton PlayerButton, PlayerButton2, PlayerButton3;
-	SelectBox<Sector> ListButton;
+	SelectBox<String> ListButton;
 	int edgePadding;
 	int buttonPadding = 5;
+	String[] fleets = {"Player Fleet", "Enemy Fleet 1", "Enemy Fleet 2", "Enemy Fleet 3", "Enemy Fleet 5"};
+	JComboBox fleetList = new JComboBox(fleets);
 	
 	
 	/**
@@ -55,7 +62,7 @@ public class InfoBar extends Stage{
 		label1.setY(100);
 		label1.setAlignment(Align.center);
 		
-		ListButton = new SelectBox<Sector>( skin);
+		ListButton = new SelectBox<String>( skin);
 		//ListButton.setItems(myGame.m_Galaxy.m_Sector);
 		
 		
@@ -74,6 +81,7 @@ public class InfoBar extends Stage{
 		txt6 = new Label("txt6", skin);
 		sectorLabel = new Label("sector", skin);
 		playerResources = new Label("playerResources", skin);
+		SelectedFleet = new Label("SelectedFleet", skin);
 		
 		infobar.setX(100);
 		infobar.setY(PlayerButton.getHeight());
@@ -83,15 +91,25 @@ public class InfoBar extends Stage{
         PlayerButton2.setY(2*PlayerButton.getHeight());
         PlayerButton3.setX(0);
         PlayerButton3.setY(PlayerButton.getHeight());
-        ListButton.setX(0);
-        ListButton.setY(3*PlayerButton.getHeight());
         txt1.setX(edgePadding * 10);
         txt1.setY(PlayerButton.getHeight() * 3);
         txt1.setText("Player Resoures:");
+        
+        ListButton.setX(0);
+        ListButton.setY(3*PlayerButton.getHeight());
+        
+        
+        ListButton.setItems(fleets);
 
         playerResources.setX(txt1.getX() + txt1.getMinWidth() + buttonPadding);
         playerResources.setY(PlayerButton.getHeight() * 3);
         playerResources.setText("0");
+        
+        SelectedFleet.setX(txt1.getX() + txt1.getMinWidth() + buttonPadding);
+        SelectedFleet.setY(PlayerButton.getHeight());
+        SelectedFleet.setText("Your fleet");
+        
+        
         
         txt2.setX(edgePadding * 10);
         txt2.setY(PlayerButton.getHeight() * 2);
@@ -139,6 +157,9 @@ public class InfoBar extends Stage{
 		this.addActor(txt6);
 		this.addActor(sectorLabel);
 		this.addActor(playerResources);
+		this.addActor(SelectedFleet);
+		
+		
 		
 	}
 	
