@@ -2,8 +2,10 @@ package se300.destinytactics;
 
 import se300.destinytactics.game.mapgen.Utility;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameListItem extends HorizontalGroup {
 
@@ -31,6 +33,8 @@ public class GameListItem extends HorizontalGroup {
 		 * the scrolling table listing the game paramters. When clicked the list item should create a window on
 		 * the right half of screen with game details.
 		 */
+
+		
 	}
 	
 	public void update(){

@@ -4,10 +4,10 @@ public class GameJson {
 
 	public long galaxySeed;
 	public PlayerJson[] players;
-	public String createdBy;
-	public String galaxyID;
+	public int createdBy;
+	public int galaxyID;
 	public String createDate;
-	public String gameID;
+	public int gameID;
 	public String status;
 	public SectorJson[] sectors;
 	public String[] alliances = {"Rebels", "Empire"};
@@ -15,13 +15,16 @@ public class GameJson {
 
 	public GameJson(long seed) {
 		galaxySeed = seed;
-		galaxyID = "1";
-		createdBy = "1";
+		galaxyID = 1;
+		createdBy = 1;
 		players = new PlayerJson[1];
 		players[0] = new PlayerJson(1, 1, "Rebels");
 		sectors = new SectorJson[1];
 		sectors[0] = new SectorJson(1,1);
 
+	}
+	public GameJson() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

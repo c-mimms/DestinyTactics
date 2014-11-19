@@ -62,6 +62,8 @@ public class WebRequest extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Thread.currentThread().interrupt();
+		return;
 	}
 	
 	/**

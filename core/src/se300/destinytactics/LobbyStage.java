@@ -147,7 +147,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		httpGet.setContent(HttpParametersUtils
 				.convertHttpParameters(parameters));
 		httpGet.setTimeOut(0);
-		System.out.println(httpGet.getContent());
 
 		WebRequest createReq = new WebRequest(this, httpGet);
 		createReq.start();
@@ -157,22 +156,36 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 	@Override
 	public void http(OrderedMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		System.out.println(map);
+		Json json = new Json();
+		//System.out.println(map);
 		if (map.containsKey("gameList")) {
-			Json json = new Json();
-			json.setOutputType(OutputType.json);
-			System.out.println("List of games");
 			JsonValue root = new JsonReader().parse(map.get("gameList")
 					.toString());
 
 			for (JsonValue entry = root.child; entry != null; entry = entry.next) {
-				gameList.add(json.fromJson(GameListItem.class, entry.toString()));
-				this.addActor(gameList.get(gameList.size()-1));
+				final GameListItem tmp = json.fromJson(GameListItem.class, entry.toString());
+				gameList.add(tmp);
+
+				tmp.addListener(new ClickListener() {
+					public boolean touchDown(InputEvent event, float x, float y,
+							int pointer, int button) {
+						joinGame(tmp.gameID);
+						return true;
+					}
+				});
+				this.addActor(tmp);
 			}
 			for(GameListItem item : gameList){
 				item.update();
 			}
+		}
+		else if(map.containsKey("gameObj")){
+			GameJson games = json.fromJson(GameJson.class, map.get("gameObj").toString());
+			//System.out.println(map);
+		}
+		else if(map.containsKey("gameDataObject")){
+			GameJson games = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
+			System.out.println(games.sectors);
 		}
 	}
 
@@ -184,11 +197,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
 		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
 
-		GameJson game = new GameJson(Utility.getSeed());
-		Json json = new Json();
-		json.setOutputType(OutputType.json);
-		System.out.println(json.toJson(game));
-
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "getGameList");
 		parameters.put("status", "pending");
@@ -199,11 +207,31 @@ public class LobbyStage extends Stage implements MakesRequests {
 		httpGet.setContent(HttpParametersUtils
 				.convertHttpParameters(parameters));
 		httpGet.setTimeOut(0);
-		System.out.println(httpGet.getContent());
 
 		WebRequest listReq = new WebRequest(this, httpGet);
 		listReq.start();
 
 	}
 
+
+	/**
+	 * Join a game.
+	 */
+	public void joinGame(int id) {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "loadGame");
+		parameters.put("gameID", "" + id);
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest joinReq = new WebRequest(this, httpGet);
+		joinReq.start();
+
+	}
 }
