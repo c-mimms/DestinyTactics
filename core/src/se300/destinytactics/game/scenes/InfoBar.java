@@ -6,9 +6,11 @@ import javax.swing.JComboBox;
 
 import se300.destinytactics.DestinyTactics; 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.mapgen.Sector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -20,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 
@@ -39,7 +43,7 @@ public class InfoBar extends Stage{
 	SelectBox<String> ListButton;
 	int edgePadding;
 	int buttonPadding = 5;
-	String[] fleets = {"Player Fleet", "Enemy Fleet 1", "Enemy Fleet 2", "Enemy Fleet 3", "Enemy Fleet 5"};
+	String[] fleets = new String[2];
 	JComboBox fleetList = new JComboBox(fleets);
 	
 	
@@ -95,11 +99,21 @@ public class InfoBar extends Stage{
         txt1.setY(PlayerButton.getHeight() * 3);
         txt1.setText("Player Resoures:");
         
+        fleets[0] = new String("Player 1");
+        fleets[1] = new String("Enemy fleet 1");
         ListButton.setX(0);
         ListButton.setY(3*PlayerButton.getHeight());
-        
-        
         ListButton.setItems(fleets);
+        
+        // Switches to Location of Currently selected Fleet
+        ListButton.addListener(new ClickListener(){
+        	public void changed (ChangeEvent event) {
+				System.out.print(ListButton.getSelected());
+        		
+        	}
+        });
+        
+        ListButton.setSelected("Enemy Fleet 1");
 
         playerResources.setX(txt1.getX() + txt1.getMinWidth() + buttonPadding);
         playerResources.setY(PlayerButton.getHeight() * 3);
