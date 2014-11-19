@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
@@ -49,7 +50,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public Sound selectSound;
 	public InputMultiplexer multiplexer;
 	public Stage menuStage;
-	public Table menu;
+	public Table lobby, menu, gameListView, gameDetailsView;
 	public float masterVolume = 0.5f;
 	private int userID;
 	public Texture bgimg;
@@ -81,6 +82,35 @@ public class LobbyStage extends Stage implements MakesRequests {
 		bgimg = new Texture("MenuBackground.jpg");
 		background = new Image(bgimg);
 		gameList = new ArrayList<GameListItem>();
+		
+		//DestinyTactics.SCREEN_WIDTH
+		lobby = new Table(skin);
+		menu = new Table();
+		gameListView = new Table();
+		gameDetailsView = new Table();
+		
+		lobby.setDebug(true);
+		lobby.setHeight(DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding));
+		lobby.setWidth(DestinyTactics.SCREEN_WIDTH - (2 * edgePadding));
+		
+		
+		//.height((DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding)) /6)
+		//.width(lobby.getWidth()/2 - edgePadding)
+		lobby.add("Lobby").align(Align.left).height((DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding)) / 14);
+		lobby.add("Menu").align(Align.right).height((DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding)) / 14);
+		lobby.row();
+		lobby.add().align(Align.left).expand().width(lobby.getWidth()/2 - (edgePadding / 2)).height(lobby.getHeight() - ((DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding)) / 14));
+		lobby.add().align(Align.right).expand().width(lobby.getWidth()/2 - (edgePadding / 2)).height(lobby.getHeight() - ((DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding)) / 14));
+		//lobby.add("Game List").expandY().align(Align.left).width(DestinyTactics.SCREEN_WIDTH - (2 * edgePadding)).top();
+		//lobby.add("Game Details").expandY().align(Align.right).width(DestinyTactics.SCREEN_WIDTH - (2 * edgePadding)).top();
+		
+		
+		lobby.setY(edgePadding);
+		lobby.setX(edgePadding);
+		this.addActor(background);
+		this.addActor(lobby);
+
+		/*
 		menu = new Table();
 		// menu.setDebug(true);
 
@@ -114,7 +144,10 @@ public class LobbyStage extends Stage implements MakesRequests {
 		menu.setY(padding);
 		this.addActor(background);
 		this.addActor(menu);
-		listGames();
+		*/
+		
+		
+		//listGames();
 	}
 
 	/**
