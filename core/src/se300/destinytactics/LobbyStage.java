@@ -1,6 +1,7 @@
 package se300.destinytactics;
 
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,17 +28,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.OrderedMap;
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * 
- * @author Team Guardian
- * Extends Stage in the LibGDX framework.
- * Displays the UI for selecting and joining games. 
+ * @author Team Guardian Extends Stage in the LibGDX framework. Displays the UI
+ *         for selecting and joining games.
  */
-public class LobbyStage extends Stage implements MakesRequests{
+public class LobbyStage extends Stage implements MakesRequests {
 
 	public MultiplayerScreen myGame;
 	public Skin skin;
@@ -55,13 +58,17 @@ public class LobbyStage extends Stage implements MakesRequests{
 	MessageDigest messageDigest;
 	String name, passwordHash;
 	Label status;
-	
+	ArrayList<GameListItem> gameList;
+
 	/**
 	 * LobbyStage constructor. Builds the Lobby menu actors.
+	 * 
 	 * @param vp
 	 * @param padding
-	 * @param skin  Skin to use for the screen.
-	 * @param myGame  Parent game class that contains this screen.
+	 * @param skin
+	 *            Skin to use for the screen.
+	 * @param myGame
+	 *            Parent game class that contains this screen.
 	 * 
 	 */
 	public LobbyStage(Viewport vp, int padding, Skin skin,
@@ -71,10 +78,9 @@ public class LobbyStage extends Stage implements MakesRequests{
 		this.myGame = myGame;
 		edgePadding = padding;
 		this.skin = skin;
-
 		bgimg = new Texture("MenuBackground.jpg");
 		background = new Image(bgimg);
-
+		gameList = new ArrayList<GameListItem>();
 		menu = new Table();
 		// menu.setDebug(true);
 
@@ -108,30 +114,32 @@ public class LobbyStage extends Stage implements MakesRequests{
 		menu.setY(padding);
 		this.addActor(background);
 		this.addActor(menu);
+		listGames();
 	}
-	
+
 	/**
 	 * Calls the goMenu method in DestinyTactics object to switch screens.
 	 */
 	public void goMenu() {
 		myGame.goMenu();
 	}
-	
+
 	/**
 	 * Starts the loaded game.
 	 */
 	public void createGame() {
 
-		//{"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
-		//"createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
-		
+		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
+		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
+
 		GameJson game = new GameJson(Utility.getSeed());
 		Json json = new Json();
+		json.setOutputType(OutputType.json);
 		System.out.println(json.toJson(game));
-		
+
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("method", "createGame");
-		parameters.put("gameObj", json.toJson(game));
+		parameters.put("method", "saveGame");
+		parameters.put("gameDataObject", json.toJson(game));
 		parameters.put("returnFormat", "JSON");
 
 		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
@@ -139,6 +147,7 @@ public class LobbyStage extends Stage implements MakesRequests{
 		httpGet.setContent(HttpParametersUtils
 				.convertHttpParameters(parameters));
 		httpGet.setTimeOut(0);
+		System.out.println(httpGet.getContent());
 
 		WebRequest createReq = new WebRequest(this, httpGet);
 		createReq.start();
@@ -150,6 +159,51 @@ public class LobbyStage extends Stage implements MakesRequests{
 	public void http(OrderedMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		System.out.println(map);
+		if (map.containsKey("gameList")) {
+			Json json = new Json();
+			json.setOutputType(OutputType.json);
+			System.out.println("List of games");
+			JsonValue root = new JsonReader().parse(map.get("gameList")
+					.toString());
+
+			for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+				gameList.add(json.fromJson(GameListItem.class, entry.toString()));
+				this.addActor(gameList.get(gameList.size()-1));
+			}
+			for(GameListItem item : gameList){
+				item.update();
+			}
+		}
+	}
+
+	/**
+	 * List pending games.
+	 */
+	public void listGames() {
+
+		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
+		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
+
+		GameJson game = new GameJson(Utility.getSeed());
+		Json json = new Json();
+		json.setOutputType(OutputType.json);
+		System.out.println(json.toJson(game));
+
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "getGameList");
+		parameters.put("status", "pending");
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+		System.out.println(httpGet.getContent());
+
+		WebRequest listReq = new WebRequest(this, httpGet);
+		listReq.start();
+
 	}
 
 }

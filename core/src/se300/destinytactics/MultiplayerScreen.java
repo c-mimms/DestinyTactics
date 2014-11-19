@@ -66,7 +66,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	 * @param skin  Skin to use for the screen.
 	 */
 	public MultiplayerScreen(DestinyTactics game, Skin skin) {
-
+		
 		this.game = game;
 		this.skin = skin;
 
@@ -186,6 +186,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
 
+		goToLobby();
 	}
 
 	@Override

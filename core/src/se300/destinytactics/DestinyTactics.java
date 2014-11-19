@@ -31,13 +31,15 @@ public class DestinyTactics extends Game {
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 640;
 	public static final int PADDING = 20;
-
+	public static Skin skin2 ;
+	
 	GameScene gameScreen;
 	MenuScene menuScreen;
 	HighScoresScene scoreScreen;
 	SetupScene setupScreen;
 	MultiplayerScreen multiplayerScreen;
-	Skin skin,skin2;
+	public Skin skin;
+	
 	public Music musicLoop;
 	public Sound selectSound;
 	public float masterVolume = 0.5f;

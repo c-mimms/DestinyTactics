@@ -15,7 +15,8 @@ public class GameJson {
 
 	public GameJson(long seed) {
 		galaxySeed = seed;
-		galaxyID = "";
+		galaxyID = "1";
+		createdBy = "1";
 		players = new PlayerJson[1];
 		players[0] = new PlayerJson(1, 1, "Rebels");
 		sectors = new SectorJson[1];

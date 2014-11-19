@@ -2,6 +2,7 @@ package se300.destinytactics;
 
 public class PlayerJson {
 	
+	public int gameID;
 	public int userID;
 	public String alliance;
 	public int isHost;
