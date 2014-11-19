@@ -187,6 +187,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 			GameJson games = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
 			System.out.println(games.sectors);
 		}
+		//System.out.println(Thread.activeCount());
 	}
 
 	/**
