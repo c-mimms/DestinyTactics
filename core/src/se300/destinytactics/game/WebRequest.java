@@ -55,14 +55,6 @@ public class WebRequest extends Thread {
 	 */
 	public void run(){
 		send();
-		try {
-			//End this thread.
-			this.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Thread.currentThread().interrupt();
 		return;
 	}
 	
