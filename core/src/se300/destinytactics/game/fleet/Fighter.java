@@ -1,7 +1,7 @@
 package se300.destinytactics.game.fleet;
 
 
-
+ 
 
 /**
  * @author simonsr1
@@ -18,7 +18,6 @@ public class Fighter extends Ship implements needsHangar {
 	public static ShipJSON stats = new ShipJSON();
 	
 	public Fighter(){
-		
 		
 	}
 

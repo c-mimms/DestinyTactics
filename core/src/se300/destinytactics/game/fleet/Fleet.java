@@ -299,16 +299,95 @@ public class Fleet extends Actor {
 		int defBattleship = enemy.getShipCount("Battleship");
 		int defDreadnaught = enemy.getShipCount("Dreadnaught");
 		
-		//Get effective numbers
+		//Get effective numbers Attacker
+		int effattFighters = attFighters;
+		int effattCorvette = attCorvette;
+		int effattBomber = attBomber;
+		int effattCarrier = attCarrier;
+		int effattScout = attScout;
+		int effattBattleship = attBattleship;
+		int effattDreadnaught = attDreadnaught;
+		
+		//Get effective numbers def. Multiply by support
+		int effdefFighters = defFighters;
+		int effdefCorvette = defCorvette;
+		int effdefBomber = defBomber;
+		int effdefCarrier = defCarrier;
+		int effdefScout = defScout;
+		int effdefBattleship = defBattleship;
+		int effdefDreadnaught = defDreadnaught;
 		
 		//Do math. This will be changed to number of effective ships later
-		if(attFighters < defFighters) { //If attacker has less, all attacker fighters are killed
-			defFighters -= attFighters; //Remaining defenders
-			attFighters = 0;
+		if(effattFighters < effdefFighters) { //If attacker has less, all attacker fighters are killed
+			effdefFighters -= effattFighters; //Remaining defenders
+			effattFighters = 0;
 		} else { //If attacker has more, all defenders are killed
-			attFighters -= defFighters; //remaining attackers
-			defFighters = 0;
+			effattFighters -= effdefFighters; //remaining attackers
+			effdefFighters = 0;
 		}
+		if(effattCorvette < effdefCorvette) { //If attacker has less, all attacker fighters are killed
+			effdefCorvette -= effattCorvette; //Remaining defenders
+			effattCorvette = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattCorvette -= effdefCorvette; //remaining attackers
+			effdefCorvette = 0;
+		}
+		if(effattBomber < effdefBomber) { //If attacker has less, all attacker fighters are killed
+			effdefBomber -= effattBomber; //Remaining defenders
+			effattBomber = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattBomber -= effdefBomber; //remaining attackers
+			effdefBomber = 0;
+		}
+		if(effattCarrier < effdefCarrier) { //If attacker has less, all attacker fighters are killed
+			effdefCarrier -= effattCarrier; //Remaining defenders
+			effattCarrier = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattCarrier -= effdefCarrier; //remaining attackers
+			effdefCarrier = 0;
+		}
+		if(effattScout < effdefScout) { //If attacker has less, all attacker fighters are killed
+			effdefScout -= effattScout; //Remaining defenders
+			effattScout = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattScout -= effdefScout; //remaining attackers
+			effdefScout = 0;
+		}
+		if(effattBattleship < effdefBattleship) { //If attacker has less, all attacker fighters are killed
+			effdefBattleship -= effattBattleship; //Remaining defenders
+			effattBattleship = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattBattleship -= effdefBattleship; //remaining attackers
+			effdefBattleship = 0;
+		}
+		if(effattDreadnaught < effdefDreadnaught) { //If attacker has less, all attacker fighters are killed
+			effdefDreadnaught -= effattDreadnaught; //Remaining defenders
+			effattDreadnaught = 0;
+		} else { //If attacker has more, all defenders are killed
+			effattDreadnaught -= effdefDreadnaught; //remaining attackers
+			effdefDreadnaught = 0;
+		}
+		
+		
+		//De-effectify ships. Divide by support
+		//Attacker total ships
+		attFighters = effattFighters;
+		attCorvette = effattCorvette;
+		attBomber = effattBomber;
+		attCarrier = effattCarrier;
+		attScout = effattScout;
+		attBattleship = effattBattleship;
+		attDreadnaught = effattDreadnaught;
+		
+		//Defenders Total Ships //DEVIDE BY SUPPORTS!!
+		defFighters = effdefFighters;
+		defCorvette = effdefCorvette;
+		defBomber = effdefBomber;
+		defCarrier = effdefCarrier;
+		defScout = effdefScout;
+		defBattleship = effdefBattleship;
+		defDreadnaught = effdefDreadnaught;
+		
 		
 		
 		//Put remaining ships back into this fleet
