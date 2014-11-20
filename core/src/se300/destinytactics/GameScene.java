@@ -123,8 +123,12 @@ public class GameScene implements Screen, MakesRequests{
 		//Utility.setSeed(1);
 		
 		//Generate the Galaxy
-		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
-
+		if(m_Galaxy == null){
+			m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
+		}
+		else{
+			m_Galaxy.thisgame = this;
+		}
 		// Create galaxy stage and constants UIs
 		galaxyStage = new GalaxyScene(new FitViewport(SCREEN_WIDTH,
 				SCREEN_HEIGHT), skin, this);
