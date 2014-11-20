@@ -31,7 +31,9 @@ public class ShipJSON {
 	bomberKDRatio,
 	battleshipKDRatio,
 	size,
-	scoutSupport;
+	scoutSupport,
+	metalCost,
+	buildTime;
 
 	public String unit, type;
 	

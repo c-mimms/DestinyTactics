@@ -13,12 +13,12 @@ public class Fighter extends Ship implements needsHangar {
 	private int combatRating = 1;
 	private int hangarcost = 1;
 	private int sectorTravelSpeed = 1;
-	private String shipType = "Fighter";
+	private int buildTime;
 
 	public static ShipJSON stats = new ShipJSON();
 	
 	public Fighter(){
-		
+		buildTime = stats.buildTime;
 	}
 
 	public void finalize() throws Throwable {
@@ -37,12 +37,34 @@ public class Fighter extends Ship implements needsHangar {
 	}
 
 	public int getHangarCost(){
-		return 0;
+		return stats.needsHangar;
 	}
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
+	}
+
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
 	}
 	
 }//end Fighter

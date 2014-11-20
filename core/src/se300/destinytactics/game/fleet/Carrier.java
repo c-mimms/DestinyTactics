@@ -15,12 +15,12 @@ public class Carrier extends Ship implements hasHangar {
 	private int hangarSize = 50;
 	private int sectorTravelSpeed = 1;
 	private String shipType = "Carrier";
+	private int buildTime;
 	
 	public static ShipJSON stats = new ShipJSON();
 
 	public Carrier(){
-		buildTime = 5;
-		spaceToBuild = 100;
+		buildTime = stats.buildTime;
 	}
 
 	public void finalize() throws Throwable {
@@ -36,7 +36,27 @@ public class Carrier extends Ship implements hasHangar {
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
 	}
 	
 }//end Carrier

@@ -14,13 +14,13 @@ public class Dreadnaught extends Ship implements hasHangar {
 	private int galacticTravelSpeed = 1;
 	private int hangarSize = 25;
 	private int sectorTravelSpeed = 1;
+	private int buildTime;
 	private String shipType = "Dreadnaught";
 	
 	public static ShipJSON stats = new ShipJSON();
 
 	public Dreadnaught(){
-		buildTime = 7;
-		spaceToBuild = 144;
+		buildTime = stats.buildTime;
 	}
 
 	public void finalize() throws Throwable {
@@ -36,7 +36,27 @@ public class Dreadnaught extends Ship implements hasHangar {
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
 	}
 	
 }//end Dreadnaught

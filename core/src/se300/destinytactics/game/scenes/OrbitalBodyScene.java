@@ -97,13 +97,13 @@ public class OrbitalBodyScene extends Stage {
 				+myGame.curOrbitalBody.getShips(6)
 				+")");
 		} else {
-			myGame.planetUI.fc.fighterNum.setText("0( )");
-			myGame.planetUI.fc.corvetteNum.setText("0( )");
-			myGame.planetUI.fc.bomberNum.setText("0( )");
-			myGame.planetUI.fc.carrierNum.setText("0( )");
-			myGame.planetUI.fc.scoutNum.setText("0( )");
-			myGame.planetUI.fc.battleNum.setText("0( )");
-			myGame.planetUI.fc.dreadNum.setText("0( )");
+			myGame.planetUI.fc.fighterNum.setText("0(0)");
+			myGame.planetUI.fc.corvetteNum.setText("0(0)");
+			myGame.planetUI.fc.bomberNum.setText("0(0)");
+			myGame.planetUI.fc.carrierNum.setText("0(0)");
+			myGame.planetUI.fc.scoutNum.setText("0(0)");
+			myGame.planetUI.fc.battleNum.setText("0(0)");
+			myGame.planetUI.fc.dreadNum.setText("0(0)");
 		}
 		
 		// Add image background and stretch to fit

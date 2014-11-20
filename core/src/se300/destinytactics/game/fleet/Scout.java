@@ -11,13 +11,13 @@ public class Scout extends Ship {
 	private int combatRating = 1;
 	private int galacticTravelSpeed = 3;
 	private int sectorTravelSpeed = 2;
+	private int buildTime;
 	private String shipType = "Scout";
 	
 	public static ShipJSON stats = new ShipJSON();
 
 	public Scout(){
-		buildTime = 1;
-		spaceToBuild = 4;
+		buildTime = stats.buildTime;
 	}
 
 	public void finalize() throws Throwable {
@@ -26,7 +26,27 @@ public class Scout extends Ship {
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
 	}
 	
 }//end Scout

@@ -40,6 +40,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 	private int shipyardSize;
 	private int shipyardCost;
 	public ArrayList<Ship> buildQueue = new ArrayList<Ship>();
+	String orderedType;
 
 	public int ships[] = new int[7];
 
@@ -168,12 +169,18 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 
 	@Override
 	public void addToQueue(Ship ship) {
-		if (ship.getSpaceToBuild() < shipyardSize) {
+		if (ship.getSpaceToBuild() < shipyardSize & ship.getMetalCost() < owner.getResource()) {
 			buildQueue.add(ship);
 			addShipOrdered(ship);
 			shipyardSize -= ship.getSpaceToBuild();
+			owner.spendResource(ship.getMetalCost());
 		} else {
-			System.out.println("Shipyard Full");
+			if(ship.getSpaceToBuild() > shipyardSize){
+				System.out.println("Shipyard full.");
+			}
+			if(ship.getMetalCost() > owner.getResource()){
+				System.out.println("Not enough resources.");
+			};
 		}
 	}
 
@@ -182,7 +189,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 		ArrayList<Ship> removeQueue = new ArrayList<Ship>();
 		for (Ship ship : buildQueue) {
 			ship.decrementBuildTime();
-			//System.out.println(ship.getBuildTime());
+			System.out.println(ship.getShipType() + " " + ship.getBuildTime());
 			if (ship.getBuildTime() <= 0) {
 				System.out.println(ship.getShipType() + " Built");
 				toFleet(ship);
@@ -191,19 +198,19 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 		}
 		for (Ship ship : removeQueue) {
 			buildQueue.remove(ship);
-			if (ship.getShipType() == "Fighter") {
+			if (ship.getShipType().equals("Fighter")) {
 				ships[0] = ships[0] - 1;
-			} else if (ship.getShipType() == "Corvette") {
+			} else if (ship.getShipType().equals("Corvette")){
 				ships[1] -= 1;
-			} else if (ship.getShipType() == "Bomber") {
+			} else if (ship.getShipType().equals("Bomber")) {
 				ships[2] -= 1;
-			} else if (ship.getShipType() == "Carrier") {
+			} else if (ship.getShipType().equals("Carrier")) {
 				ships[3] -= 1;
-			} else if (ship.getShipType() == "Scout") {
+			} else if (ship.getShipType().equals("Scout")) {
 				ships[4] -= 1;
-			} else if (ship.getShipType() == "Battleship") {
+			} else if (ship.getShipType().equals("Battleship")) {
 				ships[5] -= 1;
-			} else if (ship.getShipType() == "Dreadnaught") {
+			} else if (ship.getShipType().equals("Dreadnaught")) {
 				ships[6] -= 1;
 			}
 		}
@@ -229,21 +236,23 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 	 * Records number of each type of ship in queue
 	 */
 	public void addShipOrdered(Ship ship) {
-		if (ship.getShipType() == "Fighter") {
+		System.out.println(ship.getShipType());
+		orderedType = ship.getShipType().toString();
+		if (ship.getShipType().equals("Fighter")) {
 			ships[0] = ships[0] + 1;
-		} else if (ship.getShipType() == "Corvette") {
+		} else if (ship.getShipType().equals("Corvette")) {
 			ships[1] += 1;
-		} else if (ship.getShipType() == "Bomber") {
+		} else if (ship.getShipType().equals("Bomber")) {
 			ships[2] += 1;
-		} else if (ship.getShipType() == "Carrier") {
+		} else if (ship.getShipType().equals("Carrier")) {
 			ships[3] += 1;
-		} else if (ship.getShipType() == "Scout") {
+		} else if (ship.getShipType().equals("Scout")) {
 			ships[4] += 1;
-		} else if (ship.getShipType() == "Battleship") {
+		} else if (ship.getShipType().equals("Battleship")) {
 			ships[5] += 1;
-		} else if (ship.getShipType() == "Dreadnaught") {
+		} else if (ship.getShipType().equals("Dreadnaught")) {
 			ships[6] += 1;
-		}
+		} 
 	}
 
 	@Override

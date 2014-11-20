@@ -3,11 +3,11 @@ package se300.destinytactics.game.fleet;
 public class Battleship extends Ship implements hasHangar {
 
 	public String shipType = "Battleship";
+	private int buildTime;
 	public static ShipJSON stats = new ShipJSON();
 	
 	public Battleship() {
-		buildTime = 4;
-		spaceToBuild = 64;
+		buildTime = stats.buildTime;
 	}
 	
 	@Override
@@ -24,7 +24,27 @@ public class Battleship extends Ship implements hasHangar {
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
 	}
 	
 

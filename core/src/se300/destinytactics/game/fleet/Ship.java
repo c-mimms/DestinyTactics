@@ -7,7 +7,7 @@ package se300.destinytactics.game.fleet;
  * @version 1.0
  * @created 10-Oct-2014 5:49:17 PM
  */
-public class Ship {
+public abstract class Ship {
 
 	private int combatRating;
 	private Fleet fleetAssignment;
@@ -19,9 +19,6 @@ public class Ship {
 	private String[][] supportBenefits;
 	
 	
-	//NEW 11/10/14
-	public int buildTime;
-	public int spaceToBuild;
 
 	
 	public Ship(){
@@ -47,9 +44,11 @@ public class Ship {
 		return 0;
 	}
 
-	public String getShipType(){
-		return "";
-	}
+	/**
+	 * Gets unit type
+	 * @return
+	 */
+	public abstract String getShipType();
 
 	/**
 	 * 
@@ -91,23 +90,23 @@ public class Ship {
 	 * gets build time
 	 * @return buildTime
 	 */
-	public int getBuildTime() {
-		return buildTime;
-	}
+	public abstract int getBuildTime();
 	
 	/**
 	 * decrements build time by 1
 	 */
-	public void decrementBuildTime() {
-		buildTime--;
-	}
+	public abstract void decrementBuildTime();
 	
 	/**
 	 * Gets amount of space in shipyard that ship needs
 	 * @return spaceToBuild
 	 */
-	public int getSpaceToBuild() {
-		return spaceToBuild;
-	}
+	public abstract int getSpaceToBuild();
+	
+	/**
+	 * Gets cost of ship
+	 * @return metalCost
+	 */
+	public abstract int getMetalCost();
 	
 }//end Ship

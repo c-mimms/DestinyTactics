@@ -11,13 +11,13 @@ public class Corvette extends Ship {
 	private int combatRating = 25;
 	private int galacticTravelSpeed = 2;
 	private int sectorTravelSpeed = 2;
+	private int buildTime;
 	private String shipType = "Corvette";
 	
 	public static ShipJSON stats = new ShipJSON();
 
 	public Corvette(){
-		buildTime = 1;
-		spaceToBuild = 36;
+		buildTime = stats.buildTime;
 	}
 
 	public void finalize() throws Throwable {
@@ -26,7 +26,27 @@ public class Corvette extends Ship {
 	
 	@Override
 	public String getShipType(){
-		return shipType;
+		return stats.unit;
+	}
+	
+	@Override
+	public void decrementBuildTime() {
+		buildTime--;
+		
+	}
+	@Override
+	public int getBuildTime() {
+		return buildTime;
+	}
+
+	@Override
+	public int getSpaceToBuild() {
+		return stats.size;
+	}
+
+	@Override
+	public int getMetalCost() {
+		return stats.metalCost;
 	}
 	
 }//end Corvette
