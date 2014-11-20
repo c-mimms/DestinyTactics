@@ -4,6 +4,8 @@ public class Bomber extends Ship {
 
 	public String shipType = "Bomber";
 	
+	public static ShipJSON stats = new ShipJSON();
+	
 	public Bomber() {
 		buildTime = 3;
 		spaceToBuild = 36;

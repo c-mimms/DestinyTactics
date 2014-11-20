@@ -3,6 +3,7 @@ package se300.destinytactics.game.fleet;
 public class Battleship extends Ship implements hasHangar {
 
 	public String shipType = "Battleship";
+	public static ShipJSON stats = new ShipJSON();
 	
 	public Battleship() {
 		buildTime = 4;

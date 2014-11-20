@@ -12,6 +12,8 @@ public class Corvette extends Ship {
 	private int galacticTravelSpeed = 2;
 	private int sectorTravelSpeed = 2;
 	private String shipType = "Corvette";
+	
+	public static ShipJSON stats = new ShipJSON();
 
 	public Corvette(){
 		buildTime = 1;

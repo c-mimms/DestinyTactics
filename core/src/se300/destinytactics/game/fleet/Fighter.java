@@ -15,9 +15,11 @@ public class Fighter extends Ship implements needsHangar {
 	private int sectorTravelSpeed = 1;
 	private String shipType = "Fighter";
 
+	public static ShipJSON stats = new ShipJSON();
+	
 	public Fighter(){
-		buildTime = 1;
-		spaceToBuild = 2;
+		
+		
 	}
 
 	public void finalize() throws Throwable {

@@ -280,6 +280,56 @@ public class Fleet extends Actor {
 	 * @param enemy
 	 */
 	public void attack(Fleet enemy) {
+		
+		//Attacker total ships
+		int attFighters = this.getShipCount("Fighter");
+		int attCorvette = this.getShipCount("Corvette");
+		int attBomber = this.getShipCount("Bomber");
+		int attCarrier = this.getShipCount("Carrier");
+		int attScout = this.getShipCount("Scout");
+		int attBattleship = this.getShipCount("Battleship");
+		int attDreadnaught = this.getShipCount("Dreadnaught");
+		
+		//Defenders Total Ships
+		int defFighters = enemy.getShipCount("Fighter");
+		int defCorvette = enemy.getShipCount("Corvette");
+		int defBomber = enemy.getShipCount("Bomber");
+		int defCarrier = enemy.getShipCount("Carrier");
+		int defScout = enemy.getShipCount("Scout");
+		int defBattleship = enemy.getShipCount("Battleship");
+		int defDreadnaught = enemy.getShipCount("Dreadnaught");
+		
+		//Get effective numbers
+		
+		//Do math. This will be changed to number of effective ships later
+		if(attFighters < defFighters) { //If attacker has less, all attacker fighters are killed
+			defFighters -= attFighters; //Remaining defenders
+			attFighters = 0;
+		} else { //If attacker has more, all defenders are killed
+			attFighters -= defFighters; //remaining attackers
+			defFighters = 0;
+		}
+		
+		
+		//Put remaining ships back into this fleet
+		this.shipMap.put("Fighter", attFighters);
+		this.shipMap.put("Corvette", attCorvette);
+		this.shipMap.put("Bomber", attBomber);
+		this.shipMap.put("Carrier", attCarrier);
+		this.shipMap.put("Scout", attScout);
+		this.shipMap.put("Battleship", attBattleship);
+		this.shipMap.put("Dreadnaught", attDreadnaught);
+		
+		//Put remaining ships back into enemy fleet
+		enemy.shipMap.put("Fighter", defFighters);
+		enemy.shipMap.put("Corvette", defCorvette);
+		enemy.shipMap.put("Bomber", defBomber);
+		enemy.shipMap.put("Carrier", defCarrier);
+		enemy.shipMap.put("Scout", defScout);
+		enemy.shipMap.put("Battleship", defBattleship);
+		enemy.shipMap.put("Dreadnaught", defDreadnaught);
+		
+		/*
 		while(enemy.getShipCount("Fighter") > 0 & this.getShipCount("Fighter") > 0) {
 			enemy.shipMap.put("Fighter", enemy.getShipCount("Fighter") - 1);
 			this.shipMap.put("Fighter", this.getShipCount("Fighter") - 1);
@@ -308,7 +358,7 @@ public class Fleet extends Actor {
 			enemy.shipMap.put("Dreadnaught", enemy.getShipCount("Dreadnaught") - 1);
 			this.shipMap.put("Dreadnaught", this.getShipCount("Dreadnaught") - 1);
 		}
-		
+		*/
 	}
 	
 	/**

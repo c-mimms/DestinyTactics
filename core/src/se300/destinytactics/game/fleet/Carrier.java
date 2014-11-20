@@ -15,6 +15,8 @@ public class Carrier extends Ship implements hasHangar {
 	private int hangarSize = 50;
 	private int sectorTravelSpeed = 1;
 	private String shipType = "Carrier";
+	
+	public static ShipJSON stats = new ShipJSON();
 
 	public Carrier(){
 		buildTime = 5;
