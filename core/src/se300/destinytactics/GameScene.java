@@ -1,6 +1,17 @@
 package se300.destinytactics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import se300.destinytactics.game.Player;
+import se300.destinytactics.game.WebRequest;
+import se300.destinytactics.game.fleet.Battleship;
+import se300.destinytactics.game.fleet.Bomber;
+import se300.destinytactics.game.fleet.Carrier;
+import se300.destinytactics.game.fleet.Corvette;
+import se300.destinytactics.game.fleet.Dreadnaught;
+import se300.destinytactics.game.fleet.Fighter;
+import se300.destinytactics.game.fleet.ShipJSON;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.mapgen.Utility;
@@ -15,10 +26,17 @@ import se300.destinytactics.game.scenes.SectorScene;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Net.HttpMethods;
+import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -35,7 +53,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
  * 					Contains game-wide and player-specific data (i.e. current amount of resources, score, fleet size, etc..)
  * 				 planetUI : Shown within the planetStage. Displays fleet, defense, and infrastructure management interfaces.
  */
-public class GameScene implements Screen {
+public class GameScene implements Screen, MakesRequests{
 
 	// Constants
 	public static final int SCREEN_WIDTH = 1024;
@@ -93,6 +111,7 @@ public class GameScene implements Screen {
 		// m_Galaxy.thisgame = this;
 		localPlayer = new Player();
 
+		this.getShipData();
 		// Load music and sounds (we should have a static sound/music class
 		// maybe?)
 		musicLoop = Gdx.audio.newMusic(Gdx.files
@@ -310,5 +329,56 @@ public class GameScene implements Screen {
 		galaxyStage.endTurn();
 		localPlayer.endTurn();
 		goGalaxy();
+	}
+	
+	/**
+	 * Gets Ship Object information from server
+	 */
+	public void getShipData() {
+		
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "getUnitList");
+		parameters.put("returnFormat", "JSON");
+		
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest shipReq = new WebRequest(this, httpGet);
+		shipReq.start();
+	}
+
+	@Override
+	public void http(OrderedMap<String, Object> map) {
+		JsonValue root = new JsonReader().parse(map.get("unitList").toString());
+		Json json = new Json();
+		
+		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+			ShipJSON tmp = json.fromJson(ShipJSON.class, entry.toString());
+			System.out.println(tmp.unit);
+			switch(tmp.unit) {
+				case "Fighter": //IDIOT
+					Fighter.stats = tmp;
+					break;
+				case "Corvette":
+					Corvette.stats = tmp;
+					break;
+				case "Bomber":
+					Bomber.stats = tmp;
+					break;
+				case "Carrier":
+					Carrier.stats = tmp;
+					break;
+				case "Battleship":
+					Battleship.stats = tmp;
+					break;
+				case "Dreadnaught":
+					Dreadnaught.stats = tmp;
+					break;
+			}
+		}
+		
 	}
 }

@@ -15,6 +15,8 @@ public class Dreadnaught extends Ship implements hasHangar {
 	private int hangarSize = 25;
 	private int sectorTravelSpeed = 1;
 	private String shipType = "Dreadnaught";
+	
+	public static ShipJSON stats = new ShipJSON();
 
 	public Dreadnaught(){
 		buildTime = 7;

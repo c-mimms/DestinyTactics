@@ -12,8 +12,8 @@ public class Ship {
 	private int combatRating;
 	private Fleet fleetAssignment;
 	private int galacticTravelSpeed = 0;
-	private int hangarSize = 0;
-	private boolean needsHangar = false;
+	//private int hangarSize = 0;
+	//private boolean needsHangar = false;
 	private int sectorTravelSpeed;
 	private String shipType;
 	private String[][] supportBenefits;
@@ -23,6 +23,7 @@ public class Ship {
 	public int buildTime;
 	public int spaceToBuild;
 
+	
 	public Ship(){
 		
 	}
