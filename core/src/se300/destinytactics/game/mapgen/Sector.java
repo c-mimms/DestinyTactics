@@ -63,8 +63,8 @@ public class Sector extends Actor {
 	public int padding = 50;
 	public boolean hovering = false;
 	public Galaxy galaxy;
-	private int controlState;
-	private int numBodies;
+	public int controlState;
+	public int numBodies;
 
 	// ToolTip
 	public ToolTip toolTip;
@@ -72,9 +72,6 @@ public class Sector extends Actor {
 	public Sector(Galaxy gal) {
 
 		galaxy = gal;
-		sunTypes = Assets.getSunTypes();
-		sprite1.setFilter(TextureFilter.MipMapLinearLinear,
-				TextureFilter.Linear);
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
 
@@ -133,6 +130,12 @@ public class Sector extends Actor {
 
 		});
 
+	}
+	
+	public static void loadAssets(){
+
+		sunTypes = Assets.getSunTypes();
+		sprite1.setFilter(TextureFilter.MipMapLinearLinear, TextureFilter.Linear);
 	}
 
 	/**

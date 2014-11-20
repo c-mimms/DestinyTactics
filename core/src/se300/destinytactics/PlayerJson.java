@@ -25,6 +25,12 @@ public class PlayerJson {
 	public PlayerJson() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public void update() {
+
+		
+		
+	}
 }
 
 // userID” : 1, “alliance” : “Rebels”, “isHost” : 1

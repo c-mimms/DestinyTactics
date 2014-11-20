@@ -1,5 +1,7 @@
 package se300.destinytactics.game.mapgen;
 
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
@@ -110,6 +112,9 @@ public class Assets {
 	 * Blocks program execution until all assets are loaded.
 	 */
 	public static void finish() {
+		
 		 manager.finishLoading();
+		 Sector.loadAssets();
+		 OrbitalBody.loadAssets();
 	}
 }

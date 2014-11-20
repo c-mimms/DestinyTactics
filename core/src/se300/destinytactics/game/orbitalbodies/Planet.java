@@ -36,7 +36,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 	private int resourcePerTurn;
 
 	// Shipyard variable declaration
-	private int shipyardLevel;
+	int shipyardLevel;
 	private int shipyardSize;
 	private int shipyardCost;
 	public ArrayList<Ship> buildQueue = new ArrayList<Ship>();

@@ -52,7 +52,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public Stage menuStage;
 	public Table lobby, menu, gameListView, gameDetailsView;
 	public float masterVolume = 0.5f;
-	private int userID;
+	public int userID;
 	public Texture bgimg;
 	public Image logo, background;
 	public TextButton createGameButton, menuButton;
@@ -60,6 +60,8 @@ public class LobbyStage extends Stage implements MakesRequests {
 	String name, passwordHash;
 	Label status;
 	ArrayList<GameListItem> gameList;
+	boolean startGame = false;
+	GameJson lastGame;
 
 	/**
 	 * LobbyStage constructor. Builds the Lobby menu actors.
@@ -150,6 +152,17 @@ public class LobbyStage extends Stage implements MakesRequests {
 		//listGames();
 	}
 
+	public void act(float time) {
+		super.act(time);
+		if (startGame) {
+			startGame = false;
+			myGame.game.startGame();
+			if (lastGame != null) {
+				lastGame.update();
+			}
+		}
+	}
+
 	/**
 	 * Calls the goMenu method in DestinyTactics object to switch screens.
 	 */
@@ -162,12 +175,15 @@ public class LobbyStage extends Stage implements MakesRequests {
 	 */
 	public void createGame() {
 
+		GameScene.preloadGalaxy();
+
 		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
 		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
 
 		GameJson game = new GameJson(Utility.getSeed());
 		Json json = new Json();
 		json.setOutputType(OutputType.json);
+		//json.setUsePrototypes(false);
 		System.out.println(json.toJson(game));
 
 		Map<String, String> parameters = new HashMap<String, String>();
@@ -181,10 +197,13 @@ public class LobbyStage extends Stage implements MakesRequests {
 				.convertHttpParameters(parameters));
 		httpGet.setTimeOut(0);
 
+		System.out.println(httpGet.getContent());
+
 		WebRequest createReq = new WebRequest(this, httpGet);
 		createReq.start();
 
-		myGame.game.startGame();
+		this.startGame = true;
+
 	}
 
 	@Override
@@ -196,31 +215,39 @@ public class LobbyStage extends Stage implements MakesRequests {
 					.toString());
 
 			for (JsonValue entry = root.child; entry != null; entry = entry.next) {
-				final GameListItem tmp = json.fromJson(GameListItem.class, entry.toString());
+				final GameListItem tmp = json.fromJson(GameListItem.class,
+						entry.toString());
 				gameList.add(tmp);
 
 				tmp.addListener(new ClickListener() {
-					public boolean touchDown(InputEvent event, float x, float y,
-							int pointer, int button) {
+					public boolean touchDown(InputEvent event, float x,
+							float y, int pointer, int button) {
 						joinGame(tmp.gameID);
 						return true;
 					}
 				});
 				this.addActor(tmp);
 			}
-			for(GameListItem item : gameList){
+			for (GameListItem item : gameList) {
 				item.update();
 			}
 		}
-		else if(map.containsKey("gameObj")){
-			GameJson games = json.fromJson(GameJson.class, map.get("gameObj").toString());
-			//System.out.println(map);
+		// Join game return
+		else if (map.containsKey("gameObj")) {
+			GameJson games = json.fromJson(GameJson.class, map.get("gameObj")
+					.toString());
+			// System.out.println(map);
+			Utility.setSeed(games.galaxySeed);
+			this.startGame = true;
+			this.lastGame = games;
+
 		}
-		else if(map.containsKey("gameDataObject")){
-			GameJson games = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
-			System.out.println(games.sectors);
+		// Create game return
+		else if (map.containsKey("gameDataObject")) {
+			GameJson games = json.fromJson(GameJson.class,
+					map.get("gameDataObject").toString());
 		}
-		//System.out.println(Thread.activeCount());
+		// System.out.println(Thread.activeCount());
 	}
 
 	/**
@@ -246,7 +273,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		listReq.start();
 
 	}
-
 
 	/**
 	 * Join a game.
