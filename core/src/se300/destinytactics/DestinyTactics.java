@@ -95,9 +95,9 @@ public class DestinyTactics extends Game {
 	 */
 	public void startGame(){
 		Assets.finish();
-		if (gameScreen == null) {
+		//if (gameScreen == null) {
 			gameScreen = new GameScene(this, skin2);
-		}
+		//}
 		
 		//destroyCurrentScreen();
 		

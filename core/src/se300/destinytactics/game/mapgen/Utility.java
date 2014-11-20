@@ -19,6 +19,7 @@ public class Utility {
 	//Set random seed to the current seed
 	static{
 		random.setSeed(seed);
+		//System.out.println(seed);
 	}
 
 	/**

@@ -2,6 +2,9 @@ package se300.destinytactics;
 
 import java.util.ArrayList;
 
+import se300.destinytactics.game.fleet.Ship;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+
 public class OrbitalBodyJson {
 
 	public int orbit;
@@ -20,6 +23,14 @@ public class OrbitalBodyJson {
 
 	public OrbitalBodyJson() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public void update(int sector) {
+
+		
+		OrbitalBody me = GameScene.m_Galaxy.sectors[sector].bodyList[orbit];
+		me.setShipyardLevel(shipyardLevel);
+		
 	}
 }
 /*

@@ -1,22 +1,40 @@
 package se300.destinytactics;
 
+import java.util.ArrayList;
+
+import se300.destinytactics.game.mapgen.Sector;
+import se300.destinytactics.game.orbitalbodies.OrbitalBody;
+
 public class SectorJson {
 
 	public int galaxyPos;
 	public int controlledBy;
 	public int gameID;
 	public int sectorID;
-	public OrbitalBodyJson[] orbitalBodies;
+	public ArrayList<OrbitalBodyJson> orbitalBodies;
 
 	public SectorJson(int pos, int cont) {
 		galaxyPos = pos;
 		controlledBy = cont;
-		orbitalBodies = new OrbitalBodyJson[1];
-		orbitalBodies[0] = new OrbitalBodyJson(1, 1);
+		orbitalBodies = new ArrayList<OrbitalBodyJson>();
 	}
 
 	public SectorJson() {
 		// TODO Auto-generated constructor stub
+		orbitalBodies = new ArrayList<OrbitalBodyJson>();
+	}
+
+	public void update() {
+		
+		Sector me = GameScene.m_Galaxy.sectors[galaxyPos];
+		
+		me.controlState = controlledBy;
+		
+		for( OrbitalBodyJson body : orbitalBodies){
+			body.update(galaxyPos);
+		}
+		
+		
 	}
 
 }

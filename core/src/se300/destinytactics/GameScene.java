@@ -46,7 +46,7 @@ public class GameScene implements Screen {
 	public static final int PADDING = 20;
 
 	// Galaxy model
-	public Galaxy m_Galaxy;
+	public static Galaxy m_Galaxy;
 
 	// Scenes
 	public GalaxyScene galaxyStage;
@@ -76,10 +76,10 @@ public class GameScene implements Screen {
 	public static Player localPlayer;
 	public Player onlinePlayers[];
 
-	// public static void preloadGalaxy(){
-	//
-	// m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
-	// }
+	 public static void preloadGalaxy(){
+	
+	 m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
+	 }
 	
 	/**
 	 * GameScene constructor. Instantiates the stages.
@@ -101,7 +101,7 @@ public class GameScene implements Screen {
 				.internal("sounds/select2.wav"));
 
 		//Testing seed
-		Utility.setSeed(1);
+		//Utility.setSeed(1);
 		
 		//Generate the Galaxy
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
