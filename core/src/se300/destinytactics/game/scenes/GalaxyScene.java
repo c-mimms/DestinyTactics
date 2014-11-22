@@ -71,24 +71,24 @@ public class GalaxyScene extends Stage {
 		sectorNames = new Group();
 		sectorLines = new SectorLines();
 		sectorNameArray = new ArrayList<SectorLabel>();
-		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
-			if (myGame.m_Galaxy.sectors[i] == null)
+		for (int i = 0; i < GameScene.m_Galaxy.sectors.length; i++) {
+			if (GameScene.m_Galaxy.sectors[i] == null)
 				break;
-			sectors.addActor(myGame.m_Galaxy.sectors[i]);
-			String secName = myGame.m_Galaxy.sectors[i].getName();
+			sectors.addActor(GameScene.m_Galaxy.sectors[i]);
+			String secName = GameScene.m_Galaxy.sectors[i].getName();
 			
 			SectorLabel tmpLabel = new SectorLabel(secName, skin);
 			sectorNames.addActor(tmpLabel);
-			tmpLabel.setX(myGame.m_Galaxy.sectors[i].getX()
-					+ myGame.m_Galaxy.sectors[i].getWidth() / 2
+			tmpLabel.setX(GameScene.m_Galaxy.sectors[i].getX()
+					+ GameScene.m_Galaxy.sectors[i].getWidth() / 2
 					- tmpLabel.getWidth() / 2);
 			tmpLabel.setAlignment(Align.center);
 
 			if (Utility.random.nextBoolean()) {
-				tmpLabel.setY(myGame.m_Galaxy.sectors[i].getY()
+				tmpLabel.setY(GameScene.m_Galaxy.sectors[i].getY()
 						+ tmpLabel.getHeight() / 2);
 			} else {
-				tmpLabel.setY(myGame.m_Galaxy.sectors[i].getY()
+				tmpLabel.setY(GameScene.m_Galaxy.sectors[i].getY()
 						- tmpLabel.getHeight());
 			}
 			
@@ -137,9 +137,9 @@ public class GalaxyScene extends Stage {
 		//sectors.setPosition(-movex * PARALLAX / 2, -movey * PARALLAX / 2);
 		//sectorNames.setPosition(movex * PARALLAX / 2, movey * PARALLAX / 2);
 		
-		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
-			if (myGame.m_Galaxy.sectors[i] != null) {
-				Sector sector = myGame.m_Galaxy.sectors[i];
+		for (int i = 0; i < GameScene.m_Galaxy.sectors.length; i++) {
+			if (GameScene.m_Galaxy.sectors[i] != null) {
+				Sector sector = GameScene.m_Galaxy.sectors[i];
 				SectorLabel sectorName = sectorNameArray.get(i);
 				sector.setX(sector.getXPos() + (-movex * PARALLAX / 3));
 				sector.setY(sector.getYPos() + (-movey * PARALLAX / 3));

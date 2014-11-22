@@ -18,6 +18,7 @@ import se300.destinytactics.game.mapgen.Utility;
  * Station extends OrbitalBody implements canBuildFleets, canBuildDefense
  * Station cannot harvest resources.
  */
+@SuppressWarnings({"unused"})
 public class Station extends OrbitalBody implements canBuildFleets,
 		canBuildDefense {
 

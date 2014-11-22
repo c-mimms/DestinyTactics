@@ -216,8 +216,8 @@ public abstract class OrbitalBody extends Actor {
 	 * switchToPlanetView method.
 	 */
 	public void switchToPlanetView() {
-		owner = sector.galaxy.thisgame.localPlayer;
-		sector.galaxy.thisgame.localPlayer.addOrbitalBody(this);
+		owner = GameScene.localPlayer;
+		GameScene.localPlayer.addOrbitalBody(this);
 		this.getStage().mouseMoved(20, 20);
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}

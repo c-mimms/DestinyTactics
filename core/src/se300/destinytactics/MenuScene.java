@@ -1,6 +1,5 @@
 package se300.destinytactics;
 
-import se300.destinytactics.game.scenes.GalaxyScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -114,8 +113,8 @@ public class MenuScene implements Screen{
 		menu.row().space(50);
 		menu.add(quitButton);
 		
-		menu.setX(game.PADDING);
-		menu.setY(game.PADDING);
+		menu.setX(DestinyTactics.PADDING);
+		menu.setY(DestinyTactics.PADDING);
 		menuStage.addActor(background);
 		menuStage.addActor(menu);
 	}

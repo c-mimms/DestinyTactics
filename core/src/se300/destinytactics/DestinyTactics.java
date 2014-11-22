@@ -1,8 +1,6 @@
 package se300.destinytactics;
 
 import se300.destinytactics.game.mapgen.Assets;
-import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import se300.destinytactics.DestinyTactics;
-import se300.destinytactics.GameScene;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

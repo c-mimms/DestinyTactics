@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 
-import se300.destinytactics.logic.DestinyTactics;
+import se300.destinytactics.DestinyTactics;
 
 public class HtmlLauncher extends GwtApplication {
 

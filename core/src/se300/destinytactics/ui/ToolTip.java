@@ -1,21 +1,14 @@
 package se300.destinytactics.ui;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
-
-import com.badlogic.gdx.math.Interpolation;
-
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 
 /**
@@ -25,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
  * ToolTip extends Window
  * ToolTip displays relevant information about it's calling object.  *
  */
+@SuppressWarnings("unused")
 public class ToolTip extends Window {
 
 	static Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -120,7 +114,7 @@ public class ToolTip extends Window {
 		add("Available : " + spaceAv).left();
 		
 		pack();
-		setPosition(x+body.SPRITE_SIZE+10, y-this.getHeight()/2 + body.SPRITE_SIZE/2);
+		setPosition(x+OrbitalBody.SPRITE_SIZE+10, y-this.getHeight()/2 + OrbitalBody.SPRITE_SIZE/2);
 	}
 	
 }

@@ -8,6 +8,7 @@ package se300.destinytactics.game.fleet;
  * @version 1.0
  * @created 10-Oct-2014 5:49:00 PM
  */
+@SuppressWarnings("unused")
 public class Fighter extends Ship implements needsHangar {
 
 	private int combatRating = 1;

@@ -14,6 +14,7 @@ public class PlayerJson {
 	public int playerID;
 	public String lastTurnDate;
 	public int turnOrder;
+	@SuppressWarnings("rawtypes")
 	public ArrayList fleets;
 
 	PlayerJson(int user, int host, String alliance) {

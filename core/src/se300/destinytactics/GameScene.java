@@ -14,7 +14,6 @@ import se300.destinytactics.game.fleet.Fighter;
 import se300.destinytactics.game.fleet.ShipJSON;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.scenes.GalaxyScene;
 import se300.destinytactics.game.scenes.InfoBar;

@@ -3,12 +3,8 @@ package se300.destinytactics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpMethods;
 import com.badlogic.gdx.Net.HttpRequest;
-import com.badlogic.gdx.Net.HttpResponse;
-import com.badlogic.gdx.Net.HttpResponseListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,10 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -110,7 +102,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 		username.setMessageText("Name");
 		email.setMessageText("Email");
 
-		status = new Label("", game.skin2);
+		status = new Label("", DestinyTactics.skin2);
 
 		loginButton.setWidth(menuButton.getWidth());
 		registerButton.setWidth(menuButton.getWidth());
@@ -152,8 +144,8 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 		menu.row().space(50);
 		menu.add(menuButton);
 		menu.add(email);
-		menu.setX(game.PADDING);
-		menu.setY(game.PADDING);
+		menu.setX(DestinyTactics.PADDING);
+		menu.setY(DestinyTactics.PADDING);
 		menuStage.addActor(background);
 		menuStage.addActor(menu);
 	}

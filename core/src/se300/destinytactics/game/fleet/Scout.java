@@ -6,6 +6,7 @@ package se300.destinytactics.game.fleet;
  * @version 1.0
  * @created 10-Oct-2014 5:49:14 PM
  */
+@SuppressWarnings("unused")
 public class Scout extends Ship {
 
 	private int combatRating = 1;

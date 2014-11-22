@@ -33,6 +33,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * InfoBar extends Stage
  * Creates area on bottom edge of screen for high level info.
  */
+@SuppressWarnings({"unused","unchecked","rawtypes"})
 public class InfoBar extends Stage{
 
 	public GameScene myGame;
@@ -186,6 +187,7 @@ public class InfoBar extends Stage{
 	}
 	
 	
+	@SuppressWarnings("static-access")
 	public void act(){
 		if(myGame.sectorView){
 			setSector(myGame.curSector.getName());

@@ -3,7 +3,6 @@ package se300.destinytactics.game.scenes;
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -44,7 +43,7 @@ public class NavBar extends Stage {
 		this.myGame = myGame;
 		this.edgePadding = padding;
 		this.skin = skin;
-		nameLabel = new Label(myGame.m_Galaxy.getName(), skin);
+		nameLabel = new Label(GameScene.m_Galaxy.getName(), skin);
 		this.addActor(nameLabel);
 
 		nameLabel.setAlignment(Align.center);

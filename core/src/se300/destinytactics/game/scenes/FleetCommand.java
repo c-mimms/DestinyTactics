@@ -7,7 +7,6 @@ import se300.destinytactics.game.fleet.Carrier;
 import se300.destinytactics.game.fleet.Corvette;
 import se300.destinytactics.game.fleet.Dreadnaught;
 import se300.destinytactics.game.fleet.Fighter;
-import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.fleet.Scout;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -31,6 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * FleetCommand creates a UI for all things fleet.
  *
  */
+@SuppressWarnings({"rawtypes","unchecked","unused"})
 public class FleetCommand {
 	private Table container, overviewWrapper, moveFormWrapper, buildFormWrapper, attackFormWrapper, overview, moveForm, buildForm, attackForm;
 	private TextButton buildButton, moveButton, attackButton;

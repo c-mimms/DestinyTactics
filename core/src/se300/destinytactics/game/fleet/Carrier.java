@@ -7,6 +7,7 @@ package se300.destinytactics.game.fleet;
  * @version 1.0
  * @created 10-Oct-2014 5:48:54 PM
  */
+@SuppressWarnings("unused")
 public class Carrier extends Ship implements hasHangar {
 
 	private int baysEmpty;

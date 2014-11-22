@@ -3,7 +3,6 @@ package se300.destinytactics;
 import java.util.ArrayList;
 
 import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 public class SectorJson {
 

@@ -1,9 +1,7 @@
 package se300.destinytactics.game.scenes;
 
 import se300.destinytactics.GameScene;
-import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -20,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * OrbitalBodyUI extends Stage
  * Combines all elements of management UI into one.
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 public class OrbitalBodyUI extends Stage {
 
 	public GameScene myGame;

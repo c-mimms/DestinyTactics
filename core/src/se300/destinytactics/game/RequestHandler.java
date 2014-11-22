@@ -32,6 +32,7 @@ public int status = -1;
 		String ret = httpResponse.getResultAsString();
 		
 		Json json = new Json();
+		@SuppressWarnings("unchecked")
 		OrderedMap<String, Object> map = json.fromJson(OrderedMap.class, ret);
 		status = 0;
 		resultMap = map;

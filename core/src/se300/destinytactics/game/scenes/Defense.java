@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * @author Shannon
  * Defense creates a UI to build defenses
  */
+@SuppressWarnings({"unused"})
 public class Defense {
 	private Table container, overviewWrapper, moveFormWrapper, buildFormWrapper, attackFormWrapper, overview, moveForm, buildForm, attackForm;
 	private TextButton buildButton, moveButton, attackButton;

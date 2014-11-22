@@ -2,7 +2,6 @@ package se300.destinytactics;
 
 import java.util.ArrayList;
 
-import se300.destinytactics.game.fleet.Ship;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 public class OrbitalBodyJson {
@@ -13,6 +12,7 @@ public class OrbitalBodyJson {
 	public int fuelLevel;
 	public int metalLevel;
 	public int shipyardLevel;
+	@SuppressWarnings("rawtypes")
 	public ArrayList buildqueues;
 	public int controlledBy;
 

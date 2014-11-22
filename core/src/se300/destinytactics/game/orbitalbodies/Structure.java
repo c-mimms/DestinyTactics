@@ -9,6 +9,7 @@ package se300.destinytactics.game.orbitalbodies;
  * 
  * Why does this exist?
  */
+@SuppressWarnings({"unused"})
 public class Structure {
 
 	private OrbitalBody location;

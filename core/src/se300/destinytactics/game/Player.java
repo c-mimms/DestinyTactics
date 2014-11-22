@@ -23,6 +23,7 @@ public class Player {
 	private String name;
 	private int score;
 	private int resource1 = 500;
+	@SuppressWarnings("unused")
 	private int resource2;
 	public ArrayList<OrbitalBody> ownedBodies;
 	public ArrayList<Fleet> fleets;

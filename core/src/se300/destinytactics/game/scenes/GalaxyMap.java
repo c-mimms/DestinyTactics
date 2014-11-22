@@ -1,18 +1,14 @@
 package se300.destinytactics.game.scenes;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.Button;
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.mapgen.Assets;
 import se300.destinytactics.game.mapgen.Sector;
-import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.ui.SectorLabel;
-import se300.destinytactics.ui.SectorLines;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +16,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -166,10 +161,10 @@ public class GalaxyMap extends Window {
 		
 		sectors = new Group();
 		sectorNames = new Group();
-		for (int i = 0; i < myGame.m_Galaxy.sectors.length; i++) {
+		for (int i = 0; i < GameScene.m_Galaxy.sectors.length; i++) {
 
 			// Create sectors
-			final Sector copy = myGame.m_Galaxy.sectors[i];
+			final Sector copy = GameScene.m_Galaxy.sectors[i];
 			Image tmp = new Image(sprite1);
 			tmp.setName(copy.getName());
 			tmp.addListener(new ClickListener() {
