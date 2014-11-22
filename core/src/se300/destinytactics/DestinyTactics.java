@@ -94,6 +94,7 @@ public class DestinyTactics extends Game {
 	public void startGame(){
 		Assets.finish();
 		//if (gameScreen == null) {
+			GameScene.preloadGalaxy();
 			gameScreen = new GameScene(this, skin2);
 		//}
 		

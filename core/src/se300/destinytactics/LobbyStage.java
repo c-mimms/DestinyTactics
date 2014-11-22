@@ -329,7 +329,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 		else if (map.containsKey("gameObj")) {
 			GameJson games = json.fromJson(GameJson.class, map.get("gameObj")
 					.toString());
-			// System.out.println(map);
+			//System.out.println(map);
 			Utility.setSeed(games.galaxySeed);
 			this.startGame = true;
 			this.lastGame = games;
