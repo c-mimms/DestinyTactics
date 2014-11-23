@@ -10,6 +10,7 @@ import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.mapgen.Sector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -106,10 +107,18 @@ public class InfoBar extends Stage{
         ListButton.setY(3*PlayerButton.getHeight());
         ListButton.setItems(fleets);
         
+        
+        
+        final String playerrecource = ("0");
+        
         // Switches to Location of Currently selected Fleet
         ListButton.addListener(new ClickListener(){
         	public void changed (ChangeEvent event) {
-				System.out.print(ListButton.getSelected());
+				int selectedPlayer = ListButton.getSelectedIndex();
+				if(selectedPlayer == 0){
+					SelectedFleet.setText("not your fleet");
+					playerResources.setText(playerrecource);
+				}
         		
         	}
         });
@@ -118,7 +127,7 @@ public class InfoBar extends Stage{
 
         playerResources.setX(txt1.getX() + txt1.getMinWidth() + buttonPadding);
         playerResources.setY(PlayerButton.getHeight() * 3);
-        playerResources.setText("0");
+        
         
         SelectedFleet.setX(txt1.getX() + txt1.getMinWidth() + buttonPadding);
         SelectedFleet.setY(PlayerButton.getHeight());
@@ -194,6 +203,15 @@ public class InfoBar extends Stage{
 		}
 		playerResources.setText("" + myGame.localPlayer.getResource());
 	}
+	
+	public void render(float delta) {
+
+	    Gdx.gl.glClearColor(0, 0, 0, 1);    //sets up the clear color (background color) of the screen.
+	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);  //instructs openGL to actually clear the screen to the newly set clear color.
+
+	    
+
+	    }
 			
 }
 		
