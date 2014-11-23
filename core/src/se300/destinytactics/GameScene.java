@@ -29,6 +29,7 @@ import com.badlogic.gdx.Net.HttpMethods;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -91,24 +92,28 @@ public class GameScene implements Screen, MakesRequests{
 
 	// Players?
 	public static Player localPlayer;
+	public static Player noPlayer = new Player();
 	public Player onlinePlayers[];
 
-	 public static void preloadGalaxy(){
-	
-	 m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
-	 }
-	
+	public static void preloadGalaxy() {
+
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
+	}
+
 	/**
 	 * GameScene constructor. Instantiates the stages.
-	 * @param game  Parent game class that contains this screen.
-	 * @param skin  Skin to use for the screen.
+	 * 
+	 * @param game
+	 *            Parent game class that contains this screen.
+	 * @param skin
+	 *            Skin to use for the screen.
 	 */
 	public GameScene(DestinyTactics game, Skin skin) {
 
 		// Keep track of the game object so we can return to main menu
 		this.game = game;
 		// m_Galaxy.thisgame = this;
-		localPlayer = new Player();
+		localPlayer = new Player("Local Player", m_Galaxy.sectors[0].bodyList[0],new Color(1,0,0,1));
 
 		this.getShipData();
 		// Load music and sounds (we should have a static sound/music class
@@ -118,14 +123,14 @@ public class GameScene implements Screen, MakesRequests{
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
-		//Testing seed
-		//Utility.setSeed(1);
-		
-		//Generate the Galaxy
-		if(m_Galaxy == null){
-			m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, this);
-		}
-		else{
+		// Testing seed
+		// Utility.setSeed(1);
+
+		// Generate the Galaxy
+		if (m_Galaxy == null) {
+			m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS,
+					this);
+		} else {
 			m_Galaxy.thisgame = this;
 		}
 		// Create galaxy stage and constants UIs
@@ -149,11 +154,11 @@ public class GameScene implements Screen, MakesRequests{
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
-		 galaxyStage.setDebugAll(true);
-		 sectorStage.setDebugAll(true);
-		 planetStage.setDebugAll(true);
-		 planetUI.setDebugAll(true);
-		 navBar.setDebugAll(true);
+		galaxyStage.setDebugAll(true);
+		sectorStage.setDebugAll(true);
+		planetStage.setDebugAll(true);
+		planetUI.setDebugAll(true);
+		navBar.setDebugAll(true);
 
 		// Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
@@ -163,9 +168,10 @@ public class GameScene implements Screen, MakesRequests{
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
-	
+
 	/**
-	 * LibGDX override. Called every tick. Resizes the dimensions of the stages to the current app window size.
+	 * LibGDX override. Called every tick. Resizes the dimensions of the stages
+	 * to the current app window size.
 	 */
 	public void resize(int width, int height) {
 		// Resize stages to fill window.
@@ -175,11 +181,11 @@ public class GameScene implements Screen, MakesRequests{
 		planetUI.getViewport().update(width, height, false);
 		navBar.getViewport().update(width, height, false);
 	}
-	
+
 	public void finalize() throws Throwable {
 
 	}
-	
+
 	/**
 	 * LibGDX override. Clears the stages from memory
 	 */
@@ -188,9 +194,11 @@ public class GameScene implements Screen, MakesRequests{
 		sectorStage.dispose();
 		planetStage.dispose();
 	}
-	
+
 	/**
-	 * Switches to the sectorStage view and loads a sector. This is called from both the galaxyStage (clicking on sector) and planetStage (navBar).
+	 * Switches to the sectorStage view and loads a sector. This is called from
+	 * both the galaxyStage (clicking on sector) and planetStage (navBar).
+	 * 
 	 * @param nextSector
 	 */
 	public void switchView(Sector nextSector) {
@@ -207,15 +215,16 @@ public class GameScene implements Screen, MakesRequests{
 		multiplexer.addProcessor(sectorStage);
 		multiplexer.removeProcessor(galaxyStage);
 	}
-	
+
 	/**
 	 * Switches to the planetStage view and loads an orbital body.
+	 * 
 	 * @param nextOrbitalBody
 	 */
 	public void switchToPlanetView(OrbitalBody nextOrbitalBody) {
 
 		selectSound.play();
-		
+
 		curOrbitalBody = nextOrbitalBody;
 		planetStage.changePlanet(nextOrbitalBody);
 
@@ -229,7 +238,7 @@ public class GameScene implements Screen, MakesRequests{
 		multiplexer.addProcessor(planetStage);
 		multiplexer.addProcessor(planetUI);
 	}
-	
+
 	/**
 	 * Switches to the galaxyStage view.
 	 */
@@ -245,7 +254,7 @@ public class GameScene implements Screen, MakesRequests{
 		multiplexer.addProcessor(infoBar);
 		multiplexer.addProcessor(galaxyStage);
 	}
-	
+
 	/**
 	 * Switches to the sectorStage view.
 	 */
@@ -264,8 +273,8 @@ public class GameScene implements Screen, MakesRequests{
 	@Override
 	public void show() {
 		// Start music and take input when you switch to this window
-		//musicLoop.play();
-		//musicLoop.setLooping(true);
+		// musicLoop.play();
+		// musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
@@ -288,7 +297,7 @@ public class GameScene implements Screen, MakesRequests{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	/**
 	 * LibGDX override. Renders the actors loaded in the viewed stage and 
@@ -317,14 +326,15 @@ public class GameScene implements Screen, MakesRequests{
 		infoBar.act();
 		infoBar.draw();
 	}
-	
+
 	/**
-	 * Calls the goMenu method in DestinyTactics object to switch screens. Switches to menuScene.
+	 * Calls the goMenu method in DestinyTactics object to switch screens.
+	 * Switches to menuScene.
 	 */
 	public void goMenu() {
 		game.goMenu();
 	}
-	
+
 	/**
 	 * Ends the player's turn.
 	 */
@@ -333,16 +343,16 @@ public class GameScene implements Screen, MakesRequests{
 		localPlayer.endTurn();
 		goGalaxy();
 	}
-	
+
 	/**
 	 * Gets Ship Object information from server
 	 */
 	public void getShipData() {
-		
+
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "getUnitList");
 		parameters.put("returnFormat", "JSON");
-		
+
 		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
 		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
 		httpGet.setContent(HttpParametersUtils
@@ -357,31 +367,31 @@ public class GameScene implements Screen, MakesRequests{
 	public void http(OrderedMap<String, Object> map) {
 		JsonValue root = new JsonReader().parse(map.get("unitList").toString());
 		Json json = new Json();
-		
+
 		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
 			ShipJSON tmp = json.fromJson(ShipJSON.class, entry.toString());
 			System.out.println(tmp.unit);
-			switch(tmp.unit) {
-				case "Fighter": //IDIOT
-					Fighter.stats = tmp;
-					break;
-				case "Corvette":
-					Corvette.stats = tmp;
-					break;
-				case "Bomber":
-					Bomber.stats = tmp;
-					break;
-				case "Carrier":
-					Carrier.stats = tmp;
-					break;
-				case "Battleship":
-					Battleship.stats = tmp;
-					break;
-				case "Dreadnaught":
-					Dreadnaught.stats = tmp;
-					break;
+			switch (tmp.unit) {
+			case "Fighter": // IDIOT
+				Fighter.stats = tmp;
+				break;
+			case "Corvette":
+				Corvette.stats = tmp;
+				break;
+			case "Bomber":
+				Bomber.stats = tmp;
+				break;
+			case "Carrier":
+				Carrier.stats = tmp;
+				break;
+			case "Battleship":
+				Battleship.stats = tmp;
+				break;
+			case "Dreadnaught":
+				Dreadnaught.stats = tmp;
+				break;
 			}
 		}
-		
+
 	}
 }

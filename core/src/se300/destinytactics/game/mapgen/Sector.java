@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.Player;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 import se300.destinytactics.game.orbitalbodies.Planet;
 import se300.destinytactics.game.orbitalbodies.Station;
@@ -65,6 +66,7 @@ public class Sector extends Actor {
 	public Galaxy galaxy;
 	public int controlState;
 	public int numBodies;
+	private Player owner;
 
 	// ToolTip
 	public ToolTip toolTip;
@@ -75,6 +77,8 @@ public class Sector extends Actor {
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
 
+		owner = GameScene.noPlayer;
+		
 		super.setVisible(true);
 		this.sunType = Utility.random.nextInt(6);
 		this.sunRotation = Utility.random.nextFloat() * 360;
@@ -131,6 +135,8 @@ public class Sector extends Actor {
 		});
 
 	}
+	
+	
 	
 	public static void loadAssets(){
 
@@ -242,4 +248,17 @@ public class Sector extends Actor {
 		super.act(time);
 		myCircle.rotateBy(time * 3);
 	}
+
+
+
+	public Player getOwner() {
+		return owner;
+	}
+
+
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+	
 }// end Sector
