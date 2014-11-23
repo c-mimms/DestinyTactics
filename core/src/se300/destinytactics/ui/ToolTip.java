@@ -52,7 +52,7 @@ public class ToolTip extends Window {
 		//Creating labels for scale-able text
 		Label nameL = new Label(name, skin);
 		Label numBodiesL = new Label("Orbital Bodies: " +  numBodies, skin);
-		Label ownerL = new Label("Owner: " + GameScene.localPlayer.getName() + ": ", skin);
+		Label ownerL = new Label("Owner: " + sector.getOwner().getName(), skin);
 		Label tRPTL = new Label("RPT: " + totalRPT, skin);
 		Label positionL = new Label("Coords: (" + position.x + "," + position.y + ")", skin);
 		

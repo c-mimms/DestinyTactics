@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 
+import se300.destinytactics.game.fleet.Fighter;
 import se300.destinytactics.game.fleet.Fleet;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
@@ -45,13 +46,24 @@ public class Player {
 	 * @param startFleet
 	 * @param color
 	 */
-	public Player(String name, OrbitalBody startPos , Fleet startFleet, Color color){
+	public Player(String name, OrbitalBody startPos , Color color){
 		this.name = name;
+		
 		score = 0;
+		
 		ownedBodies = new ArrayList<OrbitalBody>();
 		ownedBodies.add(startPos);
+		startPos.setOwner(this);
+		startPos.sector.setOwner(this);
+		startPos.sector.controlState = 1;
+		
 		fleets = new ArrayList<Fleet>();
+		Fleet startFleet = new Fleet(startPos);
+		startFleet.setPlayerAssignment(this);
+		startFleet.addShip(new Fighter());
+		startFleet.addShip(new Fighter());
 		fleets.add(startFleet);
+		
 		this.color = color;
 	}
 

@@ -165,9 +165,8 @@ public class Fleet extends Actor {
 		if (this.sectorDestination != null) {
 			this.setBounds(0, 0, SPRITE_SIZE, SPRITE_SIZE);
 			this.distanceToDestination -= this.fleetGalacticTravelSpeed;
+			//If fleet arrives at destination
 			if (distanceToDestination <= 0) {
-				// System.out.println("Loc: " + location.getName()
-				// + "\n Destination: " + destination.getName());
 				this.location = destination;
 				location.m_Fleet = this;
 				sectorLocation = sectorDestination;
@@ -182,6 +181,7 @@ public class Fleet extends Actor {
 
 				this.setBounds(0, 0, location.getWidth() + 2 * ORBITRAD, location.getHeight() + 2
 						* ORBITRAD);
+				this.remove();
 			}
 
 			else {
