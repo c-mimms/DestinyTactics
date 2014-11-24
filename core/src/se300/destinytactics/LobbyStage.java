@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -57,7 +58,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public int userID;
 	public Texture bgimg;
 	public Image logo, background;
-	public TextButton createGameButton, menuButton;
+	public TextButton createGameButton, menuButton, continueButton;
 	MessageDigest messageDigest;
 	String name, passwordHash;
 	Label status;
@@ -101,7 +102,44 @@ public class LobbyStage extends Stage implements MakesRequests {
 		lobby.setY(0);
 		lobby.setX(0);
 		lobby.pad(edgePadding);
-
+		
+		// Create Buttons
+		 createGameButton = new TextButton("Create Game", 
+				 						   skin.get("default", TextButtonStyle.class));
+		 menuButton = new TextButton("Back to Menu",
+				 					 skin.get("default", TextButtonStyle.class));
+		 
+		 continueButton = new TextButton("Continue",
+					 skin.get("default", TextButtonStyle.class));
+		
+		 createGameButton.setWidth(menuButton.getWidth());
+		 
+		 continueButton.setWidth(menuButton.getWidth());
+		
+		 menuButton.addListener(new ClickListener() {
+			 public boolean touchDown(InputEvent event, float x, float y,
+				 int pointer, int button) {
+				 	goMenu();
+				 	return true;
+				 }
+		 });
+		
+		 createGameButton.addListener(new ClickListener() {
+			 public boolean touchDown(InputEvent event, float x, float y,
+				 int pointer, int button) {
+					 createGame();
+					 return true;
+				 }
+		 });
+		 
+		 createGameButton.addListener(new ClickListener() {
+			 public boolean touchDown(InputEvent event, float x, float y,
+				 int pointer, int button) {
+					 createGame();
+					 return true;
+				 }
+		 });
+		
 		// Create a vertical group for list of games
 		gamesList = new VerticalGroup();
 		gamesList.space(10).pad(edgePadding).fill();
@@ -109,14 +147,15 @@ public class LobbyStage extends Stage implements MakesRequests {
 			addActor(new Label("Creator", skin2));
 			addActor(new Label("Alliances", skin2));
 			addActor(new Label("Players", skin2));
-			addActor(new Label("Date", skin2));
-			space(10);
+			addActor(new Label("Status", skin2));
+			space(85);
 		}}
 		);
 		
 		// Scroll pane to hold the list of games
 		gameListScroll = new ScrollPane(gamesList, skin2);
-
+		gameListScroll.setScrollingDisabled(true, false);
+		
 		// Create table for detail info of chosen game
 		gameDetailsView = new Table();
 		gameDetailsView.pad(edgePadding);
@@ -129,9 +168,13 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 		// Add everything to lobby
 		lobby.add("Lobby").align(Align.left).height(lobby.getHeight() / 14);
+		lobby.add(menuButton).align(Align.right).height(lobby.getHeight() / 14);
 		lobby.row();
-		lobby.add(gameListScroll).left().fill().width(Value.percentWidth(0.48f, lobby));
+		lobby.add(gameListScroll).left().fill().width(Value.percentWidth(0.50f, lobby));
 		lobby.add(gameDetailsView).left().top().fill().expand();
+		lobby.row();
+		lobby.add(createGameButton).align(Align.left).height(lobby.getHeight() / 14);
+		lobby.add(continueButton).align(Align.right).height(lobby.getHeight() / 14);
 
 		lobby.debugAll();
 
@@ -204,42 +247,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 						//
 						// System.out.println(lobby.getX());
 
-		/*NEED TO ADD BUTTONS  BACK!!!*/
-		
-		// menu = new Table();
-		// // menu.setDebug(true);
-		//
-		// createGameButton = new TextButton("Create Game", skin.get("default",
-		// TextButtonStyle.class));
-		// menuButton = new TextButton("Back to Menu", skin.get("default",
-		// TextButtonStyle.class));
-		//
-		// createGameButton.setWidth(menuButton.getWidth());
-		//
-		// menuButton.addListener(new ClickListener() {
-		// public boolean touchDown(InputEvent event, float x, float y,
-		// int pointer, int button) {
-		// goMenu();
-		// return true;
-		// }
-		// });
-		//
-		// createGameButton.addListener(new ClickListener() {
-		// public boolean touchDown(InputEvent event, float x, float y,
-		// int pointer, int button) {
-		// createGame();
-		// return true;
-		// }
-		// });
-		//
-		// menu.setFillParent(true);
-		// menu.add(createGameButton);
-		// menu.add(menuButton);
-		// menu.setX(padding);
-		// menu.setY(padding);
-		
-		
-		// this.addActor(menu);
 		
 
 		listGames();
@@ -347,7 +354,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 
 	/**
-	 * List pending games.
+	 * List active & pending games.
 	 */
 	public void listGames() {
 
@@ -356,7 +363,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "getGameList");
-		parameters.put("status", "pending");
+		//parameters.put("status", "pending");
 		parameters.put("returnFormat", "JSON");
 
 		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);

@@ -59,13 +59,13 @@ public class FleetCommand {
 		attackButton = new TextButton("Attack", skin.get("default", TextButtonStyle.class));
 		
 		//Initialize Nums
-		fighterNum = new Label("0" + "( )", skin);
-		corvetteNum = new Label("0" + "( )", skin);
-		bomberNum = new Label("0" + "( )", skin);
-		carrierNum = new Label("0" + "( )", skin);
-		scoutNum = new Label("0" + "( )", skin);
-		battleNum = new Label("0" + "( )", skin);
-		dreadNum = new Label("0" + "( )", skin);
+		fighterNum = new Label("0" + " (0 queued)", skin);
+		corvetteNum = new Label("0" + " (0 queued)", skin);
+		bomberNum = new Label("0" + " (0 queued)", skin);
+		carrierNum = new Label("0" + " (0 queued)", skin);
+		scoutNum = new Label("0" + " (0 queued)", skin);
+		battleNum = new Label("0" + " (0 queued)", skin);
+		dreadNum = new Label("0" + " (0 queued)", skin);
 		
 		// Add Click listeners. Changes the loaded form and the toggled button.
 		buildButton.addListener(new ClickListener() {
@@ -431,62 +431,62 @@ public class FleetCommand {
 				//Instant update
 				if(myGame.curOrbitalBody.hasFleet() == true){
 				fighterNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Fighter")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(0)
-						+")");
+						+" queued)");
 				corvetteNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Corvette")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(1)
-						+")");
+						+" queued)");
 				bomberNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Bomber")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(2)
-						+")");
+						+" queued)");
 				carrierNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Carrier")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(3)
-						+")");
+						+" queued)");
 				scoutNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Scout")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(4)
-						+")");
+						+" queued)");
 				battleNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Battleship")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(5)
-						+")");
+						+" queued)");
 				dreadNum.setText(myGame.curOrbitalBody.m_Fleet.getShipCount("Dreadnaught")
-						+"("
+						+" ("
 						+myGame.curOrbitalBody.getShips(6)
-						+")");
+						+" queued)");
 				} else {
 					fighterNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(0)
-							+")");
+							+" queued)");
 					corvetteNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(1)
-							+")");
+							+" queued)");
 					bomberNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(2)
-							+")");
+							+" queued)");
 					carrierNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(3)
-							+")");
+							+" queued)");
 					scoutNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(4)
-							+")");
+							+" queued)");
 					battleNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(5)
-							+")");
+							+" queued)");
 					dreadNum.setText("0"
-							+"("
+							+" ("
 							+myGame.curOrbitalBody.getShips(6)
-							+")");
+							+" queued)");
 				}
 				
 				return true;
