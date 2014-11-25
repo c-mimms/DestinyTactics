@@ -30,7 +30,7 @@ public int status = -1;
 	public void handleHttpResponse(HttpResponse httpResponse) {
 		
 		String ret = httpResponse.getResultAsString();
-		
+		System.out.println(ret);
 		Json json = new Json();
 		@SuppressWarnings("unchecked")
 		OrderedMap<String, Object> map = json.fromJson(OrderedMap.class, ret);

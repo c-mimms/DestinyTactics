@@ -12,7 +12,7 @@ public class GameListItem extends Table {
 	int galaxyID;
 	int createdBy;
 	String createDate;
-	String userName;
+	String username;
 	String status;
 	int gameID;
 	int alliances;
@@ -39,7 +39,7 @@ public class GameListItem extends Table {
 	
 	public void update(){
 		String allowsAlliances = alliances == 1 ? "Yes" : "No";
-		add(new Label("" + userName, DestinyTactics.skin2)).align(Align.left).expandX().space(85);
+		add(new Label("" + username, DestinyTactics.skin2)).align(Align.left).expandX().space(85);
 		add(new Label("" + allowsAlliances, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
 		add(new Label(playerCount + " / " + maxPlayers, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
 		add(new Label("" + status, DestinyTactics.skin2)).align(Align.right).expandX().space(85);

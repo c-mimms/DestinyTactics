@@ -41,7 +41,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	public Stage menuStage;
 	public Table menu;
 	public float masterVolume = 0.5f;
-	public static int userID = 6;
+	public static int userID = 2;
 	public Texture bgimg;
 	public Image logo, background;
 	public TextButton loginButton, registerButton, menuButton;
@@ -283,7 +283,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	 */
 	public void http(OrderedMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		System.out.println(map);
+		//System.out.println(map);
 		String message = map.get("message").toString();
 		userID = Float.valueOf(map.get("userID", "-1").toString()).intValue();
 		Dialog messageD = new Dialog("Status", skin) {

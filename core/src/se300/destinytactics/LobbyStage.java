@@ -284,7 +284,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 		Json json = new Json();
 		json.setOutputType(OutputType.json);
 		// json.setUsePrototypes(false);
-		System.out.println(json.toJson(game));
+		//System.out.println(json.toJson(game));
 
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "saveGame");
@@ -296,8 +296,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		httpGet.setContent(HttpParametersUtils
 				.convertHttpParameters(parameters));
 		httpGet.setTimeOut(0);
-
-		System.out.println(httpGet.getContent());
 
 		WebRequest createReq = new WebRequest(this, httpGet);
 		createReq.start();
@@ -350,7 +348,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}
 		// System.out.println(Thread.activeCount());
 		gamesList.validate();
-		lobby.debugAll();
 	}
 
 	/**

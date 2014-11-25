@@ -17,10 +17,10 @@ public class PlayerJson {
 	@SuppressWarnings("rawtypes")
 	public ArrayList fleets;
 
-	PlayerJson(int user, int host, String alliance) {
-		userID = user;
+	PlayerJson(int userID, int isHost, String alliance) {
+		this.userID = userID;
 		this.alliance = alliance;
-		isHost = host;
+		this.isHost = isHost;
 	}
 
 	public PlayerJson() {
@@ -34,4 +34,4 @@ public class PlayerJson {
 	}
 }
 
-// userID” : 1, “alliance” : “Rebels”, “isHost” : 1
+// userIDï¿½ : 1, ï¿½allianceï¿½ : ï¿½Rebelsï¿½, ï¿½isHostï¿½ : 1

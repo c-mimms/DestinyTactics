@@ -14,7 +14,7 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 * 
 * Player in the current game.
 *
-* @author  Team Gaurdian
+* @author  Team Guardian
 * @version 1.0
 * @since   2014-11-12
 * 

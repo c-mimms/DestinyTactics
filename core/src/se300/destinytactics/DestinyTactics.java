@@ -56,7 +56,7 @@ public class DestinyTactics extends Game {
 				.internal("music/Butterfly.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
-		musicLoop.play();
+		//musicLoop.play();
 		musicLoop.setLooping(true);
 		
 		menuScreen = new MenuScene(this, skin);
@@ -141,7 +141,7 @@ public class DestinyTactics extends Game {
 		//destroyCurrentScreen();
 		
 		if (!musicLoop.isPlaying()){
-			musicLoop.play();
+			//musicLoop.play();
 		}
 		setScreen(multiplayerScreen);
 	}
