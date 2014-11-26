@@ -15,6 +15,7 @@ import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.fleet.Battleship;
 import se300.destinytactics.game.fleet.Fighter;
+import se300.destinytactics.game.mapgen.Names;
 import se300.destinytactics.game.mapgen.Utility;
 import se300.destinytactics.game.orbitalbodies.Planet;
 
@@ -100,4 +101,20 @@ public class AllTeamTests {
 	}
 	
 	// Chris Mimms' tests
+
+	@Test
+	public void testNames() {
+		String name = Names.newName();
+		//Ensure name is returned and not null
+		assertTrue(name!=null);
+	}
+	
+	@Test
+	public void testSetRandomSeed() {
+		long seed = 9999999;
+		Utility.setSeed(seed);
+		assertEquals(seed, Utility.getSeed()); //Ensure seed is set correctly.
+
+	}
+	
 }
