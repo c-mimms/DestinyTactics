@@ -17,9 +17,7 @@ public class BattleshipgetSpaceToBuild {
 			fail("build time is taking too long");
 			
 		}
-		if(result >0 || result <1000000000){
-			fail("Passed");
-		}
+	
 	}
 
 }
