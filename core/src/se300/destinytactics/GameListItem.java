@@ -16,11 +16,11 @@ public class GameListItem extends Table {
 	String status;
 	int gameID;
 	int alliances;
-	int maxPlayers;
+	CharSequence maxPlayers;
 	int maxOrbitalBodies;
 	int minOrbitalBodies;
 	String galaxy;
-	int sectors;
+	CharSequence sectors;
 	String hostUserID;
 
 	public GameListItem() {

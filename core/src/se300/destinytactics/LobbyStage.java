@@ -50,18 +50,18 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public Sound selectSound;
 	public InputMultiplexer multiplexer;
 	public Stage menuStage;
-	public Table lobby, menu, gameListView, gameDetailsView, gameListRows,
-			playerRows;
-	public VerticalGroup gamesList;
-	public ScrollPane gameListScroll, playerRowsScroll;
+	public Table lobby, menu, gameListView, gameDetailsView, playerListWrapper;
+	public VerticalGroup gamesList, playerList;
+	public ScrollPane gameListScroll, playerListScroll;
 	public float masterVolume = 0.5f;
-	public int userID;
+	public int userID, loadedGameID;
 	public Texture bgimg;
 	public Image logo, background;
 	public TextButton createGameButton, menuButton, continueButton;
 	MessageDigest messageDigest;
 	String name, passwordHash;
-	Label status;
+	Label status, galaxyLabel, sectorCountLabel, maxPlayersLabel;
+	ClickListener continueListener;
 	ArrayList<GameListItem> gameList;
 	boolean startGame = false;
 	GameJson lastGame;
@@ -87,7 +87,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 		bgimg = new Texture("MenuBackground.jpg");
 		background = new Image(bgimg);
 		this.addActor(background);
-
+		loadedGameID = 0;
 		gameList = new ArrayList<GameListItem>();
 
 		// AHH WTF TABLES!
@@ -97,10 +97,10 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 		// Create table to organize entire screen
 		lobby = new Table(skin2);
-		lobby.setHeight(DestinyTactics.SCREEN_HEIGHT);
-		lobby.setWidth(DestinyTactics.SCREEN_WIDTH);
-		lobby.setY(0);
-		lobby.setX(0);
+		lobby.setHeight(DestinyTactics.SCREEN_HEIGHT - (2 * edgePadding));
+		lobby.setWidth(DestinyTactics.SCREEN_WIDTH - (2 * edgePadding));
+		lobby.setY(edgePadding);
+		lobby.setX(edgePadding);
 		lobby.pad(edgePadding);
 		
 		// Create Buttons
@@ -133,12 +133,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 		 });
 		 
 		 continueButton.addListener(new ClickListener() {
-			 public boolean touchDown(InputEvent event, float x, float y,
-				 int pointer, int button) {
-					 createGame();
-					 return true;
-				 }
-		 });
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					joinGame(loadedGameID);
+					return true;
+			}
+		});
 		
 		// Create a vertical group for list of games
 		gamesList = new VerticalGroup();
@@ -156,22 +155,50 @@ public class LobbyStage extends Stage implements MakesRequests {
 		gameListScroll = new ScrollPane(gamesList, skin2);
 		gameListScroll.setScrollingDisabled(true, false);
 		
+		galaxyLabel = new Label("", skin2);
+		sectorCountLabel = new Label("", skin2);
+		maxPlayersLabel = new Label("", skin2);
+		
 		// Create table for detail info of chosen game
-		gameDetailsView = new Table();
+		gameDetailsView = new Table(skin2);
 		gameDetailsView.pad(edgePadding);
-		gameDetailsView.add(new HorizontalGroup(){{
-			addActor(new Label("Creator", skin2));
-			addActor(new Label("Alliances", skin2));
-			addActor(new Label("Players", skin2));
-			addActor(new Label("Date", skin2));
-			space(10);}}.top()).top().left().fill().expand();
+		//gameDetailsView.setWidth(Value.percentWidth(0.45f, lobby));
+		gameDetailsView.add("Game Details").colspan(2);
+		gameDetailsView.row();
+		gameDetailsView.add(new Label("Galaxy:", skin2)).expandX();
+		gameDetailsView.add(galaxyLabel).expandX();
+		gameDetailsView.row();
+		gameDetailsView.add(new Label("Sectors:", skin2)).expand();
+		gameDetailsView.add(sectorCountLabel).expandX();
+		gameDetailsView.row();
+		gameDetailsView.add(new Label("Max Players:", skin2)).expand();
+		gameDetailsView.add(maxPlayersLabel).expandX();
+		gameDetailsView.row();
+		gameDetailsView.add(new Label("Players", skin2)).colspan(2).expandX();
+		
+		// Create a vertical group for list of games
+		playerList = new VerticalGroup();
+		playerList.space(10).pad(edgePadding).fill();
+		
+		playerListScroll = new ScrollPane(playerList, skin2);
+		
+		playerListWrapper = new Table(skin2);
+		playerListWrapper.add("Username");
+		playerListWrapper.add("Alliance");
+		playerListWrapper.add("Rank");
+		playerListWrapper.row();
+		playerListWrapper.add(playerListScroll).colspan(3);
+		
+		gameDetailsView.row();
+		gameDetailsView.add(playerListWrapper).colspan(2).expand().top();
+
 
 		// Add everything to lobby
 		lobby.add("Lobby").align(Align.left).height(lobby.getHeight() / 14);
 		lobby.add(menuButton).align(Align.right).height(lobby.getHeight() / 14);
 		lobby.row();
 		lobby.add(gameListScroll).left().fill().width(Value.percentWidth(0.50f, lobby));
-		lobby.add(gameDetailsView).left().top().fill().expand();
+		lobby.add(gameDetailsView).left().top().fill().expandY().width(Value.percentWidth(0.50f, lobby));
 		lobby.row();
 		lobby.add(createGameButton).align(Align.left).height(lobby.getHeight() / 14);
 		lobby.add(continueButton).align(Align.right).height(lobby.getHeight() / 14);
@@ -240,25 +267,35 @@ public class LobbyStage extends Stage implements MakesRequests {
 		Json json = new Json();
 		// System.out.println(map);
 		if (map.containsKey("gameList")) {
-			JsonValue root = new JsonReader().parse(map.get("gameList")
-					.toString());
+			JsonValue root = new JsonReader().parse(map.get("gameList").toString());
 
 			for (JsonValue entry = root.child; entry != null; entry = entry.next) {
-				final GameListItem tmp = json.fromJson(GameListItem.class,
-						entry.toString());
+				final GameListItem tmp = json.fromJson(GameListItem.class, entry.toString());
 
 				tmp.update();
-
+				
 				tmp.addListener(new ClickListener() {
 					public boolean touchDown(InputEvent event, float x,
 							float y, int pointer, int button) {
-						joinGame(tmp.gameID);
+						loadGameDetails(tmp);
+						//joinGame(tmp.gameID);
 						return true;
 					}
 				});
 
 				gamesList.addActor(tmp);
 
+			}
+		}
+		if (map.containsKey("playerList")) {
+			JsonValue root = new JsonReader().parse(map.get("playerList").toString());
+
+			for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+				final PlayerListItem tmp = json.fromJson(PlayerListItem.class, entry.toString());
+
+				tmp.update();
+				
+				playerList.addActor(tmp);
 			}
 		}
 		// Join game return
@@ -303,6 +340,41 @@ public class LobbyStage extends Stage implements MakesRequests {
 		WebRequest listReq = new WebRequest(this, httpGet);
 		listReq.start();
 
+	}
+	
+	/**
+	 * List players.
+	 */
+	public void listPlayers(int gameID) {
+
+		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
+		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
+
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "getPlayerList");
+		parameters.put("gameID", "" + gameID);
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest listReq = new WebRequest(this, httpGet);
+		listReq.start();
+
+	}
+	
+	public void loadGameDetails(GameListItem gameDetails) {
+		galaxyLabel.setText(gameDetails.galaxy);
+		sectorCountLabel.setText(gameDetails.sectors);
+		maxPlayersLabel.setText(gameDetails.maxPlayers);
+		
+		playerList.clearChildren();
+		
+		loadedGameID = gameDetails.gameID;
+		listPlayers(gameDetails.gameID);
 	}
 
 	/**
