@@ -130,7 +130,6 @@ public abstract class OrbitalBody extends Actor {
 		// galaxy = sector.galaxy;
 		controlState = 1;
 		owner = GameScene.noPlayer;
-		System.out.println(owner);
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
 		myCircle.setPosition(getX() + 30, getY() + 30);

@@ -25,14 +25,14 @@ public class OrbitalBodyJson {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void update(int sector) {
+	public void update(int sectorIndex) {
 
-		
-		OrbitalBody me = GameScene.m_Galaxy.sectors[sector].bodyList[orbit];
+		int orbitalBodyIndex = orbit - 1;
+		OrbitalBody me = GameScene.m_Galaxy.sectors[sectorIndex].bodyList[orbitalBodyIndex];
 		me.setShipyardLevel(shipyardLevel);
 		
 	}
 }
 /*
- * {“orbit” : 1, “controlledBy” : 1} ] }
+ * {ï¿½orbitï¿½ : 1, ï¿½controlledByï¿½ : 1} ] }
  */

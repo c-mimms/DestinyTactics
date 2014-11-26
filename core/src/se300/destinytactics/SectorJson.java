@@ -25,12 +25,13 @@ public class SectorJson {
 
 	public void update() {
 		
-		Sector me = GameScene.m_Galaxy.sectors[galaxyPos];
+		int sectorIndex = galaxyPos - 1;
+		Sector me = GameScene.m_Galaxy.sectors[sectorIndex];
 		
 		me.controlState = controlledBy;
 		
 		for( OrbitalBodyJson body : orbitalBodies){
-			body.update(galaxyPos);
+			body.update(sectorIndex);
 		}
 		
 		
@@ -39,6 +40,6 @@ public class SectorJson {
 }
 
 /*
- * [ { “galaxyPos” : 1, “controlledBy” : 1, “orbitalbodies” [ {“orbit” : 1,
- * “controlledBy” : 1} ] } ]
+ * [ { ï¿½galaxyPosï¿½ : 1, ï¿½controlledByï¿½ : 1, ï¿½orbitalbodiesï¿½ [ {ï¿½orbitï¿½ : 1,
+ * ï¿½controlledByï¿½ : 1} ] } ]
  */

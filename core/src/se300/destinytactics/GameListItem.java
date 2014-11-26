@@ -30,7 +30,7 @@ public class GameListItem extends Table {
 		
 		/*
 		 * Whole class needs to be created. Each item is one item in the game lobby list of games. A row in 
-		 * the scrolling table listing the game paramters. When clicked the list item should create a window on
+		 * the scrolling table listing the game parameters. When clicked the list item should create a window on
 		 * the right half of screen with game details.
 		 */
 		super();

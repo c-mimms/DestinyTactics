@@ -132,7 +132,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 				 }
 		 });
 		 
-		 createGameButton.addListener(new ClickListener() {
+		 continueButton.addListener(new ClickListener() {
 			 public boolean touchDown(InputEvent event, float x, float y,
 				 int pointer, int button) {
 					 createGame();
@@ -180,75 +180,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 		this.addActor(lobby);
 
-						// skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
-						// lobby = new Table(skin2);
-						//
-						// lobby.setHeight(DestinyTactics.SCREEN_HEIGHT);
-						// lobby.setWidth(DestinyTactics.SCREEN_WIDTH);
-						// lobby.setY(0);
-						// lobby.setX(0);
-						// lobby.pad(edgePadding);
-						//
-						// int menuCellHeight = (DestinyTactics.SCREEN_HEIGHT - (2 *
-						// edgePadding)) / 14;
-						// int lobbyCellWidth = (int) ((lobby.getWidth() / 2) - (edgePadding /
-						// 2));
-						// int lobbyCellHeight = (int) (lobby.getHeight() - menuCellHeight);
-						//
-						// gameListView = new Table();
-						//
-						// gameListRows = new Table(skin2);
-						// gameListRows.setWidth(lobbyCellWidth);
-						// gameListRows.setHeight(lobbyCellHeight);
-						// gameListScroll = new ScrollPane(gameListRows, skin2);
-						// gameListView.add(gameListScroll).fillX();
-						//
-						// gameListRows.add("Creator").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Alliances").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Players").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Status").top().width(lobbyCellWidth / 4);
-						// gameListRows.row();
-						// gameListRows.add("Username1").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Yes").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("8/8").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Active").top().width(lobbyCellWidth / 4);
-						// gameListRows.row();
-						// gameListRows.add("Username2").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("No").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("4/4").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Active").top().width(lobbyCellWidth / 4);
-						// gameListRows.row();
-						// gameListRows.add("Username3").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("No").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("4/8").top().width(lobbyCellWidth / 4);
-						// gameListRows.add("Pending").top().width(lobbyCellWidth / 4);
-						//
-						//
-						// gameDetailsView = new Table();
-						// gameDetailsView.setFillParent(true);
-						// playerRows = new Table(skin2);
-						// playerRowsScroll = new ScrollPane(playerRows, skin2);
-						// gameDetailsView.add(playerRowsScroll);
-						//
-						//
-						// lobby.add("Lobby").align(Align.left).height(menuCellHeight);
-						// lobby.add("Menu").align(Align.right).height(menuCellHeight);
-						// lobby.row();
-						// lobby.add(gameListView);
-						// lobby.add(gameDetailsView).expand();
-						//
-						// this.addActor(lobby);
-						//
-						// lobby.setDebug(true);
-						// gameListView.setDebug(true);
-						// gameDetailsView.setDebug(true);
-						// gameListRows.setDebug(true);
-						// playerRows.setDebug(true);
-						//
-						// System.out.println(lobby.getX());
-
-		
-
 		listGames();
 	}
 
@@ -284,7 +215,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 		Json json = new Json();
 		json.setOutputType(OutputType.json);
 		// json.setUsePrototypes(false);
-		//System.out.println(json.toJson(game));
+		System.out.println(json.toJson(game));
 
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "saveGame");
