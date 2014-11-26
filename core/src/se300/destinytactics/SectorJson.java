@@ -40,6 +40,6 @@ public class SectorJson {
 }
 
 /*
- * [ { �galaxyPos� : 1, �controlledBy� : 1, �orbitalbodies� [ {�orbit� : 1,
- * �controlledBy� : 1} ] } ]
+ * [ { 'galaxyPos' : 1, 'controlledBy' : 1, 'orbitalbodies' [ {'orbit' : 1,
+ * 'controlledBy' : 1} ] } ]
  */

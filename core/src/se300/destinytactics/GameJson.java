@@ -66,8 +66,8 @@ public class GameJson {
 // {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"","createDate":""
 // + "","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
 /*
- * { �galaxyID� : 1, �galaxySeed� : �35kn573lknd6kl3n67� �alliances� :
- * [�Rebels�, �Empire�], �players� : [ {�userID� : 1, �alliance� : �Rebels�,
- * �isHost� : 1} ], �sectors� [ { �galaxyPos� : 1, �controlledBy� : 1,
- * �orbitalbodies� [ {�orbit� : 1, �controlledBy� : 1} ] } ] }
+ * { 'galaxyID' : 1, 'galaxySeed' : '35kn573lknd6kl3n67' 'alliances' :
+ * ['Rebels', 'Empire'], 'players' : [ {'userID' : 1, 'alliance' : 'Rebels',
+ * 'isHost' : 1} ], 'sectors' [ { 'galaxyPos' : 1, 'controlledBy' : 1,
+ * 'orbitalbodies' [ {'orbit' : 1, 'controlledBy' : 1} ] } ] }
  */
