@@ -31,10 +31,10 @@ public class GameJson {
 			Sector sect = gal.sectors[i];
 			SectorJson tmp = new SectorJson();
 			tmp.controlledBy = sect.controlState;
-			tmp.galaxyPos = i;
+			tmp.galaxyPos = i + 1;
 			for(OrbitalBody bod : sect.bodyList){
 				OrbitalBodyJson tmp2 = new OrbitalBodyJson();
-				tmp2.orbit = bod.getPos();
+				tmp2.orbit = bod.getPos() + 1;
 				//ADD MORE ORBITAL BODY STUFF HERE
 				tmp.orbitalBodies.add(tmp2);
 			}
@@ -66,8 +66,8 @@ public class GameJson {
 // {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"","createDate":""
 // + "","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
 /*
- * { “galaxyID” : 1, “galaxySeed” : “35kn573lknd6kl3n67” “alliances” :
- * [“Rebels”, “Empire”], “players” : [ {“userID” : 1, “alliance” : “Rebels”,
- * “isHost” : 1} ], “sectors” [ { “galaxyPos” : 1, “controlledBy” : 1,
- * “orbitalbodies” [ {“orbit” : 1, “controlledBy” : 1} ] } ] }
+ * { ï¿½galaxyIDï¿½ : 1, ï¿½galaxySeedï¿½ : ï¿½35kn573lknd6kl3n67ï¿½ ï¿½alliancesï¿½ :
+ * [ï¿½Rebelsï¿½, ï¿½Empireï¿½], ï¿½playersï¿½ : [ {ï¿½userIDï¿½ : 1, ï¿½allianceï¿½ : ï¿½Rebelsï¿½,
+ * ï¿½isHostï¿½ : 1} ], ï¿½sectorsï¿½ [ { ï¿½galaxyPosï¿½ : 1, ï¿½controlledByï¿½ : 1,
+ * ï¿½orbitalbodiesï¿½ [ {ï¿½orbitï¿½ : 1, ï¿½controlledByï¿½ : 1} ] } ] }
  */

@@ -154,11 +154,11 @@ public class GameScene implements Screen, MakesRequests{
 
 		// Debugger toggles. Make borders around actors and regions. Turn OFF
 		// for demo
-		galaxyStage.setDebugAll(true);
-		sectorStage.setDebugAll(true);
-		planetStage.setDebugAll(true);
-		planetUI.setDebugAll(true);
-		navBar.setDebugAll(true);
+//		galaxyStage.setDebugAll(true);
+//		sectorStage.setDebugAll(true);
+//		planetStage.setDebugAll(true);
+//		planetUI.setDebugAll(true);
+//		navBar.setDebugAll(true);
 
 		// Create multiplexer to get input from all stages
 		multiplexer = new InputMultiplexer();
@@ -370,7 +370,6 @@ public class GameScene implements Screen, MakesRequests{
 
 		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
 			ShipJSON tmp = json.fromJson(ShipJSON.class, entry.toString());
-			System.out.println(tmp.unit);
 			switch (tmp.unit) {
 			case "Fighter": // IDIOT
 				Fighter.stats = tmp;
