@@ -120,7 +120,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				selectSound.play(masterVolume);
-				registerPlayer();
+				registerUser();
 				return true;
 			}
 		});
@@ -181,7 +181,7 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
 
-		goToLobby();
+		//goToLobby();
 	}
 
 	@Override
@@ -221,9 +221,9 @@ public class MultiplayerScreen implements Screen, MakesRequests {
 	}
 
 	/**
-	 * Registers player
+	 * Registers user
 	 */
-	public void registerPlayer() {
+	public void registerUser() {
 
 		name = username.getText();
 		messageDigest.update(password.getText().getBytes());

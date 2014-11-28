@@ -39,10 +39,10 @@ public class GameListItem extends Table {
 	
 	public void update(){
 		String allowsAlliances = alliances == 1 ? "Yes" : "No";
-		add(new Label("" + username, DestinyTactics.skin2)).align(Align.left).expandX().space(85);
-		add(new Label("" + allowsAlliances, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
-		add(new Label(playerCount + " / " + maxPlayers, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
-		add(new Label("" + status, DestinyTactics.skin2)).align(Align.right).expandX().space(85);
+		add(new Label("" + username, DestinyTactics.skin2)).align(Align.left).expandX().space(75).center();
+		add(new Label("" + allowsAlliances, DestinyTactics.skin2)).align(Align.center).expandX().space(75).center();
+		add(new Label(playerCount + " / " + maxPlayers, DestinyTactics.skin2)).align(Align.center).expandX().space(75).center();
+		add(new Label("" + status, DestinyTactics.skin2)).align(Align.right).expandX().space(75).center();
 		//left();
 	}
 	

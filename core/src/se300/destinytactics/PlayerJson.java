@@ -17,7 +17,8 @@ public class PlayerJson {
 	@SuppressWarnings("rawtypes")
 	public ArrayList fleets;
 
-	PlayerJson(int userID, int isHost, String alliance) {
+	PlayerJson(int gameID, int userID, int isHost, String alliance) {
+		this.gameID = gameID;
 		this.userID = userID;
 		this.alliance = alliance;
 		this.isHost = isHost;

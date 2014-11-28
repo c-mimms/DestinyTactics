@@ -36,9 +36,9 @@ public class PlayerListItem extends Table {
 	}
 	
 	public void update(){
-		add(new Label(username, DestinyTactics.skin2)).align(Align.left).expandX().space(85);
-		add(new Label(alliance, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
-		add(new Label("" + rank, DestinyTactics.skin2)).align(Align.center).expandX().space(85);
+		add(new Label(username, DestinyTactics.skin2)).align(Align.left).expandX().space(85).left();
+		add(new Label(alliance, DestinyTactics.skin2)).align(Align.center).expandX().space(85).left();
+		add(new Label("" + rank, DestinyTactics.skin2)).align(Align.center).expandX().space(85).right();
 	}
 	
 	public String toString(){
