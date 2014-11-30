@@ -10,6 +10,7 @@ public class GameListItem extends Table {
 	int minPlayers;
 	int playerCount;
 	int galaxyID;
+	int galaxySeed;
 	int createdBy;
 	String createDate;
 	String username;
@@ -22,6 +23,7 @@ public class GameListItem extends Table {
 	String galaxy;
 	CharSequence sectors;
 	String hostUserID;
+	public int turnPlayerID;
 
 	public GameListItem() {
 		// TODO Auto-generated constructor stub

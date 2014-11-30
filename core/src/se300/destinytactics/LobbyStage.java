@@ -59,7 +59,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public GameListItem gameDetails;
 	public Texture bgimg;
 	public Image logo, background;
-	public TextButton createGameButton, menuButton, continueButton, startButton, stopButton, joinButton;
+	public TextButton createGameButton, menuButton, continueButton, startButton, stopButton, joinButton, waitingButton;
 	public Container<TextButton> creatorButtonContainer, buttonContainer;
 	MessageDigest messageDigest;
 	String name, passwordHash;
@@ -109,16 +109,18 @@ public class LobbyStage extends Stage implements MakesRequests {
 		// Create Buttons
 		 createGameButton = new TextButton("Create Game", skin.get("default", TextButtonStyle.class));
 		 menuButton = new TextButton("Back to Menu", skin.get("default", TextButtonStyle.class));
-		 continueButton = new TextButton("Continue", skin.get("default", TextButtonStyle.class));
+		 continueButton = new TextButton("Enter", skin.get("default", TextButtonStyle.class));
 		 startButton = new TextButton("Start Game", skin.get("default", TextButtonStyle.class));
 		 stopButton = new TextButton("Stop Game", skin.get("default", TextButtonStyle.class));
 		 joinButton = new TextButton("Join Game", skin.get("default", TextButtonStyle.class));
+		 waitingButton = new TextButton("Waiting for Host", skin.get("default", TextButtonStyle.class));
 		
 		 createGameButton.setWidth(menuButton.getWidth());
 		 continueButton.setWidth(menuButton.getWidth());
 		 startButton.setWidth(menuButton.getWidth());
 		 stopButton.setWidth(menuButton.getWidth());
 		 joinButton.setWidth(menuButton.getWidth());
+		 waitingButton.setWidth(menuButton.getWidth());
 		
 		 menuButton.addListener(new ClickListener() {
 			 public boolean touchDown(InputEvent event, float x, float y,
@@ -145,15 +147,14 @@ public class LobbyStage extends Stage implements MakesRequests {
 		
 		startButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					//setGameStatus(loadedGameID, "Active");
-					//continueGame(loadedGameID);
+					setGameStatus(loadedGameID, "Active");
 					return true;
 			}
 		});
 		
 		stopButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					//setGameStatus(loadedGameID, "Done");
+					setGameStatus(loadedGameID, "Finished");
 					return true;
 			}
 		});
@@ -274,6 +275,17 @@ public class LobbyStage extends Stage implements MakesRequests {
 		myGame.goMenu();
 	}
 	
+	public void refreshGameDetails() {
+		GameListItem loadedGame = new GameListItem();
+		
+		for (GameListItem game : gameList) {
+			if (game.gameID == loadedGameID) {
+				loadedGame = game;
+			}
+		}
+		loadGameDetails(loadedGame);
+	}
+	
 	public void updateNavigation() {
 		// Clear button actors
 		creatorButtonContainer.clear();
@@ -370,8 +382,25 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 	public void listGamesAction(Json json, OrderedMap<String, Object> map) {
 		JsonValue root = new JsonReader().parse(map.get("gameList").toString());
-
-		gameList.clear();
+		
+		// Clear and reload game list data
+		gameList.clear();	
+		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+			final GameListItem tmpGame = json.fromJson(GameListItem.class, entry.toString());
+			tmpGame.update();
+			tmpGame.addListener(new ClickListener() {
+				public boolean touchDown(InputEvent event, float x,
+						float y, int pointer, int button) {
+					loadGameDetails(tmpGame);
+					//joinGame(tmp.gameID);
+					return true;
+				}
+			});
+			
+			gameList.add(tmpGame);
+		}
+		
+		// Clear and reload game list view
 		gameListView.clear();
 		gameListView.addActor(new HorizontalGroup(){{
 			addActor(new Label("Creator", skin2));
@@ -381,29 +410,30 @@ public class LobbyStage extends Stage implements MakesRequests {
 			space(75);
 		}}
 		);
-		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
-			final GameListItem tmp = json.fromJson(GameListItem.class, entry.toString());
-
-			tmp.update();
-			
-			tmp.addListener(new ClickListener() {
-				public boolean touchDown(InputEvent event, float x,
-						float y, int pointer, int button) {
-					loadGameDetails(tmp);
-					//joinGame(tmp.gameID);
-					return true;
-				}
-			});
-			
-			gameList.add(tmp);
-			gameListView.addActor(tmp);
+		
+		for (GameListItem game : gameList) {
+			gameListView.addActor(game);
+		}
+		
+		// Refresh viewed game details
+		if (loadedGameID != 0) {
+			refreshGameDetails();
 		}
 	}
 	
 	public void listPlayersAction(Json json, OrderedMap<String, Object> map) {
 		JsonValue root = new JsonReader().parse(map.get("playerList").toString());
 		
+		// Clear and reload player list data
 		playerList.clear();
+		
+		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+			final PlayerListItem tmp = json.fromJson(PlayerListItem.class, entry.toString());
+			tmp.update();
+			playerList.add(tmp);
+		}
+		
+		// Clear and reload player list view
 		playerListView.clear();
 		playerListView.addActor(new HorizontalGroup(){{
 			addActor(new Label("Username", skin2));
@@ -413,33 +443,38 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}}
 		);
 		
-		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
-			final PlayerListItem tmp = json.fromJson(PlayerListItem.class, entry.toString());
-			tmp.update();
-			playerList.add(tmp);
-			playerListView.addActor(tmp);
+		for (PlayerListItem player : playerList) {
+			playerListView.addActor(player);
 		}
 		
 		updateNavigation();
 	}
 	
 	public void loadGameAction(Json json, OrderedMap<String, Object> map) {
-		GameJson games = json.fromJson(GameJson.class, map.get("gameObj")
-				.toString());
-		//System.out.println(map);
-		Utility.setSeed(games.galaxySeed);
+		GameJson game = json.fromJson(GameJson.class, map.get("gameObj").toString());
+		Utility.setSeed(game.galaxySeed);
 		this.startGame = true;
-		this.lastGame = games;
+		this.lastGame = game;
 	}
 	
 	public void saveGameAction(Json json, OrderedMap<String, Object> map) {
-		@SuppressWarnings("unused")
-		GameJson games = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
+		listGames();
+		
+		if (gameDetails.status.contains(("active").toLowerCase())) {
+			creatorButtonContainer.clear(); 
+			buttonContainer.clear();
+			creatorButtonContainer.setActor(stopButton); 
+			buttonContainer.setActor(waitingButton); 
+		}
+		else if (gameDetails.status.contains(("Finished").toLowerCase())) {
+			creatorButtonContainer.clear(); 
+			buttonContainer.clear();
+		}
 	}
 	
 	public void createGameAction(Json json, OrderedMap<String, Object> map) {
 		@SuppressWarnings("unused")
-		GameJson games = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
+		GameJson game = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
 		this.startGame = true;
 	}
 	
@@ -449,8 +484,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}
 		else {
 			listGames();
-			loadGameDetails(gameDetails);
-			listPlayers(gameDetails.gameID);
 		}
 	}
 	
@@ -509,7 +542,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 		WebRequest listReq = new WebRequest(this, httpGet);
 		listReq.start();
-
 	}
 	
 	/**
@@ -537,15 +569,9 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	public void setGameStatus(int gameID, String status) {
-		GameJson game = new GameJson(Utility.getSeed());
-		Json json = new Json();
-		json.setOutputType(OutputType.json);
-		// json.setUsePrototypes(false);
-		System.out.println(json.toJson(game));
-		
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "saveGame");
-		parameters.put("gameID", "" + gameID);
+		parameters.put("gameID", "" + gameDetails.gameID);
 		parameters.put("status", status);
 		parameters.put("returnFormat", "JSON");
 

@@ -25,7 +25,10 @@ public class PlayerJson {
 	}
 
 	public PlayerJson() {
-		// TODO Auto-generated constructor stub
+		this.gameID = 0;
+		this.userID = 0;
+		this.alliance = "";
+		this.isHost = 0;
 	}
 
 	public void update() {

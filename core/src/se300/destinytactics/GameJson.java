@@ -8,60 +8,116 @@ import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 public class GameJson {
 
+	public int gameID;
 	public long galaxySeed;
-	public ArrayList<PlayerJson> players;
+	public int roundsCompleted;
 	public int createdBy;
+	public int turnPlayerID;
 	public int galaxyID;
 	public String createDate;
-	public int gameID;
 	public String status;
+	public ArrayList<PlayerJson> players;
 	public ArrayList<SectorJson> sectors;
 	public String[] alliances = { "test" };
-	public int roundsCompleted;
+	public PlayerJson turnPlayer;
 
-	public GameJson(long seed) {
-		galaxySeed = seed;
+	public GameJson(long galaxySeed) {
+		this.galaxySeed = galaxySeed;
 		Galaxy gal = GameScene.m_Galaxy;
-		
+		roundsCompleted = 0;
 		galaxyID = 1;
 		createdBy = MultiplayerScreen.userID;
+
 		players = new ArrayList<PlayerJson>();
 		sectors = new ArrayList<SectorJson>(gal.sectors.length);
 		for(int i = 0; i< gal.sectors.length; i++){
 			Sector sect = gal.sectors[i];
-			SectorJson tmp = new SectorJson();
-			tmp.controlledBy = sect.controlState;
-			tmp.galaxyPos = i + 1;
+			SectorJson tmpSector = new SectorJson();
+			tmpSector.controlledBy = sect.controlState;
+			tmpSector.galaxyPos = i + 1;
 			for(OrbitalBody bod : sect.bodyList){
-				OrbitalBodyJson tmp2 = new OrbitalBodyJson();
-				tmp2.orbit = bod.getPos() + 1;
+				OrbitalBodyJson tmpOrbitalBody = new OrbitalBodyJson();
+				tmpOrbitalBody.orbit = bod.getPos() + 1;
 				//ADD MORE ORBITAL BODY STUFF HERE
-				tmp.orbitalBodies.add(tmp2);
+				tmpSector.orbitalBodies.add(tmpOrbitalBody);
 			}
-			sectors.add(tmp);
+			sectors.add(tmpSector);
 		}
 		//ADD LOOP TO ADD ALL PLAYERS
-		PlayerJson tmp3 = new PlayerJson();
-		tmp3.isHost = 1;
-		tmp3.userID = MultiplayerScreen.userID;
-		players.add(tmp3);
+		PlayerJson tmpPlayer = new PlayerJson();
+		tmpPlayer.isHost = 1;
+		tmpPlayer.userID = MultiplayerScreen.userID;
+		players.add(tmpPlayer);
+		
+		this.turnPlayer = tmpPlayer;
 	}
 
+	public GameJson(int gameID, long galaxySeed) {
+		this(galaxySeed);
+		this.gameID = gameID;
+	}
+	
 	public GameJson() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public void update() {
-
+	public void update(String status, PlayerJson turnPlayer, int roundsCompleted) {
+		this.status = status;
+		this.roundsCompleted = roundsCompleted;
+		this.turnPlayer = turnPlayer;
+		this.turnPlayerID = turnPlayer.playerID;
+		
 		for (PlayerJson player : players) {
 			player.update();
 		}
 		for (SectorJson sector : sectors) {
 			sector.update();
 		}
-
+	}
+	
+	public void update(String status) {
+		update(this.status, getPlayerByUserID(createdBy), this.roundsCompleted);
+	}
+	
+	public void update(int userID) {
+		update(this.status, getPlayerByUserID(userID), this.roundsCompleted);
+	}
+	
+	public void update(){
+		update(this.status, getPlayerByUserID(createdBy), this.roundsCompleted);
+	}
+	
+	private PlayerJson getPlayerByUserID(int userID) {
+		PlayerJson selectedPlayer = new PlayerJson();
+		for (PlayerJson player : players) {
+			if (player.userID == userID) {
+				selectedPlayer = player;
+			}
+		} 
+		return selectedPlayer;
+	}
+	
+	public void setNextPlayer() {
+		PlayerJson nextPlayer = new PlayerJson();
+		PlayerJson firstPlayer = new PlayerJson();
+		
+		for (PlayerJson player : players) {
+			if (turnPlayer.turnOrder < player.turnOrder) {
+				nextPlayer = player;
+			}
+			if (player.turnOrder == 1) {
+				firstPlayer = player;
+			}
+		}
+		
+		if (nextPlayer.gameID == 0) {
+			nextPlayer = firstPlayer;
+		}
+		
 	}
 }
+
+
 
 // {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"","createDate":""
 // + "","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
