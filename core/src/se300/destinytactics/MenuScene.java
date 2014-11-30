@@ -65,7 +65,7 @@ public class MenuScene implements Screen{
 		
 		logo = new Image(new Texture("images/DestinyTacticsLogo.png"));
 		newGameButton = new TextButton("New Game", skin.get("default", TextButtonStyle.class));
-		multiplayerGameButton = new TextButton("Online Game", skin.get("default", TextButtonStyle.class));
+		multiplayerGameButton = new TextButton("Multiplayer Lobby", skin.get("default", TextButtonStyle.class));
 		highscoreButton = new TextButton("High Scores",skin.get("default", TextButtonStyle.class));
 		quitButton = new TextButton("Quit", skin.get("default", TextButtonStyle.class));
 		
@@ -104,8 +104,8 @@ public class MenuScene implements Screen{
 		
 		menu.setFillParent(true);
 		menu.add(logo);
-		menu.row().space(50);
-		menu.add(newGameButton);
+//		menu.row().space(50);
+//		menu.add(newGameButton);
 		menu.row().space(50);
 		menu.add(multiplayerGameButton);
 		menu.row().space(50);

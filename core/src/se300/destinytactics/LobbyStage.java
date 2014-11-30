@@ -18,10 +18,12 @@ import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -67,6 +69,8 @@ public class LobbyStage extends Stage implements MakesRequests {
 	ClickListener continueListener;
 	ArrayList<GameListItem> gameList;
 	ArrayList<PlayerListItem> playerList;
+	ArrayList<GalaxyListItem> galaxyList;
+	String[] galaxyNameList;
 	boolean startGame = false;
 	GameJson lastGame;
 
@@ -94,6 +98,8 @@ public class LobbyStage extends Stage implements MakesRequests {
 		this.userID = MultiplayerScreen.userID;
 		loadedGameID = 0;
 		gameList = new ArrayList<GameListItem>();
+		galaxyList = new ArrayList<GalaxyListItem>();
+		galaxyNameList = new String[50];
 		playerList = new ArrayList<PlayerListItem>();
 
 		skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -133,8 +139,8 @@ public class LobbyStage extends Stage implements MakesRequests {
 		 createGameButton.addListener(new ClickListener() {
 			 public boolean touchDown(InputEvent event, float x, float y,
 				 int pointer, int button) {
-					 createGame();
-					 return true;
+				 	showCreateGameForm();
+				 	return true;
 				 }
 		 });
 		 
@@ -253,8 +259,10 @@ public class LobbyStage extends Stage implements MakesRequests {
 //		buttonContainer.debugAll();
 		
 		this.addActor(lobby);
-
+		
+		// perform HTTP calls to load the game and galaxy lists
 		listGames();
+		listGalaxies();
 	}
 
 	public void act(float time) {
@@ -275,6 +283,40 @@ public class LobbyStage extends Stage implements MakesRequests {
 		myGame.goMenu();
 	}
 	
+	public void showCreateGameForm() {
+		
+		Label galaxySelectLabel = new Label("Galaxy", skin);
+		SelectBox<String> galaxySelect = new SelectBox<String>(skin);
+//		galaxySelect.setItems(galaxyNameList);
+		
+		Dialog createGameForm = new Dialog("New Game", skin) {
+			protected void result(Object obj) {
+//				String selectedGalaxyName = galaxySelect.getSelected().toLowerCase();
+//				for (GalaxyListItem galaxy : galaxyList) {
+//					String galaxyName = galaxy.galaxy.toLowerCase();
+//					if (galaxyName.contains((CharSequence) galaxySelect.getSelected())){
+//						createGame(galaxy);
+//					}
+//				}
+			}
+		};
+		
+		createGameForm.getContentTable().add(galaxySelectLabel);
+		createGameForm.getContentTable().add(galaxySelect);
+		createGameForm.button("Create Game");
+		createGameForm.pack();
+		createGameForm.setMovable(false);
+		createGameForm.setPosition(
+				this.getWidth() / 2 - createGameForm.getWidth() / 2,
+				this.getHeight() / 2 - createGameForm.getHeight() / 2);
+
+		this.addActor(createGameForm);
+	}
+	
+	/**
+	 * Called after refreshing the game list. 
+	 * Refreshes the gameDetails object after getting new data from server
+	 */
 	public void refreshGameDetails() {
 		GameListItem loadedGame = new GameListItem();
 		
@@ -286,11 +328,15 @@ public class LobbyStage extends Stage implements MakesRequests {
 		loadGameDetails(loadedGame);
 	}
 	
+	/**
+	 * Populates the gameDetails UI with user-appropriate buttons
+	 */
 	public void updateNavigation() {
 		// Clear button actors
 		creatorButtonContainer.clear();
 		buttonContainer.clear();
 		
+		// Show navigation for creator user
 		if (userID == gameDetails.createdBy) {
 			if (gameDetails.status.toUpperCase().contains("PENDING")) {
 				// Start Game
@@ -305,16 +351,14 @@ public class LobbyStage extends Stage implements MakesRequests {
 			}
 		}
 		
+		// Show navigation for non-creator users
 		else {
 			boolean isPlayer = false;
 			for (PlayerListItem player : playerList) {
 				if (userID == player.userID) {
 					isPlayer = true;
 				}
-			}
-			
-			System.out.println(isPlayer);
-			
+			}			
 			if (isPlayer) {
 				if (gameDetails.status.toUpperCase().contains("ACTIVE")) {
 					// Continue Game
@@ -329,6 +373,10 @@ public class LobbyStage extends Stage implements MakesRequests {
 		
 	}
 	
+	/**
+	 * Populates the game details UI with gameDetail data
+	 * @param gameDetails
+	 */
 	public void loadGameDetails(GameListItem gameDetails) {
 		this.gameDetails = gameDetails;
 		
@@ -343,6 +391,9 @@ public class LobbyStage extends Stage implements MakesRequests {
 		listPlayers(gameDetails.gameID);
 	}
 	
+	/**
+	 * Directs the HTTP response to the appropriate success action
+	 */
 	@Override
 	public void http(OrderedMap<String, Object> map) {
 		Json json = new Json();
@@ -351,6 +402,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 		
 		if (message.contains(("Game list loaded.").toLowerCase())) {
 			listGamesAction(json, map);
+		}
+		
+		// load galaxies return
+		else if (message.contains(("Galaxy list loaded.").toLowerCase())) {
+			listGalaxiesAction(json, map);
 		}
 		
 		// load players return
@@ -379,7 +435,12 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}
 		gameListView.validate();
 	}
-
+	
+	/**
+	 * Called from HTTP override function. Refreshes the game list.
+	 * @param json
+	 * @param map
+	 */
 	public void listGamesAction(Json json, OrderedMap<String, Object> map) {
 		JsonValue root = new JsonReader().parse(map.get("gameList").toString());
 		
@@ -421,6 +482,33 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}
 	}
 	
+	/**
+	 * Called from the HTTP override function. Refreshes the galaxy list.
+	 * @param json
+	 * @param map
+	 */
+	public void listGalaxiesAction(Json json, OrderedMap<String, Object> map) {
+		JsonValue root = new JsonReader().parse(map.get("galaxyList").toString());
+		
+		// Clear and reload galaxy list data
+		galaxyList.clear();
+		galaxyNameList = new String[50];
+		
+		int index = 0;
+		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
+			final GalaxyListItem tmp = json.fromJson(GalaxyListItem.class, entry.toString());
+			tmp.update();
+			galaxyList.add(tmp);
+			galaxyNameList[index] = tmp.galaxy;
+			index++;
+		}
+	}
+	
+	/**
+	 * Called from the HTTP override function. Refreshes the player list for the selected game.
+	 * @param json
+	 * @param map
+	 */
 	public void listPlayersAction(Json json, OrderedMap<String, Object> map) {
 		JsonValue root = new JsonReader().parse(map.get("playerList").toString());
 		
@@ -450,6 +538,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 		updateNavigation();
 	}
 	
+	/**
+	 * Called from the HTTP override function. Starts the loaded game.
+	 * @param json
+	 * @param map
+	 */
 	public void loadGameAction(Json json, OrderedMap<String, Object> map) {
 		GameJson game = json.fromJson(GameJson.class, map.get("gameObj").toString());
 		Utility.setSeed(game.galaxySeed);
@@ -457,6 +550,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 		this.lastGame = game;
 	}
 	
+	/**
+	 * Called from the HTTP override function. Refreshes the game list and updates the UI
+	 * @param json
+	 * @param map
+	 */
 	public void saveGameAction(Json json, OrderedMap<String, Object> map) {
 		listGames();
 		
@@ -472,12 +570,22 @@ public class LobbyStage extends Stage implements MakesRequests {
 		}
 	}
 	
+	/**
+	 * Called from the HTTP override function. Refreshes the game list and selects the new game.
+	 * @param json
+	 * @param map
+	 */
 	public void createGameAction(Json json, OrderedMap<String, Object> map) {
 		@SuppressWarnings("unused")
 		GameJson game = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
 		this.startGame = true;
 	}
 	
+	/**
+	 * Called from the HTTP override function. Either starts the loaded game or refreshes the game list.
+	 * @param json
+	 * @param map
+	 */
 	public void joinGameAction(Json json, OrderedMap<String, Object> map) {
 		if (gameDetails.status.toUpperCase().contains("ACTIVE")) {
 			this.startGame = true;
@@ -488,9 +596,9 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	/**
-	 * Starts the loaded game.
+	 * HTTP call. Starts the loaded game.
 	 */
-	public void createGame() {
+	public void createGame(GalaxyListItem galaxy) {
 
 		GameScene.preloadGalaxy();
 
@@ -522,7 +630,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	/**
-	 * List active & pending games.
+	 * HTTP call. List active & pending games.
 	 */
 	public void listGames() {
 
@@ -545,7 +653,25 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	/**
-	 * List players.
+	 * HTTP call. List galaxies.
+	 */
+	public void listGalaxies() {
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("method", "getGalaxyList");
+		parameters.put("returnFormat", "JSON");
+
+		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);
+		httpGet.setUrl("http://cesiumdesign.com/DestinyTactics/destinyTactics.cfc?");
+		httpGet.setContent(HttpParametersUtils
+				.convertHttpParameters(parameters));
+		httpGet.setTimeOut(0);
+
+		WebRequest listReq = new WebRequest(this, httpGet);
+		listReq.start();
+	}
+	
+	/**
+	 * HTTP call. List players.
 	 */
 	public void listPlayers(int gameID) {
 
@@ -568,6 +694,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 
 	}
 	
+	/**
+	 * HTTP call. Updates the selected game with a new status
+	 * @param gameID
+	 * @param status
+	 */
 	public void setGameStatus(int gameID, String status) {
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "saveGame");
@@ -586,7 +717,8 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	/**
-	 * Load and continue game.
+	 * HTTP call. Load and continue game.
+	 * @param id
 	 */
 	public void continueGame(int id) {
 
@@ -607,7 +739,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	}
 	
 	/**
-	 * Join a game.
+	 * HTTP call. Adds a player for the logged in user to the selected game.
 	 */
 	public void joinGame() {
 		int isHost = gameDetails.createdBy == userID ? 1 : 0;
