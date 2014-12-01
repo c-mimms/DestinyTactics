@@ -67,10 +67,9 @@ public class LobbyStage extends Stage implements MakesRequests {
 	String name, passwordHash;
 	Label status, galaxyLabel, sectorCountLabel, maxPlayersLabel, statusLabel;
 	ClickListener continueListener;
-	ArrayList<GameListItem> gameList;
-	ArrayList<PlayerListItem> playerList;
-	ArrayList<GalaxyListItem> galaxyList;
-	String[] galaxyNameList;
+	public ArrayList<GameListItem> gameList;
+	public ArrayList<PlayerListItem> playerList;
+	public ArrayList<GalaxyListItem> galaxyList;
 	boolean startGame = false;
 	GameJson lastGame;
 
@@ -99,7 +98,6 @@ public class LobbyStage extends Stage implements MakesRequests {
 		loadedGameID = 0;
 		gameList = new ArrayList<GameListItem>();
 		galaxyList = new ArrayList<GalaxyListItem>();
-		galaxyNameList = new String[50];
 		playerList = new ArrayList<PlayerListItem>();
 
 		skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -283,21 +281,33 @@ public class LobbyStage extends Stage implements MakesRequests {
 		myGame.goMenu();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void showCreateGameForm() {
 		
 		Label galaxySelectLabel = new Label("Galaxy", skin);
-		SelectBox<String> galaxySelect = new SelectBox<String>(skin);
-//		galaxySelect.setItems(galaxyNameList);
+		@SuppressWarnings("rawtypes")
+		SelectBox galaxySelect = new SelectBox(skin);
+		
+		String[] galaxyNames = new String[galaxyList.size()];
+		int i = 0;
+		for (GalaxyListItem galaxy: galaxyList) { 
+			galaxyNames[i] = galaxy.getGalaxy();
+			i++;
+		}
+		
+		galaxySelect.setItems(galaxyNames);
 		
 		Dialog createGameForm = new Dialog("New Game", skin) {
 			protected void result(Object obj) {
-//				String selectedGalaxyName = galaxySelect.getSelected().toLowerCase();
-//				for (GalaxyListItem galaxy : galaxyList) {
-//					String galaxyName = galaxy.galaxy.toLowerCase();
-//					if (galaxyName.contains((CharSequence) galaxySelect.getSelected())){
-//						createGame(galaxy);
-//					}
-//				}
+				String selectedGalaxyName = (String) galaxySelect.getSelected();
+				selectedGalaxyName = selectedGalaxyName.toLowerCase();
+
+				for (GalaxyListItem galaxy : galaxyList) {
+					String galaxyName = galaxy.getGalaxy().toLowerCase();
+					if (galaxyName.contains(selectedGalaxyName)){
+						createGame(galaxy);
+					}
+				}
 			}
 		};
 		
@@ -492,15 +502,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 		
 		// Clear and reload galaxy list data
 		galaxyList.clear();
-		galaxyNameList = new String[50];
 		
-		int index = 0;
 		for (JsonValue entry = root.child; entry != null; entry = entry.next) {
 			final GalaxyListItem tmp = json.fromJson(GalaxyListItem.class, entry.toString());
 			tmp.update();
 			galaxyList.add(tmp);
-			galaxyNameList[index] = tmp.galaxy;
-			index++;
 		}
 	}
 	
@@ -544,10 +550,10 @@ public class LobbyStage extends Stage implements MakesRequests {
 	 * @param map
 	 */
 	public void loadGameAction(Json json, OrderedMap<String, Object> map) {
-		GameJson game = json.fromJson(GameJson.class, map.get("gameObj").toString());
+		GameJson game = json.fromJson(GameJson.class, map.get("gameDataObj").toString());
 		Utility.setSeed(game.galaxySeed);
-		this.startGame = true;
-		this.lastGame = game;
+		this.lastGame = game;	
+		this.startGame = true;		
 	}
 	
 	/**
@@ -578,7 +584,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	public void createGameAction(Json json, OrderedMap<String, Object> map) {
 		@SuppressWarnings("unused")
 		GameJson game = json.fromJson(GameJson.class, map.get("gameDataObject").toString());
-		this.startGame = true;
+		listGames();
 	}
 	
 	/**
@@ -600,7 +606,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 	 */
 	public void createGame(GalaxyListItem galaxy) {
 
-		GameScene.preloadGalaxy();
+		GameScene.preloadGalaxy(galaxy);
 
 		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
 		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
@@ -718,13 +724,13 @@ public class LobbyStage extends Stage implements MakesRequests {
 	
 	/**
 	 * HTTP call. Load and continue game.
-	 * @param id
+	 * @param gameID
 	 */
-	public void continueGame(int id) {
+	public void continueGame(int gameID) {
 
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("method", "loadGame");
-		parameters.put("gameID", "" + id);
+		parameters.put("gameID", "" + gameID);
 		parameters.put("returnFormat", "JSON");
 
 		HttpRequest httpGet = new HttpRequest(HttpMethods.POST);

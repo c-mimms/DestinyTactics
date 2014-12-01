@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 public class GalaxyListItem extends Table {
 	
 	int galaxyID;
-	String galaxy;
-	int sectors;
+	private String galaxy;
+	private int sectors;
 	int minPlayers;
 	int maxPlayers;
 	int alliances;
@@ -20,6 +20,22 @@ public class GalaxyListItem extends Table {
 	}
 	
 	public void update(){
-		add(new Label(galaxy, DestinyTactics.skin2)).align(Align.left).expandX().left();
+		add(new Label(getGalaxy(), DestinyTactics.skin2)).align(Align.left).expandX().left();
+	}
+
+	public int getSectors() {
+		return sectors;
+	}
+
+	public void setSectors(int sectors) {
+		this.sectors = sectors;
+	}
+
+	public String getGalaxy() {
+		return galaxy;
+	}
+
+	public void setGalaxy(String galaxy) {
+		this.galaxy = galaxy;
 	}
 }

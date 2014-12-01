@@ -35,6 +35,9 @@ public class GameJson {
 			SectorJson tmpSector = new SectorJson();
 			tmpSector.controlledBy = sect.controlState;
 			tmpSector.galaxyPos = i + 1;
+			
+			System.out.println("(new) orbitalbodies in sector: " + sect.bodyList.length);
+			
 			for(OrbitalBody bod : sect.bodyList){
 				OrbitalBodyJson tmpOrbitalBody = new OrbitalBodyJson();
 				tmpOrbitalBody.orbit = bod.getPos() + 1;
@@ -71,6 +74,7 @@ public class GameJson {
 			player.update();
 		}
 		for (SectorJson sector : sectors) {
+			System.out.println("(update) orbitalbodies in sector: " + sector.orbitalBodies.size());
 			sector.update();
 		}
 	}

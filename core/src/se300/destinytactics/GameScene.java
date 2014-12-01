@@ -96,8 +96,11 @@ public class GameScene implements Screen, MakesRequests{
 	public Player onlinePlayers[];
 
 	public static void preloadGalaxy() {
-
 		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, NUMBER_SECTORS, null);
+	}
+	
+	public static void preloadGalaxy(GalaxyListItem galaxy) {
+		m_Galaxy = new Galaxy(GALAXY_WIDTH, GALAXY_HEIGHT, galaxy, null);
 	}
 
 	/**

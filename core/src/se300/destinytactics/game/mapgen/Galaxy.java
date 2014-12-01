@@ -1,5 +1,6 @@
 package se300.destinytactics.game.mapgen;
 
+import se300.destinytactics.GalaxyListItem;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.mapgen.Sector;
 
@@ -19,29 +20,29 @@ public class Galaxy {
 	public Sector sectors[];
 	private int sizeY;
 	private int sizeX;
-	private int numSystems;
+	private int sectorCount;
 	public Sector m_Sector;
 	public GameScene thisgame;
 	public int minSpacing = 75;
 
 	/**
 	 * Generate a new galaxy.
-	 * @param x
-	 * @param y
-	 * @param n
+	 * @param sizeX
+	 * @param sizeY
+	 * @param sectorCount
 	 * @param thisgame
 	 */
-	public Galaxy(int x, int y, int n, GameScene thisgame) {
+	public Galaxy(int sizeX, int sizeY, int sectorCount, GameScene thisgame) {
 
 		this.thisgame = thisgame;
-		numSystems = n;
-		sizeX = x;
-		sizeY = y;
+		this.sectorCount = sectorCount;
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
 
-		sectors = new Sector[numSystems];
+		sectors = new Sector[this.sectorCount];
 		name = Names.newName();
 
-		for (int i = 0; i < numSystems; i++) {
+		for (int i = 0; i < this.sectorCount; i++) {
 			boolean placeFree = false;
 			Sector temp = null;
 			while (!placeFree) {
@@ -63,7 +64,46 @@ public class Galaxy {
 			sectors[i] = temp;
 		}
 	}
+	
+	/**
+	 * Generate a new galaxy.
+	 * @param sizeX
+	 * @param sizeY
+	 * @param galaxy
+	 * @param thisgame
+	 */
+	public Galaxy(int sizeX, int sizeY, GalaxyListItem galaxy, GameScene thisgame) {
 
+		this.thisgame = thisgame;
+		this.sectorCount = galaxy.getSectors();
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
+
+		sectors = new Sector[this.sectorCount];
+		name = galaxy.getGalaxy();
+
+		for (int i = 0; i < this.sectorCount; i++) {
+			boolean placeFree = false;
+			Sector temp = null;
+			while (!placeFree) {
+
+				temp = new Sector(this);
+
+				placeFree = true;
+				//Generate all sectors and place them in an array.
+				for (int j = 0; j < sectors.length; j++) {
+					if (sectors[j] == null)
+						break;
+					if (temp.getDistance(sectors[j]) < minSpacing) {
+						placeFree = false;
+						break;
+					}
+				}
+
+			}
+			sectors[i] = temp;
+		}
+	}
 	
 	public int getGalaxyWidth() {
 

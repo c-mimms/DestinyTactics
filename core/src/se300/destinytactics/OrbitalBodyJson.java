@@ -2,6 +2,7 @@ package se300.destinytactics;
 
 import java.util.ArrayList;
 
+import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 public class OrbitalBodyJson {
@@ -16,9 +17,9 @@ public class OrbitalBodyJson {
 	public ArrayList buildqueues;
 	public int controlledBy;
 
-	public OrbitalBodyJson(int i, int j) {
-		orbit = i;
-		controlledBy = j;
+	public OrbitalBodyJson(int orbit, int controlledBy) {
+		this.orbit = orbit;
+		this.controlledBy = controlledBy;
 	}
 
 	public OrbitalBodyJson() {
@@ -28,8 +29,10 @@ public class OrbitalBodyJson {
 	public void update(int sectorIndex) {
 
 		int orbitalBodyIndex = orbit - 1;
-		OrbitalBody me = GameScene.m_Galaxy.sectors[sectorIndex].bodyList[orbitalBodyIndex];
-		me.setShipyardLevel(shipyardLevel);
+		System.out.println("(update) sector: " + sectorIndex + " orbitalBody: " + orbitalBodyIndex);
+		Sector sector = GameScene.m_Galaxy.sectors[sectorIndex];
+		OrbitalBody orbitalBody = sector.bodyList[orbitalBodyIndex];
+		orbitalBody.setShipyardLevel(shipyardLevel);
 		
 	}
 }
