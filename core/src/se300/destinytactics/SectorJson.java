@@ -26,6 +26,8 @@ public class SectorJson {
 	public void update() {
 		
 		int sectorIndex = galaxyPos - 1;
+		System.out.println("(update) orbitalbodies in sector "+ sectorIndex +": " + orbitalBodies.size());
+		System.out.println("Actual size is " + GameScene.m_Galaxy.sectors[sectorIndex].numBodies);
 		Sector me = GameScene.m_Galaxy.sectors[sectorIndex];
 		
 		me.controlState = controlledBy;

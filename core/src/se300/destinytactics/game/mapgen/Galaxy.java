@@ -80,8 +80,9 @@ public class Galaxy {
 		this.sizeY = sizeY;
 
 		sectors = new Sector[this.sectorCount];
-		name = galaxy.getGalaxy();
-
+		name = Names.newName(); //Need to use the name generated from the seed or everything is one random number off...
+								//Hours spent finding this bug : 1.0  (Shannon add your hours to this)
+		
 		for (int i = 0; i < this.sectorCount; i++) {
 			boolean placeFree = false;
 			Sector temp = null;

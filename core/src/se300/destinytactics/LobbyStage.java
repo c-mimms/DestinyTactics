@@ -606,11 +606,11 @@ public class LobbyStage extends Stage implements MakesRequests {
 	 */
 	public void createGame(GalaxyListItem galaxy) {
 
+		Utility.setSeed(Utility.random.nextLong());
 		GameScene.preloadGalaxy(galaxy);
 
 		// {"message":"Game loaded.","gameObj":{"galaxySeed":"","players":[],"createdBy":"","galaxyID":"",
 		// "createDate":"","gameID":"","status":"","sectors":[],"roundsCompleted":""}}
-
 		GameJson game = new GameJson(Utility.getSeed());
 		Json json = new Json();
 		json.setOutputType(OutputType.json);

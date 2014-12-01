@@ -1,6 +1,7 @@
 package se300.destinytactics;
 
 import se300.destinytactics.game.mapgen.Assets;
+import se300.destinytactics.game.mapgen.Utility;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -94,6 +95,7 @@ public class DestinyTactics extends Game {
 	public void startGame(){
 		Assets.finish();
 		//if (gameScreen == null) {
+			Utility.setSeed(Utility.seed);
 			GameScene.preloadGalaxy();
 			gameScreen = new GameScene(this, skin2);
 		//}

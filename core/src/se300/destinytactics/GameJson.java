@@ -74,7 +74,6 @@ public class GameJson {
 			player.update();
 		}
 		for (SectorJson sector : sectors) {
-			System.out.println("(update) orbitalbodies in sector: " + sector.orbitalBodies.size());
 			sector.update();
 		}
 	}
