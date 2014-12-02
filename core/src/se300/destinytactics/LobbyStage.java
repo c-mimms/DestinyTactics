@@ -369,16 +369,17 @@ public class LobbyStage extends Stage implements MakesRequests {
 					isPlayer = true;
 				}
 			}			
-			if (isPlayer) {
+			if (isPlayer && gameDetails.status.toUpperCase().contains("ACTIVE")) {
 				if (gameDetails.status.toUpperCase().contains("ACTIVE")) {
 					// Continue Game
 					buttonContainer.setActor(continueButton);
 				}
 			}
-			else {
+			else if (!isPlayer && gameDetails.status.toUpperCase().contains("PENDING")){
 				// Join Game
 				buttonContainer.setActor(joinButton);
 			}
+			
 		}
 		
 	}

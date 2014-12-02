@@ -15,7 +15,7 @@ import java.io.File;
 public class Names {
 
 	public static String[] names = {"Haven", "Firaxis", "Vista", "Omicron", "Gemini", "Zephyr",
-			"Mon Tuatha", "Thraxis", "Goliath", "Calypso", "Dirk", "Pirrano", "G Meyers", 
+			"Mon Tuatha", "Thraxis", "Goliath", "Calypso", "Dirk", "Pirrano", "G'Meyers", 
 			"Greystrom", "Tande", "Pelou", "Luthien", "Vaire", "Niocia", "Aldan", "Cerberi", "Cygni", "Adonis",
 			"Vorcia", "Hooni", "Shalim", "Qadesh", "Moisu", "Arietis", "Alkonost", "Sicia", "Tian-Mu", "Doradus",
 			"Astarte", "Maenali", "M'Glani", "Herculis", "Ceres", "Serpentis", "Draconis", "Utumno", "Phaeton",
