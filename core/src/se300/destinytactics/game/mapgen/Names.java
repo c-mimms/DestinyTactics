@@ -14,9 +14,15 @@ import java.io.File;
 */
 public class Names {
 
-	public static String[] names = {"Randomeous Nameous", "Steveous Jobeous", "Totz Notz Randomz", "Cornify", "Lil' Spoon", "Sauce Boas",
-			"Planet 1", "Breaking Bad", "Not A Name", "Name", "Epicus Maximus", "Blue Planet", "Greystrom Meyers", 
-			"The Pwnzershriek", "East Germany", "The Snack that Smiles Back", "Strong Steps", "Rolling Stoned"
+	public static String[] names = {"Haven", "Firaxis", "Vista", "Omicron", "Gemini", "Zephyr",
+			"Mon Tuatha", "Thraxis", "Goliath", "Calypso", "Dirk", "Pirrano", "G Meyers", 
+			"Greystrom", "Tande", "Pelou", "Luthien", "Vaire", "Niocia", "Aldan", "Cerberi", "Cygni", "Adonis",
+			"Vorcia", "Hooni", "Shalim", "Qadesh", "Moisu", "Arietis", "Alkonost", "Sicia", "Tian-Mu", "Doradus",
+			"Astarte", "Maenali", "M'Glani", "Herculis", "Ceres", "Serpentis", "Draconis", "Utumno", "Phaeton",
+			"Judur", "Avlel", "Ninkasi", "Coru", "Nahar", "Semargl", "Oman", "Vaalbara", "Q'Sauri", "H'Necri",
+			"Oceanus", "Vorcia", "Nioni", "Vaire", "Furi", "Atlantis", "Tethys", "Skirnir", "Alkonost", "Orionis",
+			"Aegle", "Grakha", "Charon", "Tarandi", "L'Mada", "M'Inon", "Bolthor", "Geminorum", "Oberon", "Lona",
+			"Gula", "Hyrokkin", "Thyoph"
 	};
 
 
