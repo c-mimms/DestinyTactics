@@ -104,8 +104,8 @@ public class MenuScene implements Screen{
 		
 		menu.setFillParent(true);
 		menu.add(logo);
-//		menu.row().space(50);
-//		menu.add(newGameButton);
+		menu.row().space(50);
+		menu.add(newGameButton);
 		menu.row().space(50);
 		menu.add(multiplayerGameButton);
 		menu.row().space(50);
