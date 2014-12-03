@@ -5,6 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+/**
+ * 
+ * @author Chris
+ * An item to populate the game list.
+ *
+ */
 public class GameListItem extends Table {
 
 	int minPlayers;

@@ -4,6 +4,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+/**
+ * 
+ * @author Chris
+ * Item to populate the list of galaxy types.
+ */
 public class GalaxyListItem extends Table {
 	
 	int galaxyID;

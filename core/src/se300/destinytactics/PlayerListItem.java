@@ -5,6 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+/**
+ * Item to populate the list of players.
+ * @author Chris
+ *
+ */
 public class PlayerListItem extends Table {
 
 	int playerID;

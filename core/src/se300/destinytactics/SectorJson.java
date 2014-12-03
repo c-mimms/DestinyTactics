@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import se300.destinytactics.game.mapgen.Sector;
 
+/**
+ * Json class to load a sector from a JSON string.
+ * @author Chris
+ *
+ */
 public class SectorJson {
 
 	public int galaxyPos;

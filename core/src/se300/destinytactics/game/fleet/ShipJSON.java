@@ -1,5 +1,10 @@
 package se300.destinytactics.game.fleet;
 
+/**
+ * Json class to load ship stats at game start.
+ * @author Chris
+ *
+ */
 public class ShipJSON {
 	//JSON
 	public int lightTurretSupport,

@@ -6,6 +6,12 @@ import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
+/**
+ * 
+ * @author Chris
+ * Json class to load the game from a returned JSON string.
+ *
+ */
 public class GameJson {
 
 	public int gameID;

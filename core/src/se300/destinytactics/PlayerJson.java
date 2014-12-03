@@ -2,6 +2,11 @@ package se300.destinytactics;
 
 import java.util.ArrayList;
 
+/**
+ * Class to load a player from a JSON string.
+ * @author Chris
+ *
+ */
 public class PlayerJson {
 
 	public int gameID;
