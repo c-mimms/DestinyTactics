@@ -83,7 +83,7 @@ public class Sector extends Actor {
 		this.sunType = Utility.random.nextInt(6);
 		this.sunRotation = Utility.random.nextFloat() * 360;
 		controlState = 0;
-		numBodies = (int) (Utility.random.nextDouble() * 15) + 1;
+		numBodies = (int) (Utility.random.nextDouble() * 6) + 1;
 		bodyList = new OrbitalBody[numBodies];
 		posX = (int) (EDGE_EXCLUSION + (Utility.random.nextDouble() * (galaxy
 				.getGalaxyWidth() - 2 * EDGE_EXCLUSION)));
