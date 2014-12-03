@@ -124,6 +124,9 @@ public class Player {
 	 */
 	public void addOrbitalBody(OrbitalBody ob){
 		ownedBodies.add(ob);
+		ob.setOwner(this);
+		ob.sector.controlState=1;
+		ob.sector.setOwner(this);
 	}
 	
 	/*

@@ -128,7 +128,7 @@ public abstract class OrbitalBody extends Actor {
 		sector = sect;
 		controlState = 0;
 		// galaxy = sector.galaxy;
-		controlState = 1;
+		//controlState = 1;
 		owner = GameScene.noPlayer;
 		myCircle.setOrigin(Align.center);
 		myCircle.setSize(50, 50);
@@ -216,7 +216,6 @@ public abstract class OrbitalBody extends Actor {
 	 * switchToPlanetView method.
 	 */
 	public void switchToPlanetView() {
-		GameScene.localPlayer.addOrbitalBody(this);
 		this.getStage().mouseMoved(20, 20);
 		sector.galaxy.thisgame.switchToPlanetView(this);
 	}
@@ -240,6 +239,7 @@ public abstract class OrbitalBody extends Actor {
 
 	public void setOwner(Player play) {
 		owner = play;
+		controlState = 1;
 	}
 
 	public Player getOwner() {

@@ -27,7 +27,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 	public Structure m_Structure;
 
 	// Owner
-	public Player owner;
+	//public Player owner;
 
 	// Mining Variable declaration
 	private int mineLevel;
@@ -53,7 +53,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 	public Planet(int radius, Sector sector) {
 
 		super(radius, sector);
-		owner = super.owner;
+		//owner = super.owner;
 
 		// Mining variable init
 		mineLevel = 0;
@@ -91,6 +91,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 
 	@Override
 	public void endTurn() {
+		System.out.println(controlState +"    " +  owner.getName());
 		if (controlState == 1 && owner != null) {
 			// System.out.println("Resources: " + resource + "  Efficiency  : "
 			// + miningEfficiency);

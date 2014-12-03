@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import se300.destinytactics.GameScene;
 import se300.destinytactics.game.Player;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
@@ -182,6 +183,9 @@ public class Fleet extends Actor {
 				this.setBounds(0, 0, location.getWidth() + 2 * ORBITRAD, location.getHeight() + 2
 						* ORBITRAD);
 				this.remove();
+
+				GameScene.localPlayer.addOrbitalBody(this.location);
+				
 			}
 
 			else {

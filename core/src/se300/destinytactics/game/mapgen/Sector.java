@@ -175,7 +175,7 @@ public class Sector extends Actor {
 	 * Switch view to selected sector.
 	 */
 	public void switchView() {
-		controlState = 1;
+		//controlState = 1;
 		this.getStage().touchDown(20, 20, 0, Input.Buttons.LEFT);
 		this.getStage().mouseMoved(20, 20);
 		galaxy.thisgame.switchView(this);
