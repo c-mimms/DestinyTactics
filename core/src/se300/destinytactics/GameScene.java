@@ -276,8 +276,8 @@ public class GameScene implements Screen, MakesRequests{
 	@Override
 	public void show() {
 		// Start music and take input when you switch to this window
-		// musicLoop.play();
-		// musicLoop.setLooping(true);
+		musicLoop.play();
+		musicLoop.setLooping(true);
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
