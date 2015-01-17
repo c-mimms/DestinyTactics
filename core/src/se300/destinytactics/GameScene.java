@@ -122,7 +122,7 @@ public class GameScene implements Screen, MakesRequests{
 		// Load music and sounds (we should have a static sound/music class
 		// maybe?)
 		musicLoop = Gdx.audio.newMusic(Gdx.files
-				.internal("music/SimplicityIsBliss.mp3"));
+				.internal("music/Butterfly.mp3"));
 		selectSound = Gdx.audio.newSound(Gdx.files
 				.internal("sounds/select2.wav"));
 
