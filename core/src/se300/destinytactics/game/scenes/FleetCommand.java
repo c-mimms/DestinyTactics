@@ -1,5 +1,6 @@
 package se300.destinytactics.game.scenes;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import se300.destinytactics.GameScene;
 import se300.destinytactics.game.fleet.Battleship;
 import se300.destinytactics.game.fleet.Bomber;
@@ -8,9 +9,13 @@ import se300.destinytactics.game.fleet.Corvette;
 import se300.destinytactics.game.fleet.Dreadnaught;
 import se300.destinytactics.game.fleet.Fighter;
 import se300.destinytactics.game.fleet.Scout;
+import se300.destinytactics.ui.ToolTip;
 
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -38,6 +43,11 @@ public class FleetCommand {
 	
 	//Labels for number of ships
 	public Label fighterNum, corvetteNum, bomberNum, carrierNum, scoutNum, battleNum, dreadNum;
+	
+	//Hovering Tooltip
+	boolean hovering;
+	ToolTip toolTip;
+	public String name;
 	
 	
 	
@@ -78,7 +88,6 @@ public class FleetCommand {
 		moveButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				setForm("Move");
-				moveFleet();
 				return true;
 			}
 		});
@@ -266,52 +275,190 @@ public class FleetCommand {
 		
 		moveForm.defaults().expandX();
 		
+		//FIGHTERS
 		moveForm.row();
-		moveForm.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		TextField unitCountTextBox = new TextField("", skin);
-		//unitCountTextBox.DigitsOnlyFilter();
+		Label fighterMove = new Label("Fighters", skin);
+		moveForm.add(fighterMove).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField unitCountTextBox = new TextField("0", skin);
+		unitCountTextBox.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		
-		moveForm.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
-		TextField unitCountTextBox5 = new TextField("", skin);
+		fighterMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Fighter", unitCountTextBox, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
+
+		//CORVETTES
+		Label corvetteMove = new Label("Corvettes", skin);
+		moveForm.add(corvetteMove).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		final TextField unitCountTextBox5 = new TextField("0", skin);
+		unitCountTextBox5.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox5).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		corvetteMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Corvette", unitCountTextBox5, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 		
+		//BOMBERS
 		moveForm.row();
-		moveForm.add(new Label("Bombers", skin)).expandX().fillX();
-		TextField unitCountTextBox2 = new TextField("", skin);
+		Label bomberMove = new Label("Bombers", skin);
+		moveForm.add(bomberMove).expandX().fillX();
+		final TextField unitCountTextBox2 = new TextField("0", skin);
+		unitCountTextBox2.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox2).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		bomberMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Bomber", unitCountTextBox2, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 		
-		moveForm.add(new Label("Carriers", skin)).expandX().fillX();
-		TextField unitCountTextBox4 = new TextField("", skin);
+		//CARRIERS
+		Label carrierMove = new Label("Carriers", skin);
+		moveForm.add(carrierMove).expandX().fillX();
+		final TextField unitCountTextBox4 = new TextField("0", skin);
+		unitCountTextBox4.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox4).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		carrierMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Carrier", unitCountTextBox4, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 		
+		//SCOUTSHIPS
 		moveForm.row();
-		moveForm.add(new Label("Scoutships", skin)).expandX().fillX();
-		TextField unitCountTextBox3 = new TextField("", skin);
+		Label scoutMove = new Label("Scoutships", skin);
+		moveForm.add(scoutMove).expandX().fillX();
+		final TextField unitCountTextBox3 = new TextField("0", skin);
+		unitCountTextBox3.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox3).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		scoutMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Scoutship", unitCountTextBox3, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 		
-		moveForm.add(new Label("Battleships", skin)).expandX().fillX();
-		TextField unitCountTextBox6 = new TextField("", skin);
+		//BATTLESHIPS
+		Label battleMove = new Label("Battleships", skin);
+		moveForm.add(battleMove).expandX().fillX();
+		final TextField unitCountTextBox6 = new TextField("0", skin);
+		unitCountTextBox6.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox6).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		battleMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Battleship", unitCountTextBox6, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 		
+		
+		//DREADNAUGHTS
 		moveForm.row();
 		moveForm.add().expandX().fillX();
 		moveForm.add().expandX().fillX();
 		
-		moveForm.add(new Label("Dreadnaughts", skin)).expandX().fillX();
-		TextField unitCountTextBox7 = new TextField("", skin);
+		Label dreadMove = new Label("Dreadnaughts", skin);
+		moveForm.add(dreadMove).expandX().fillX();
+		final TextField unitCountTextBox7 = new TextField("0", skin);
+		unitCountTextBox7.setTextFieldFilter(new DigitsOnlyFilter());
 		moveForm.add(unitCountTextBox7).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		dreadMove.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Dreadnaught", unitCountTextBox7, "move");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			}
+		});
 	
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
+		
+		/*
+		 * Working Clear Button
+		 */
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
+		
+		clearButton.addListener(new ClickListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				clearMoveSelection();
+				return true;
+			}
+			
+			public void clearMoveSelection(){
+				unitCountTextBox.setText("0");
+				unitCountTextBox2.setText("0");
+				unitCountTextBox3.setText("0");
+				unitCountTextBox4.setText("0");
+				unitCountTextBox5.setText("0");
+				unitCountTextBox6.setText("0");
+				unitCountTextBox7.setText("0");
+			}
+			
+			
+		});
+		
+		/*
+		 * Workings Submit Button
+		 */
 		TextButton submitButton = new TextButton("Move Fleet", skin.get("default", TextButtonStyle.class));
-
+	
 		submitButton.addListener(new ClickListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				moveFleet();
+				clearMoveSelection();
 				return true;
 			}
+			
+			public void clearMoveSelection(){
+				unitCountTextBox.setText("0");
+				unitCountTextBox2.setText("0");
+				unitCountTextBox3.setText("0");
+				unitCountTextBox4.setText("0");
+				unitCountTextBox5.setText("0");
+				unitCountTextBox6.setText("0");
+				unitCountTextBox7.setText("0");
+			}
 		});
+		
 		
 		moveFormWrapper.add("Move Fleet").colspan(3).left().expandX();
 		moveFormWrapper.row().top();                 
@@ -342,48 +489,146 @@ public class FleetCommand {
 		
 		buildForm.defaults().expandX();
 		
+		//FIGHTERS
 		buildForm.row();
-		buildForm.add(new Label("Fighters", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		Label fighterBuild = new Label("Fighters", skin);
+		buildForm.add(fighterBuild).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		final TextField fighterCount = new TextField("0", skin);
-		//unitCountTextBox.DigitsOnlyFilter();
 		fighterCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(fighterCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		fighterBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Fighter", fighterCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
-		buildForm.add(new Label("Corvettes", skin)).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		//CORVETTES
+		Label corvetteBuild = new Label("Corvettes", skin);
+		buildForm.add(corvetteBuild).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
 		final TextField corvetteCount = new TextField("0", skin);
 		corvetteCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(corvetteCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		corvetteBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Corvette", corvetteCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
+		//BOMBERS
 		buildForm.row();
-		buildForm.add(new Label("Bombers", skin)).expandX().fillX();
+		Label bomberBuild = new Label("Bombers", skin);
+		buildForm.add(bomberBuild).expandX().fillX();
 		final TextField bomberCount = new TextField("0", skin);
 		bomberCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(bomberCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		bomberBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Bomber", bomberCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
-		buildForm.add(new Label("Carriers", skin)).expandX().fillX();
+		//CARRIERS
+		Label carrierBuild = new Label("Carriers", skin);
+		buildForm.add(carrierBuild).expandX().fillX();
 		final TextField carrierCount = new TextField("0", skin);
 		carrierCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(carrierCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		carrierBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Carrier", carrierCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
+		//SCOUTSHIPS
 		buildForm.row();
-		buildForm.add(new Label("Scoutships", skin)).expandX().fillX();
+		Label scoutBuild = new Label("Scoutships", skin);
+		buildForm.add(scoutBuild).expandX().fillX();
 		final TextField scoutCount = new TextField("0", skin);
 		scoutCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(scoutCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		scoutBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Scoutship", scoutCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
-		buildForm.add(new Label("Battleships", skin)).expandX().fillX();
+		//BATTLESHIPS
+		Label battleBuild = new Label("Battleships", skin);
+		buildForm.add(battleBuild).expandX().fillX();
 		final TextField battleshipCount = new TextField("0", skin);
 		battleshipCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(battleshipCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		battleBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Battleship", battleshipCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
+		//FILLER
 		buildForm.row();
 		buildForm.add().expandX().fillX();
 		buildForm.add().expandX().fillX();
 		
-		buildForm.add(new Label("Dreadnaughts", skin)).expandX().fillX();
+		//DREADNAUGHTS
+		Label dreadBuild = new Label("Dreadnaughts", skin);
+		buildForm.add(dreadBuild).expandX().fillX();
 		final TextField dreadCount = new TextField("0", skin);
 		dreadCount.setTextFieldFilter(new DigitsOnlyFilter());
 		buildForm.add(dreadCount).width(GameScene.SCREEN_WIDTH/8).expandX().fillX();
+		dreadBuild.addListener(new ClickListener() {
+			public void enter(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOn("Dreadnaught", dreadCount, "build");
+			}
+
+			public void exit(InputEvent event, float x, float y, int pointer,
+					Actor fromActor) {
+				hoverOff();
+			
+			}
+		});
 		
 		TextButton cancelButton = new TextButton("Cancel", skin.get("default", TextButtonStyle.class));
 		TextButton clearButton = new TextButton("Clear", skin.get("default", TextButtonStyle.class));
@@ -611,7 +856,36 @@ public class FleetCommand {
 		if(myGame.curOrbitalBody.m_Fleet !=null){
 			
 			myGame.planetUI.getDestination();
+			
+			
 		}
 		
 	}
+	
+
+	public void hoverOn(String name, TextField textBox, String purpose) {
+		if (toolTip == null) {
+			toolTip = new ToolTip(name, textBox, purpose);
+		}
+		if (purpose == "move")
+			this.getMoveForm().addActor(toolTip);
+		if (purpose == "build")
+			this.getBuildForm().addActor(toolTip);
+		if (purpose == "attack")
+			this.getAttackForm().addActor(toolTip);
+		
+		toolTip.addAction(sequence(Actions.alpha(0), Actions.delay(0.3f),
+				Actions.fadeIn(0.4f, Interpolation.fade)));
+
+		hovering = true;
+	}
+
+	
+	public void hoverOff() {
+		hovering = false;
+		if(toolTip != null)
+			toolTip.remove();
+		toolTip = null;
+	}
+	
 }

@@ -11,6 +11,7 @@ import se300.destinytactics.game.fleet.Carrier;
 import se300.destinytactics.game.fleet.Corvette;
 import se300.destinytactics.game.fleet.Dreadnaught;
 import se300.destinytactics.game.fleet.Fighter;
+import se300.destinytactics.game.fleet.Scout;
 import se300.destinytactics.game.fleet.ShipJSON;
 import se300.destinytactics.game.mapgen.Galaxy;
 import se300.destinytactics.game.mapgen.Sector;
@@ -385,6 +386,9 @@ public class GameScene implements Screen, MakesRequests{
 				break;
 			case "Carrier":
 				Carrier.stats = tmp;
+				break;
+			case "Scoutship":
+				Scout.stats = tmp;
 				break;
 			case "Battleship":
 				Battleship.stats = tmp;

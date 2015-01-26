@@ -2,12 +2,22 @@ package se300.destinytactics.ui;
 
 import se300.destinytactics.DestinyTactics;
 import se300.destinytactics.GameScene;
+import se300.destinytactics.game.fleet.Battleship;
+import se300.destinytactics.game.fleet.Bomber;
+import se300.destinytactics.game.fleet.Carrier;
+import se300.destinytactics.game.fleet.Corvette;
+import se300.destinytactics.game.fleet.Dreadnaught;
+import se300.destinytactics.game.fleet.Fighter;
+import se300.destinytactics.game.fleet.Scout;
+import se300.destinytactics.game.fleet.Ship;
+import se300.destinytactics.game.fleet.ShipJSON;
 import se300.destinytactics.game.mapgen.Sector;
 import se300.destinytactics.game.orbitalbodies.OrbitalBody;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 
@@ -117,4 +127,65 @@ public class ToolTip extends Window {
 		setPosition(x+OrbitalBody.SPRITE_SIZE+10, y-this.getHeight()/2 + OrbitalBody.SPRITE_SIZE/2);
 	}
 	
+	/**
+	 * Purpose must be "move", "build", or "attack"
+	 * @param name
+	 * @param textbox
+	 * @param purpose
+	 */
+	public ToolTip(String name, TextField textbox, String purpose){
+		super(name, skin);
+		/*
+		 * Will display:
+		 * Cost
+		 * Turns to Build
+		 * Interplanetary Speed
+		 * Interstellar Speed
+		 * needsHangar
+		 * HargarSize
+		 */
+		ShipJSON stats = null;
+		float x = textbox.getX();
+		float y = textbox.getY();
+		
+		//Import stats
+		if(name == "Fighter"){
+			stats = Fighter.stats;
+		} else if (name == "Corvette") {
+			stats = Corvette.stats;
+		} else if (name == "Bomber") {
+			stats = Bomber.stats;
+		} else if (name == "Scoutship") {
+			stats = Scout.stats;
+		} else if (name == "Battleship") {
+			stats = Battleship.stats;
+		} else if (name == "Dreadnaught") {
+			stats = Dreadnaught.stats;
+		} else if (name == "Carrier") {
+			stats = Carrier.stats;
+		}
+		
+		//Display based on purpose
+		if(purpose == "move"){
+			add("IPS: " + stats.interplanetarySpeed);
+			row();
+			add("ISS: " + stats.interstellarSpeed);
+			row();
+			add("Hangar: " + stats.needsHangar);
+			row();
+			add("Hargar Size: " + stats.hangarSize);
+		} else if (purpose == "build") {
+			add("Cost: " + stats.metalCost);
+			row();
+			add("Turns: " + stats.buildTime);
+			row();
+			add("Size: " + stats.size);
+		} else if (purpose == "attack") {
+			
+		}
+
+		
+		pack();
+		setPosition(x-textbox.getWidth()-this.getWidth(), y);
+	}
 }

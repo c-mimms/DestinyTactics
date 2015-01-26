@@ -286,7 +286,7 @@ public class LobbyStage extends Stage implements MakesRequests {
 		
 		Label galaxySelectLabel = new Label("Galaxy", skin);
 		@SuppressWarnings("rawtypes")
-		SelectBox galaxySelect = new SelectBox(skin);
+		final SelectBox galaxySelect = new SelectBox(skin);
 		
 		String[] galaxyNames = new String[galaxyList.size()];
 		int i = 0;
