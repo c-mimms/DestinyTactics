@@ -207,7 +207,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 				ships[2] -= 1;
 			} else if (ship.getShipType().equals("Carrier")) {
 				ships[3] -= 1;
-			} else if (ship.getShipType().equals("Scout")) {
+			} else if (ship.getShipType().equals("Scoutship")) {
 				ships[4] -= 1;
 			} else if (ship.getShipType().equals("Battleship")) {
 				ships[5] -= 1;
@@ -247,7 +247,7 @@ public class Planet extends OrbitalBody implements canBuildFleets,
 			ships[2] += 1;
 		} else if (ship.getShipType().equals("Carrier")) {
 			ships[3] += 1;
-		} else if (ship.getShipType().equals("Scout")) {
+		} else if (ship.getShipType().equals("Scoutship")) {
 			ships[4] += 1;
 		} else if (ship.getShipType().equals("Battleship")) {
 			ships[5] += 1;

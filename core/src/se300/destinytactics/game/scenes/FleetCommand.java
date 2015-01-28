@@ -9,6 +9,7 @@ import se300.destinytactics.game.fleet.Corvette;
 import se300.destinytactics.game.fleet.Dreadnaught;
 import se300.destinytactics.game.fleet.Fighter;
 import se300.destinytactics.game.fleet.Scout;
+import se300.destinytactics.ui.Confirmation;
 import se300.destinytactics.ui.ToolTip;
 
 import com.badlogic.gdx.math.Interpolation;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldFilter.DigitsOnlyFilter;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
@@ -733,6 +736,16 @@ public class FleetCommand {
 							+myGame.curOrbitalBody.getShips(6)
 							+" queued)");
 				}
+				
+				//Popup window for all added
+				
+				Confirmation popup = new Confirmation("Name", skin, myGame.curOrbitalBody.getShips(0), myGame.curOrbitalBody.getShips(1),
+						myGame.curOrbitalBody.getShips(3), myGame.curOrbitalBody.getShips(2), myGame.curOrbitalBody.getShips(4), myGame.curOrbitalBody.getShips(5),
+						myGame.curOrbitalBody.getShips(6), myGame.curOrbitalBody.getStage());
+				myGame.planetUI.addActor(popup);
+
+				popup = null;
+				
 				
 				return true;
 			}
